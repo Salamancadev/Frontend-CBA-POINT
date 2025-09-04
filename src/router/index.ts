@@ -12,12 +12,12 @@ const router = createRouter({
   routes: [
     { path: '/', name: 'home', component: Home }, // Ruta para la página principal
     { path: '/login', name: 'login', component: Login }, // Ruta para login
-    { path: '/register', name: 'register', component: Register } // Ruta para registro
+    { path: '/register', name: 'register', component: Register }, // Ruta para registro
   ],
   // Hace que al navegar siempre se desplace al inicio de la página
   scrollBehavior() {
     return { top: 0 }
-  }
+  },
 })
 // Exporta el router para usarlo en la aplicación principal
 export default router

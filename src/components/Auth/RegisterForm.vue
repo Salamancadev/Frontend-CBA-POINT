@@ -1,14 +1,9 @@
 <template>
-  <!-- Formulario de registro, previene el envío por defecto y llama a onSubmit -->
   <form @submit.prevent="onSubmit" class="space-y-4">
-    <!-- Campos de nombre y apellido en dos columnas -->
+    <!-- Nombre y Apellido -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div>
-        <!-- Etiqueta para el campo de nombre -->
-        <label for="name" class="block text-sm font-medium text-white"
-          >Nombre</label
-        >
-        <!-- Input para el nombre, vinculado a form.name -->
+        <label for="name" class="block text-sm font-medium text-white">Nombre</label>
         <input
           id="name"
           v-model="form.name"
@@ -19,11 +14,7 @@
         />
       </div>
       <div>
-        <!-- Etiqueta para el campo de apellido -->
-        <label for="lastName" class="block text-sm font-medium text-white"
-          >Apellido</label
-        >
-        <!-- Input para el apellido, vinculado a form.lastName -->
+        <label for="lastName" class="block text-sm font-medium text-white">Apellido</label>
         <input
           id="lastName"
           v-model="form.lastName"
@@ -34,11 +25,10 @@
         />
       </div>
     </div>
-    <!-- Campo de rol -->
+
+    <!-- Rol -->
     <div>
-      <label for="role" class="block text-sm font-medium text-white"
-        >Rol</label
-      >
+      <label for="role" class="block text-sm font-medium text-white">Rol</label>
       <select
         id="role"
         v-model="form.role"
@@ -51,12 +41,11 @@
         <option value="Administrativo">Administrativo</option>
       </select>
     </div>
-    <!-- Campo de tipo de documento y número de documento en dos columnas -->
+
+    <!-- Tipo y número de documento -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div>
-        <label for="documentType" class="block text-sm font-medium text-white"
-          >Tipo de documento</label
-        >
+        <label for="documentType" class="block text-sm font-medium text-white">Tipo de documento</label>
         <select
           id="documentType"
           v-model="form.documentType"
@@ -70,9 +59,7 @@
         </select>
       </div>
       <div>
-        <label for="documentNumber" class="block text-sm font-medium text-white"
-          >Número de documento</label
-        >
+        <label for="documentNumber" class="block text-sm font-medium text-white">Número de documento</label>
         <input
           id="documentNumber"
           v-model="form.documentNumber"
@@ -83,13 +70,10 @@
         />
       </div>
     </div>
-    <!-- Campo de correo electrónico -->
+
+    <!-- Correo -->
     <div>
-      <!-- Etiqueta para el campo de correo -->
-      <label for="email" class="block text-sm font-medium text-white"
-        >Correo</label
-      >
-      <!-- Input para el correo, vinculado a form.email -->
+      <label for="email" class="block text-sm font-medium text-white">Correo</label>
       <input
         id="email"
         v-model="form.email"
@@ -99,14 +83,11 @@
         placeholder="tu@email.com"
       />
     </div>
-    <!-- Campos de contraseña y confirmación en dos columnas -->
+
+    <!-- Contraseña y Confirmación -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div>
-        <!-- Etiqueta para el campo de contraseña -->
-        <label for="password" class="block text-sm font-medium text-white"
-          >Contraseña</label
-        >
-        <!-- Input para la contraseña, vinculado a form.password -->
+        <label for="password" class="block text-sm font-medium text-white">Contraseña</label>
         <input
           id="password"
           v-model="form.password"
@@ -118,11 +99,7 @@
         />
       </div>
       <div>
-        <!-- Etiqueta para el campo de confirmación de contraseña -->
-        <label for="confirm" class="block text-sm font-medium text-white"
-          >Confirmar contraseña</label
-        >
-        <!-- Input para confirmar la contraseña, vinculado a form.confirm -->
+        <label for="confirm" class="block text-sm font-medium text-white">Confirmar contraseña</label>
         <input
           id="confirm"
           v-model="form.confirm"
@@ -134,9 +111,10 @@
         />
       </div>
     </div>
-    <!-- Checkbox para aceptar términos y condiciones -->
-    <label class="inline-flex items-center gap-2 text-sm text-gray-300"
-      ><input
+
+    <!-- Términos -->
+    <label class="inline-flex items-center gap-2 text-sm text-gray-300">
+      <input
         type="checkbox"
         v-model="form.terms"
         required
@@ -144,50 +122,94 @@
       />
       <span>Acepto los términos y condiciones</span>
     </label>
-    <!-- Botón para enviar el formulario -->
-    <button
-      type="submit"
-      class="w-full btn bg-[#7ED957] text-[#0b1220] hover:brightness-90"
-    >
+
+    <!-- Botón -->
+    <button type="submit" class="w-full btn bg-[#7ED957] text-[#0b1220] hover:brightness-90">
       Crear cuenta
     </button>
-    <!-- Muestra mensaje de error si existe -->
+
+    <!-- Error -->
     <p v-if="error" class="text-red-400 text-sm">{{ error }}</p>
   </form>
 </template>
-<script setup>
-// Importa reactive y ref de Vue para estado reactivo y referencias
-import { reactive, ref } from "vue";
-// Define el evento personalizado "submit" que puede emitir el componente
-const emit = defineEmits(["submit"]);
-// Variable reactiva para mostrar errores en el formulario
-const error = ref("");
-// Estado reactivo para almacenar los datos del formulario
-const form = reactive({
-  name: "",
-  lastName: "",
-  role: "",
-  documentType: "",
-  documentNumber: "",
-  email: "",
-  password: "",
-  confirm: "",
+
+<script lang="ts" setup>
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
+
+interface RegisterFormData {
+  name: string
+  lastName: string
+  role: string
+  documentType: string
+  documentNumber: string
+  email: string
+  password: string
+  confirm: string
+  terms: boolean
+}
+
+const emit = defineEmits<{
+  (e: 'submit', payload: RegisterFormData): void
+}>()
+
+const error = ref('')
+const form = reactive<RegisterFormData>({
+  name: '',
+  lastName: '',
+  role: '',
+  documentType: '',
+  documentNumber: '',
+  email: '',
+  password: '',
+  confirm: '',
   terms: false,
-});
-// Función que se ejecuta al enviar el formulario
-function onSubmit() {
-  // Reinicia el mensaje de error
-  error.value = "";
-  // Verifica que las contraseñas coincidan
-  if (form.password !== form.confirm) {
-    error.value = "Las contraseñas no coinciden";
-    return;
+})
+
+const router = useRouter()
+
+const api = axios.create({
+  baseURL: 'http://127.0.0.1:8000/api',
+  headers: {
+    'Content-Type': 'application/json'
   }
-  // Emite el evento "submit" con los datos del formulario
-  emit("submit", { ...form });
-  // Muestra los datos en consola (solo para desarrollo)
-  console.log("Register submit", form);
-  // Simula el registro con una alerta
-  alert("Registro simulado");
+})
+
+async function onSubmit() {
+  error.value = ''
+
+  if (form.password !== form.confirm) {
+    error.value = 'Las contraseñas no coinciden'
+    return
+  }
+
+  try {
+    // Payload exacto que Django espera
+    const payload = {
+      nombre: form.name,           // nombre en serializer
+      apellido: form.lastName,     // apellido en serializer
+      rol: form.role,              // rol en serializer
+      tipo_documento: form.documentType, // tipo_documento en serializer
+      documento: form.documentNumber,    // documento en serializer
+      email: form.email,
+      password: form.password,
+      confirm: form.confirm,       // confirm en serializer
+      acepta_terminos: form.terms  // acepta_terminos en serializer
+    }
+
+    const res = await api.post('/register/', payload)
+
+    console.log('Registro exitoso', res.data)
+    alert('Registro exitoso')
+    router.push('/login')
+
+  } catch (err: any) {
+    console.error('Error completo del backend:', err)
+    error.value = err.response?.data || 'Error en el registro'
+  }
+
+  emit('submit', { ...form })
 }
 </script>
+

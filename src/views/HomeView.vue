@@ -8,8 +8,8 @@
   </main>
 </template>
 <script setup>
-  // Importa el componente HeroSection para mostrar la sección principal
-  import HeroSection from "../components/HeroSection.vue";
-  // Importa el componente BenefitsSection para mostrar los beneficios
-  import BenefitsSection from "../components/BenefitsSection.vue";
+// Importa el componente HeroSection para mostrar la sección principal
+import HeroSection from '../components/HeroSection.vue'
+// Importa el componente BenefitsSection para mostrar los beneficios
+import BenefitsSection from '../components/BenefitsSection.vue'
 </script>

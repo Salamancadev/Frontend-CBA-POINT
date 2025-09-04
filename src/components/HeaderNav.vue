@@ -2,11 +2,7 @@
   <!-- Encabezado principal con alineación de elementos y fondo oscuro -->
   <header class="flex items-center bg-[#212529] p-4">
     <!-- Logo de la aplicación, imagen alineada a la izquierda -->
-    <img
-      src="/img/LOGO CBA PASS.png"
-      alt="CbaPass logo"
-      class="w-[10%] h-auto"
-    />
+    <img src="/img/LOGO CBA PASS.png" alt="CbaPass logo" class="w-[10%] h-auto" />
     <!-- Barra de navegación principal -->
     <nav class="w-full bg-[#212529]">
       <!-- Lista de enlaces de navegación alineados horizontalmente -->
@@ -47,5 +43,4 @@
     </nav>
   </header>
 </template>
-<script setup>
-</script>
+<script setup></script>

@@ -10,8 +10,8 @@
   </div>
 </template>
 <script setup>
-  // Importa el componente de navegación superior
-  import HeaderNav from "./components/HeaderNav.vue";
-  // Importa el componente de pie de página
-  import SiteFooter from "./components/SiteFooter.vue";
+// Importa el componente de navegación superior
+import HeaderNav from './components/HeaderNav.vue'
+// Importa el componente de pie de página
+import SiteFooter from './components/SiteFooter.vue'
 </script>

@@ -3,9 +3,7 @@
   <form @submit.prevent="onSubmit" class="space-y-4">
     <div>
       <!-- Etiqueta para el campo de correo -->
-      <label for="email" class="block text-sm font-medium text-white"
-        >Correo</label
-      >
+      <label for="email" class="block text-sm font-medium text-white">Correo</label>
       <!-- Input para el correo, vinculado al estado form.email -->
       <input
         id="email"
@@ -18,9 +16,7 @@
     </div>
     <div>
       <!-- Etiqueta para el campo de contraseña -->
-      <label for="password" class="block text-sm font-medium text-white"
-        >Contraseña</label
-      >
+      <label for="password" class="block text-sm font-medium text-white">Contraseña</label>
       <!-- Input para la contraseña, vinculado a form.password -->
       <input
         id="password"
@@ -43,33 +39,28 @@
         <span>Recuérdame</span>
       </label>
       <!-- Enlace para recuperar contraseña -->
-      <a href="#" class="text-sm hover:text-[#7ED957]"
-        >¿Olvidaste tu contraseña?</a
-      >
+      <a href="#" class="text-sm hover:text-[#7ED957]">¿Olvidaste tu contraseña?</a>
     </div>
     <!-- Botón para enviar el formulario -->
-    <button
-      type="submit"
-      class="w-full btn bg-[#7ED957] text-[#0b1220] hover:brightness-90"
-    >
+    <button type="submit" class="w-full btn bg-[#7ED957] text-[#0b1220] hover:brightness-90">
       Ingresar
     </button>
   </form>
 </template>
 <script setup>
 // Importa la función reactive de Vue para crear un objeto reactivo
-import { reactive } from "vue";
+import { reactive } from 'vue'
 // Define el evento personalizado "submit" que puede emitir el componente
-const emit = defineEmits(["submit"]);
+const emit = defineEmits(['submit'])
 // Estado reactivo para almacenar los datos del formulario
-const form = reactive({ email: "", password: "", remember: false });
+const form = reactive({ email: '', password: '', remember: false })
 // Función que se ejecuta al enviar el formulario
 function onSubmit() {
   // Emite el evento "submit" con los datos del formulario
-  emit("submit", { ...form });
+  emit('submit', { ...form })
   // Muestra los datos en consola (solo para desarrollo)
-  console.log("Login submit", form);
+  console.log('Login submit', form)
   // Simula el inicio de sesión con una alerta
-  alert("Inicio de sesión simulado.");
+  alert('Inicio de sesión simulado.')
 }
 </script>

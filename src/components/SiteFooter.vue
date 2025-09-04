@@ -1,17 +1,13 @@
 <template>
   <!-- Pie de página principal con fondo oscuro y distribución en cuadrícula -->
-  <footer
-    class="grid text-[aliceblue] grid-cols-3 grid-rows-2 font-sans p-[4rem] bg-[#1B1E21]"
-  >
+  <footer class="grid text-[aliceblue] grid-cols-3 grid-rows-2 font-sans p-[4rem] bg-[#1B1E21]">
     <!-- Sección de contacto con email y teléfono -->
     <section>
       <h4 class="font-semibold mb-2">Contacto</h4>
       <p>
         Email:
         <!-- Enlace para enviar correo electrónico -->
-        <a
-          href="mailto:proyectocbapass@gmail.com"
-          class="underline hover:text-[#7ED957]"
+        <a href="mailto:proyectocbapass@gmail.com" class="underline hover:text-[#7ED957]"
           >proyectocbapass@gmail.com</a
         >
       </p>
@@ -78,8 +74,7 @@
     </p>
   </footer>
 </template>
-<script setup>
-</script>
+<script setup></script>
 
 <style scoped>
 /* Estilos específicos para el pie de página */

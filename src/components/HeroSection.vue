@@ -17,9 +17,9 @@
     <br /><br />
     <!-- Descripción del sistema y sus beneficios, con palabras resaltadas -->
     <p class="text-[1.5rem] w-[45%] font-sans text-[aliceblue]">
-      <strong>Cba<span class="text-[#7ED957]">Point</span></strong> es un sistema
-      de <span class="text-[#24DEFF] font-bold">gestion de asistencias</span> para
-      instructores SENA y personal administrativo que facilita la
+      <strong>Cba<span class="text-[#7ED957]">Point</span></strong> es un sistema de
+      <span class="text-[#24DEFF] font-bold">gestion de asistencias</span> para instructores SENA y
+      personal administrativo que facilita la
       <span class="text-[#7ED957] font-bold">gestión</span> de aprendices en la institución.
     </p>
     <br /><br /><br />
@@ -32,8 +32,7 @@
     >
   </section>
 </template>
-<script setup>
-</script>
+<script setup></script>
 
 <style scoped>
 /* Estilos adicionales para el componente, si son necesarios */

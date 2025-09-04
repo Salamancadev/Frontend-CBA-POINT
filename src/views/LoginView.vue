@@ -1,8 +1,6 @@
 <template>
   <!-- Sección principal centrada con fondo oscuro y padding -->
-  <section
-    class="min-h-[70vh] bg-[#212529] flex items-center justify-center p-6"
-  >
+  <section class="min-h-[70vh] bg-[#212529] flex items-center justify-center p-6">
     <!-- Contenedor del formulario con estilos y sombra -->
     <div class="w-full max-w-md rounded-2xl bg-[#1c2024] p-6 shadow">
       <!-- Título de la página de login -->
@@ -16,19 +14,17 @@
       <!-- Enlace para ir a la página de registro si no tiene cuenta -->
       <p class="mt-6 text-sm text-gray-300">
         ¿No tienes cuenta?
-        <RouterLink to="/register" class="font-medium hover:text-[#7ED957]"
-          >Regístrate</RouterLink
-        >
+        <RouterLink to="/register" class="font-medium hover:text-[#7ED957]">Regístrate</RouterLink>
       </p>
     </div>
   </section>
 </template>
 <script setup>
-  // Importa el componente LoginForm para mostrar el formulario de login
-  import LoginForm from "@/components/Auth/LoginForm.vue";
-  // Función que maneja el evento submit del formulario
-  function handleSubmit(payload) {
-    // Muestra el payload recibido en consola (solo para desarrollo)
-    console.log("login payload", payload);
-  }
+// Importa el componente LoginForm para mostrar el formulario de login
+import LoginForm from '@/components/Auth/LoginForm.vue'
+// Función que maneja el evento submit del formulario
+function handleSubmit(payload) {
+  // Muestra el payload recibido en consola (solo para desarrollo)
+  console.log('login payload', payload)
+}
 </script>

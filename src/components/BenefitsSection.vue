@@ -30,7 +30,10 @@
       <p
         class="relative m-[5%] p-[5%] text-[aliceblue] font-sans bg-[#343A40] rounded-[15px] text-[2em]"
       >
-        Cba<span class="text-[#7ED957]">Point</span> te ayudará llevar el control de asistencias de aprendices por medio de qr que generan reportes automaticos así dejando de lado el uso de papel y contribuyendo al cuidado del medio ambiente, ademas gestionar las clases de induccion para nuevos aprendices con un tour virtual.
+        Cba<span class="text-[#7ED957]">Point</span> te ayudará llevar el control de asistencias de
+        aprendices por medio de qr que generan reportes automaticos así dejando de lado el uso de
+        papel y contribuyendo al cuidado del medio ambiente, ademas gestionar las clases de
+        induccion para nuevos aprendices con un tour virtual.
       </p>
     </article>
   </section>
