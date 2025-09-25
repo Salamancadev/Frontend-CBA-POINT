@@ -1,3 +1,5 @@
+
+
 <template>
   <!-- Formulario de login -->
   <form @submit.prevent="onSubmit" class="space-y-4">
@@ -34,6 +36,7 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router' // Asegúrate de que 'vue-router' esté correctamente instalado
 import axios from 'axios'
+import { useUserStore } from '../../stores/userStore'
 
 interface LoginFormData {
   documentNumber: string
@@ -64,34 +67,27 @@ async function onSubmit() {
 
     const res = await api.post('/login/', payload)
 
-    // Guardar los tokens en el localStorage
+    // Guardar tokens
     localStorage.setItem('access_token', res.data.access)
     localStorage.setItem('refresh_token', res.data.refresh)
 
-    console.log('Login exitoso', res.data)
-    alert('Login exitoso')
+    // Setear el usuario en el store
+    const userStore = useUserStore()
+    userStore.setUser(res.data.role)
 
-    // Verifica si el router está disponible y si el rol está siendo recibido
+    // Redirección según el rol
     const userRole = res.data.role
-    console.log('User role:', userRole) // Verifica si el rol se está recibiendo
 
-    // Redirigir a la vista correspondiente según el rol
     if (userRole === 'Aprendiz') {
-      console.log('Redirigiendo a Dashboard de Aprendiz...')
       router.push({ name: 'dashboard-aprendiz' })
     } else if (userRole === 'Instructor') {
-      console.log('Redirigiendo a Dashboard de Instructor...')
       router.push({ name: 'dashboard-instructor' })
     } else if (userRole === 'Administrador') {
-      console.log('Redirigiendo a Dashboard de Administrador...')
       router.push({ name: 'dashboard-admin' })
     }
   } catch (err: any) {
     console.error('Error completo del backend:', err)
     error.value = err.response?.data?.error || 'Error en el login'
   }
-
-  const userStore = useUserStore()
-  userStore.setUser(res.data.role) // Aquí se setea el rol al iniciar sesión
 }
 </script>
