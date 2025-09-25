@@ -125,7 +125,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { User } from '../types/User.ts'
+import { User } from '../types/User.t'
 
 const user = ref<User | null>(null)
 const todayAttendance = ref(12)
