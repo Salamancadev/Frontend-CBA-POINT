@@ -2,7 +2,11 @@
   <div class="max-w-3xl mx-auto py-8 px-4">
     <!-- Header -->
     <div class="text-center mb-8">
-      <h1 class="text-4xl font-extrabold text-white bg-gradient-to-r from-blue-700 via-purple-700 to-blue-700 inline-block px-6 py-2 rounded-xl shadow-lg mb-2 animate-fade-in">Escáner QR</h1>
+      <h1
+        class="text-4xl font-extrabold text-white bg-gradient-to-r from-blue-700 via-purple-700 to-blue-700 inline-block px-6 py-2 rounded-xl shadow-lg mb-2 animate-fade-in"
+      >
+        Escáner QR
+      </h1>
       <p class="text-lg text-gray-300">Registra tu asistencia escaneando el código QR</p>
     </div>
 
@@ -13,7 +17,9 @@
         <div v-if="!scannerActive" class="text-center py-10">
           <div class="text-6xl mb-4 animate-bounce">📱</div>
           <h3 class="text-2xl font-bold text-blue-700 mb-2">Activar Escáner</h3>
-          <p class="text-gray-500 mb-6">Presiona el botón para activar la cámara y escanear códigos QR</p>
+          <p class="text-gray-500 mb-6">
+            Presiona el botón para activar la cámara y escanear códigos QR
+          </p>
           <button
             @click="startScanner"
             class="bg-gradient-to-r from-blue-700 to-purple-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:scale-105 transition disabled:opacity-50"
@@ -27,17 +33,37 @@
         <!-- Scanner Active -->
         <div v-else class="text-center">
           <div class="relative w-full max-w-md mx-auto mb-6 rounded-xl overflow-hidden shadow-lg">
-            <video ref="videoElement" autoplay muted playsinline class="w-full h-72 object-cover rounded-xl border-4 border-blue-700"></video>
+            <video
+              ref="videoElement"
+              autoplay
+              muted
+              playsinline
+              class="w-full h-72 object-cover rounded-xl border-4 border-blue-700"
+            ></video>
             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div class="w-40 h-40 border-4 border-blue-700 rounded-xl relative">
-                <div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-blue-700 rounded-tl-xl"></div>
-                <div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-blue-700 rounded-br-xl"></div>
+                <div
+                  class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-blue-700 rounded-tl-xl"
+                ></div>
+                <div
+                  class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-blue-700 rounded-br-xl"
+                ></div>
               </div>
             </div>
           </div>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <button @click="stopScanner" class="bg-red-600 text-white font-bold px-6 py-2 rounded-lg shadow hover:scale-105 transition">Detener</button>
-            <button @click="manualEntry" class="bg-yellow-500 text-white font-bold px-6 py-2 rounded-lg shadow hover:scale-105 transition">Entrada Manual</button>
+            <button
+              @click="stopScanner"
+              class="bg-red-600 text-white font-bold px-6 py-2 rounded-lg shadow hover:scale-105 transition"
+            >
+              Detener
+            </button>
+            <button
+              @click="manualEntry"
+              class="bg-yellow-500 text-white font-bold px-6 py-2 rounded-lg shadow hover:scale-105 transition"
+            >
+              Entrada Manual
+            </button>
           </div>
         </div>
 
@@ -45,27 +71,41 @@
         <div
           v-if="scanResult"
           class="flex items-center gap-4 px-6 py-4 rounded-xl mt-8"
-          :class="scanResult.success ? 'bg-green-100 border border-green-300' : 'bg-red-100 border border-red-300'"
+          :class="
+            scanResult.success
+              ? 'bg-green-100 border border-green-300'
+              : 'bg-red-100 border border-red-300'
+          "
         >
           <div class="text-3xl">
             {{ scanResult.success ? '✅' : '❌' }}
           </div>
           <div>
-            <h4 class="font-bold text-lg text-blue-700 mb-1">{{ scanResult.success ? 'Asistencia Registrada' : 'Error en el Escaneo' }}</h4>
+            <h4 class="font-bold text-lg text-blue-700 mb-1">
+              {{ scanResult.success ? 'Asistencia Registrada' : 'Error en el Escaneo' }}
+            </h4>
             <p class="text-gray-600 mb-1">{{ scanResult.message }}</p>
-            <small v-if="scanResult.success" class="text-gray-400">{{ formatTime(new Date()) }}</small>
+            <small v-if="scanResult.success" class="text-gray-400">{{
+              formatTime(new Date())
+            }}</small>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Manual Entry Modal -->
-    <div v-if="showManualModal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50" @click="closeManualModal">
+    <div
+      v-if="showManualModal"
+      class="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+      @click="closeManualModal"
+    >
       <div class="bg-white rounded-2xl p-8 w-full max-w-md shadow-xl" @click.stop>
         <h3 class="text-2xl font-bold text-blue-700 mb-6 text-center">Entrada Manual de Código</h3>
         <form @submit.prevent="processManualCode">
           <div class="mb-6">
-            <label for="manualCode" class="block text-blue-700 font-semibold mb-2">Código del Evento</label>
+            <label for="manualCode" class="block text-blue-700 font-semibold mb-2"
+              >Código del Evento</label
+            >
             <input
               id="manualCode"
               v-model="manualCode"
@@ -76,8 +116,19 @@
             />
           </div>
           <div class="flex gap-4 justify-end">
-            <button type="button" @click="closeManualModal" class="bg-gray-500 text-white px-6 py-2 rounded-lg font-semibold hover:scale-105 transition">Cancelar</button>
-            <button type="submit" class="bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold hover:scale-105 transition">Registrar</button>
+            <button
+              type="button"
+              @click="closeManualModal"
+              class="bg-gray-500 text-white px-6 py-2 rounded-lg font-semibold hover:scale-105 transition"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              class="bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold hover:scale-105 transition"
+            >
+              Registrar
+            </button>
           </div>
         </form>
       </div>
@@ -87,7 +138,11 @@
     <div class="bg-white/90 backdrop-blur-lg rounded-xl p-8 shadow-xl">
       <h2 class="text-2xl font-bold text-blue-700 mb-6">Escaneos Recientes</h2>
       <div class="flex flex-col gap-4">
-        <div v-for="scan in recentScans" :key="scan.id" class="flex items-center gap-4 p-4 rounded-lg bg-blue-50 hover:bg-blue-100 transition">
+        <div
+          v-for="scan in recentScans"
+          :key="scan.id"
+          class="flex items-center gap-4 p-4 rounded-lg bg-blue-50 hover:bg-blue-100 transition"
+        >
           <div class="text-2xl w-12 text-center">{{ scan.success ? '✅' : '❌' }}</div>
           <div class="flex-1">
             <h4 class="font-bold text-blue-700 mb-1">{{ scan.eventName }}</h4>

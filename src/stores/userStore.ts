@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useUserStore = defineStore('userStore', {
   state: () => ({
     isLoggedIn: false, // Determina si el usuario está logueado
-    role: '',           // Guardar el rol del usuario
+    role: '', // Guardar el rol del usuario
   }),
 
   actions: {
@@ -15,5 +15,5 @@ export const useUserStore = defineStore('userStore', {
       this.role = ''
       this.isLoggedIn = false
     },
-  }
+  },
 })

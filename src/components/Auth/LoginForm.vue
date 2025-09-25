@@ -32,7 +32,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'  // Asegúrate de que 'vue-router' esté correctamente instalado
+import { useRouter } from 'vue-router' // Asegúrate de que 'vue-router' esté correctamente instalado
 import axios from 'axios'
 
 interface LoginFormData {
@@ -46,11 +46,11 @@ const form = reactive<LoginFormData>({
 })
 
 const error = ref('')
-const router = useRouter()  // Instancia el router correctamente
+const router = useRouter() // Instancia el router correctamente
 
 const api = axios.create({
   baseURL: 'http://127.0.0.1:8000/api',
-  headers: { 'Content-Type': 'application/json' }
+  headers: { 'Content-Type': 'application/json' },
 })
 
 async function onSubmit() {
@@ -59,7 +59,7 @@ async function onSubmit() {
   try {
     const payload = {
       documento: form.documentNumber,
-      password: form.password
+      password: form.password,
     }
 
     const res = await api.post('/login/', payload)
@@ -73,26 +73,25 @@ async function onSubmit() {
 
     // Verifica si el router está disponible y si el rol está siendo recibido
     const userRole = res.data.role
-    console.log("User role:", userRole)  // Verifica si el rol se está recibiendo
+    console.log('User role:', userRole) // Verifica si el rol se está recibiendo
 
     // Redirigir a la vista correspondiente según el rol
     if (userRole === 'Aprendiz') {
-      console.log("Redirigiendo a Dashboard de Aprendiz...")
+      console.log('Redirigiendo a Dashboard de Aprendiz...')
       router.push({ name: 'dashboard-aprendiz' })
     } else if (userRole === 'Instructor') {
-      console.log("Redirigiendo a Dashboard de Instructor...")
+      console.log('Redirigiendo a Dashboard de Instructor...')
       router.push({ name: 'dashboard-instructor' })
     } else if (userRole === 'Administrador') {
-      console.log("Redirigiendo a Dashboard de Administrador...")
+      console.log('Redirigiendo a Dashboard de Administrador...')
       router.push({ name: 'dashboard-admin' })
     }
-
   } catch (err: any) {
     console.error('Error completo del backend:', err)
     error.value = err.response?.data?.error || 'Error en el login'
   }
 
   const userStore = useUserStore()
-userStore.setUser(res.data.role)  // Aquí se setea el rol al iniciar sesión
+  userStore.setUser(res.data.role) // Aquí se setea el rol al iniciar sesión
 }
 </script>

@@ -45,7 +45,9 @@
     <!-- Tipo y número de documento -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div>
-        <label for="documentType" class="block text-sm font-medium text-white">Tipo de documento</label>
+        <label for="documentType" class="block text-sm font-medium text-white"
+          >Tipo de documento</label
+        >
         <select
           id="documentType"
           v-model="form.documentType"
@@ -59,7 +61,9 @@
         </select>
       </div>
       <div>
-        <label for="documentNumber" class="block text-sm font-medium text-white">Número de documento</label>
+        <label for="documentNumber" class="block text-sm font-medium text-white"
+          >Número de documento</label
+        >
         <input
           id="documentNumber"
           v-model="form.documentNumber"
@@ -99,7 +103,9 @@
         />
       </div>
       <div>
-        <label for="confirm" class="block text-sm font-medium text-white">Confirmar contraseña</label>
+        <label for="confirm" class="block text-sm font-medium text-white"
+          >Confirmar contraseña</label
+        >
         <input
           id="confirm"
           v-model="form.confirm"
@@ -172,8 +178,8 @@ const router = useRouter()
 const api = axios.create({
   baseURL: 'http://127.0.0.1:8000/api',
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 })
 
 async function onSubmit() {
@@ -187,15 +193,15 @@ async function onSubmit() {
   try {
     // Payload exacto que Django espera
     const payload = {
-      nombre: form.name,           // nombre en serializer
-      apellido: form.lastName,     // apellido en serializer
-      rol: form.role,              // rol en serializer
+      nombre: form.name, // nombre en serializer
+      apellido: form.lastName, // apellido en serializer
+      rol: form.role, // rol en serializer
       tipo_documento: form.documentType, // tipo_documento en serializer
-      documento: form.documentNumber,    // documento en serializer
+      documento: form.documentNumber, // documento en serializer
       email: form.email,
       password: form.password,
-      confirm: form.confirm,       // confirm en serializer
-      acepta_terminos: form.terms  // acepta_terminos en serializer
+      confirm: form.confirm, // confirm en serializer
+      acepta_terminos: form.terms, // acepta_terminos en serializer
     }
 
     const res = await api.post('/register/', payload)
@@ -203,7 +209,6 @@ async function onSubmit() {
     console.log('Registro exitoso', res.data)
     alert('Registro exitoso')
     router.push('/login')
-
   } catch (err: any) {
     console.error('Error completo del backend:', err)
     error.value = err.response?.data || 'Error en el registro'
@@ -212,4 +217,3 @@ async function onSubmit() {
   emit('submit', { ...form })
 }
 </script>
-
