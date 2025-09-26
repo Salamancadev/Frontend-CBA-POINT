@@ -34,7 +34,7 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router' // Asegúrate de que 'vue-router' esté correctamente instalado
 import axios from 'axios'
-import { useUserStore } from '../../stores/userStore'
+import { useUserStore } from '../../store/userStore'
 
 interface LoginFormData {
   documentNumber: string

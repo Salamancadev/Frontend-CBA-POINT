@@ -9,7 +9,7 @@ const DashboardInstructor = () => import('../views/Instructor/DashboardInstructo
 const DashboardAdmin = () => import('../views/Admin/DashboardAdmin.vue')
 
 // Asegúrate de tener la store configurada correctamente para obtener el rol del usuario
-import { useUserStore } from '../stores/userStore'
+import { useUserStore } from '../store/userStore'
 
 const routes = [
   { path: '/', name: 'home', component: Home },
