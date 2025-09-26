@@ -3,7 +3,9 @@
     <!-- Header -->
     <div class="mb-8">
       <h1 class="text-4xl font-bold mb-1">Dashboard</h1>
-      <p class="text-lg text-gray-500">Bienvenido, {{ user?.nombre }} {{ user?.apellido }}</p>
+      <p class="text-lg text-gray-500">
+        Bienvenido, {{ user?.name || 'Usuario' }} {{ user?.lastName || '' }}
+      </p>
     </div>
 
     <!-- Stats Grid -->
@@ -51,9 +53,10 @@
           <p class="text-sm">Registrar asistencia con código QR</p>
         </router-link>
 
+        <!-- Acciones solo para aprendices -->
         <router-link
-          v-if="user?.rol === 'aprendiz'"
-          to="/student-qr"
+          v-if="user?.role === 'Aprendiz'"
+          to="/generar-qr"
           class="bg-purple-800 text-white text-center p-4 rounded-xl shadow hover:scale-105 transition no-underline flex flex-col items-center"
         >
           <div class="text-3xl mb-2">🎯</div>
@@ -62,8 +65,8 @@
         </router-link>
 
         <router-link
-          v-if="user?.rol === 'aprendiz'"
-          to="/induction"
+          v-if="user?.role === 'Aprendiz'"
+          to="/consultar-eventos"
           class="bg-blue-700 text-white text-center p-4 rounded-xl shadow hover:scale-105 transition no-underline flex flex-col items-center"
         >
           <div class="text-3xl mb-2">🎓</div>
@@ -80,8 +83,9 @@
           <p class="text-sm">Explorar el campus CBA</p>
         </router-link>
 
+        <!-- Acciones solo para instructores y administradores -->
         <router-link
-          v-if="user?.rol !== 'aprendiz'"
+          v-if="user?.role !== 'Aprendiz'"
           to="/qr-generator"
           class="bg-blue-700 text-white text-center p-4 rounded-xl shadow hover:scale-105 transition no-underline flex flex-col items-center"
         >
@@ -91,7 +95,7 @@
         </router-link>
 
         <router-link
-          v-if="user?.rol !== 'aprendiz'"
+          v-if="user?.role !== 'Aprendiz'"
           to="/reports"
           class="bg-purple-800 text-white text-center p-4 rounded-xl shadow hover:scale-105 transition no-underline flex flex-col items-center"
         >
@@ -124,8 +128,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { User } from '../types/User.t'
+import { ref, onMounted, watchEffect } from 'vue'
+import type { User } from '../types/User'
 
 const user = ref<User | null>(null)
 const todayAttendance = ref(12)
@@ -157,10 +161,17 @@ const recentActivities = ref([
   },
 ])
 
-onMounted(() => {
+// Cargar usuario desde localStorage
+const loadUser = () => {
   const userData = localStorage.getItem('cba_user')
-  if (userData) user.value = JSON.parse(userData)
-})
+  user.value = userData ? JSON.parse(userData) : null
+}
+
+// Ejecutar al montar
+onMounted(loadUser)
+
+// Actualizar automáticamente si cambia localStorage
+watchEffect(loadUser)
 
 const formatTime = (timestamp: Date) => {
   const now = new Date()
