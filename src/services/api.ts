@@ -6,7 +6,6 @@ import type { AxiosInstance } from 'axios'
 //   baseURL: 'http://localhost:8000/api',
 // })
 
-
 // Detectar si estamos en desarrollo o producción
 const isDevelopment = import.meta.env.MODE === 'development'
 const myBaseUrl = isDevelopment

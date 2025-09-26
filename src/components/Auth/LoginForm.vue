@@ -1,5 +1,3 @@
-
-
 <template>
   <!-- Formulario de login -->
   <form @submit.prevent="onSubmit" class="space-y-4">

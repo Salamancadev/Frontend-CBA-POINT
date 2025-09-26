@@ -163,7 +163,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import type { User } from '../types'
+import type { User } from '../types/User'
 
 const videoElement = ref<HTMLVideoElement | null>(null)
 const scannerActive = ref(false)
