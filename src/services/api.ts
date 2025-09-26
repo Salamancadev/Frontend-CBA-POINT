@@ -1,28 +1,29 @@
 import axios from 'axios'
 import type { AxiosInstance } from 'axios'
 
-// // Crear instancia de Axios
-// export const api: AxiosInstance = axios.create({
-//   baseURL: 'http://localhost:8000/api',
-// })
-
 // Detectar si estamos en desarrollo o producción
 const isDevelopment = import.meta.env.MODE === 'development'
-const myBaseUrl = isDevelopment
+const baseUrl = isDevelopment
   ? import.meta.env.VITE_API_BASE_URL_LOCAL
   : import.meta.env.VITE_API_BASE_URL_DEPLOY
 
 // Crear instancia de Axios
 export const api: AxiosInstance = axios.create({
-  baseURL: myBaseUrl,
+  baseURL: baseUrl,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 })
 
-// Funciones para la API
+// Ejemplo de funciones de API
 export const apiService = {
-  getSomething() {
-    return api.get('/something')
+  registerUser(data: any) {
+    return api.post('/register/', data) // solo '/register/' porque el baseURL ya tiene /api
   },
-  postSomething(data: any) {
-    return api.post('/something', data)
+  loginUser(data: any) {
+    return api.post('/login/', data)
+  },
+  getProfile() {
+    return api.get('/perfil-usuario/')
   },
 }
