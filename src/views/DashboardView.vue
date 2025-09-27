@@ -53,7 +53,7 @@
         </router-link>
 
         <router-link
-          v-if="user?.rol === 'aprendiz'"
+          v-if="user?.rol === 'Aprendiz'"
           to="/dash-Student"
           class="text-center p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col items-center"
           style="background-color: #7ED957; color: #212529;"
@@ -64,7 +64,7 @@
         </router-link>
 
         <router-link
-          v-if="user?.rol === 'aprendiz'"
+          v-if="user?.rol === 'Aprendiz'"
           to="/dash-mapa"
           class="text-center p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col items-center"
           style="background-color: #7ED957; color: #212529;"
@@ -85,7 +85,7 @@
         </router-link>
 
         <router-link
-          v-if="user?.rol !== 'aprendiz'"
+          v-if="user?.rol !== 'Aprendiz'"
           to="/dash-Student"
           class="text-center p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col items-center"
           style="background-color: #7ED957; color: #212529;"
@@ -96,7 +96,7 @@
         </router-link>
 
         <router-link
-          v-if="user?.rol !== 'aprendiz'"
+          v-if="user?.rol !== 'Aprendiz'"
           to="/dash-Reportes"
           class="text-center p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col items-center"
           style="background-color: #7ED957; color: #212529;"

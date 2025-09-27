@@ -15,7 +15,7 @@
               <button @click="toggleSatellite" class="px-4 py-2 rounded-lg font-semibold shadow" style="background-color: #212529; color: #7ED957; border: 1px solid #7ED957;">🛰️ Satélite</button>
             </div>
           </div>
-          
+
           <div ref="mapContainer" class="map-display flex-1 relative overflow-hidden">
             <div class="mock-map w-full h-full relative">
               <div class="map-background absolute inset-0" style="background: linear-gradient(135deg, #212529 0%, #212529 100%);"></div>
@@ -42,11 +42,11 @@
               <p class="location-type text-sm" style="color: #f8f9fa;">{{ selectedLocation.tipo }}</p>
             </div>
           </div>
-          
+
           <div class="location-description mb-6">
             <p class="text-base" style="color: #fff;">{{ selectedLocation.descripcion }}</p>
           </div>
-          
+
           <div class="location-details mb-6">
             <div class="detail-item flex justify-between py-2 border-b border-[#7ED957] text-sm" style="color: #7ED957;">
               <span>Capacidad:</span> <span style="color: #fff;">{{ selectedLocation.capacidad }}</span>
@@ -58,7 +58,7 @@
               <span>Acceso:</span> <span style="color: #fff;">{{ selectedLocation.acceso }}</span>
             </div>
           </div>
-          
+
           <div class="location-actions flex flex-col gap-4 mt-auto">
             <button @click="navigateToLocation" class="px-4 py-2 rounded-lg font-semibold shadow" style="background-color: #7ED957; color: #212529;">🧭 Cómo llegar</button>
             <button @click="checkInLocation" class="px-4 py-2 rounded-lg font-semibold shadow" style="background-color: #212529; color: #7ED957; border: 1px solid #7ED957;">📍 Check-in aquí</button>
@@ -176,7 +176,7 @@ const campusLocations = ref<CampusLocation[]>([
   {
     id: '3',
     nombre: 'Biblioteca',
-    descripción: 'Centro de recursos bibliográficos y digitales especializados en biotecnología.',
+    descripcion: 'Centro de recursos bibliográficos y digitales especializados en biotecnología.',
     tipo: 'Biblioteca',
     icon: '📚',
     position: { x: 40, y: 50 },
@@ -381,7 +381,7 @@ const startNavigation = () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: 
+  background-image:
     radial-gradient(circle at 20% 30%, rgba(76, 175, 80, 0.3) 0%, transparent 50%),
     radial-gradient(circle at 80% 70%, rgba(33, 150, 243, 0.3) 0%, transparent 50%),
     radial-gradient(circle at 60% 20%, rgba(255, 193, 7, 0.3) 0%, transparent 50%);
@@ -706,11 +706,11 @@ const startNavigation = () => {
   .tour-content {
     grid-template-columns: 1fr;
   }
-  
+
   .map-container {
     height: 400px;
   }
-  
+
   .tour-sidebar {
     height: auto;
   }
@@ -720,16 +720,16 @@ const startNavigation = () => {
   .map-controls {
     flex-direction: column;
   }
-  
+
   .control-btn {
     font-size: 0.8rem;
     padding: 0.4rem 0.8rem;
   }
-  
+
   .stats-card {
     grid-template-columns: 1fr;
   }
-  
+
   .modal-actions {
     flex-direction: column;
   }
