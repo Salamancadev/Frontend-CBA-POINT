@@ -1,63 +1,62 @@
 <template>
-  <div class="bg-gray-100 min-h-screen p-5 text-gray-800 font-sans">
+  <div class="min-h-screen p-6 font-sans" style="background-color: #212529; color: #f8f9fa;">
     <!-- Header -->
-    <div class="mb-8">
-      <h1 class="text-4xl font-bold mb-1">Dashboard</h1>
-      <p class="text-lg text-gray-500">
-        Bienvenido, {{ user?.name || 'Usuario' }} {{ user?.lastName || '' }}
-      </p>
+    <div class="mb-10">
+      <h1 class="text-5xl font-extrabold mb-2 drop-shadow" style="color: #7ED957;">Dashboard</h1>
+      <p class="text-lg">Bienvenido, <span class="font-semibold" style="color: #7ED957;">{{ user?.nombre }} {{ user?.apellido }}</span></p>
     </div>
 
     <!-- Stats Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 my-8">
-      <div class="bg-white rounded-xl p-4 flex items-center shadow hover:-translate-y-1 transition">
-        <div class="text-3xl mr-4">📊</div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 my-10">
+      <div class="rounded-2xl p-6 flex items-center shadow-lg hover:-translate-y-1 hover:shadow-xl transition-transform duration-200" style="background-color: #212529; border: 2px solid #7ED957;">
+        <div class="text-3xl mr-4" style="color: #7ED957;">📊</div>
         <div>
-          <h3 class="text-sm text-gray-400">Asistencias Hoy</h3>
-          <p class="text-2xl font-bold text-gray-700">{{ todayAttendance }}</p>
+          <h3 class="text-base font-medium" style="color: #7ED957;">Asistencias Hoy</h3>
+          <p class="text-3xl font-extrabold" style="color: #7ED957;">{{ todayAttendance }}</p>
         </div>
       </div>
-      <div class="bg-white rounded-xl p-4 flex items-center shadow hover:-translate-y-1 transition">
-        <div class="text-3xl mr-4">📅</div>
+      <div class="rounded-2xl p-6 flex items-center shadow-lg hover:-translate-y-1 hover:shadow-xl transition-transform duration-200" style="background-color: #212529; border: 2px solid #7ED957;">
+        <div class="text-3xl mr-4" style="color: #7ED957;">📅</div>
         <div>
-          <h3 class="text-sm text-gray-400">Eventos Activos</h3>
-          <p class="text-2xl font-bold text-gray-700">{{ activeEvents }}</p>
+          <h3 class="text-base font-medium" style="color: #7ED957;">Eventos Activos</h3>
+          <p class="text-3xl font-extrabold" style="color: #7ED957;">{{ activeEvents }}</p>
         </div>
       </div>
-      <div class="bg-white rounded-xl p-4 flex items-center shadow hover:-translate-y-1 transition">
-        <div class="text-3xl mr-4">🎯</div>
+      <div class="rounded-2xl p-6 flex items-center shadow-lg hover:-translate-y-1 hover:shadow-xl transition-transform duration-200" style="background-color: #212529; border: 2px solid #7ED957;">
+        <div class="text-3xl mr-4" style="color: #7ED957;">🎯</div>
         <div>
-          <h3 class="text-sm text-gray-400">Porcentaje Asistencia</h3>
-          <p class="text-2xl font-bold text-gray-700">{{ attendancePercentage }}%</p>
+          <h3 class="text-base font-medium" style="color: #7ED957;">Porcentaje Asistencia</h3>
+          <p class="text-3xl font-extrabold" style="color: #7ED957;">{{ attendancePercentage }}%</p>
         </div>
       </div>
-      <div class="bg-white rounded-xl p-4 flex items-center shadow hover:-translate-y-1 transition">
-        <div class="text-3xl mr-4">👥</div>
+      <div class="rounded-2xl p-6 flex items-center shadow-lg hover:-translate-y-1 hover:shadow-xl transition-transform duration-200" style="background-color: #212529; border: 2px solid #7ED957;">
+        <div class="text-3xl mr-4" style="color: #7ED957;">👥</div>
         <div>
-          <h3 class="text-sm text-gray-400">Total Usuarios</h3>
-          <p class="text-2xl font-bold text-gray-700">{{ totalUsers }}</p>
+          <h3 class="text-base font-medium" style="color: #7ED957;">Total Usuarios</h3>
+          <p class="text-3xl font-extrabold" style="color: #7ED957;">{{ totalUsers }}</p>
         </div>
       </div>
     </div>
 
     <!-- Quick Actions -->
-    <div class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">Acciones Rápidas</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+    <div class="mb-12">
+      <h2 class="text-3xl font-bold mb-6" style="color: #7ED957;">Acciones Rápidas</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         <router-link
-          to="/escaner"
-          class="bg-blue-700 text-white text-center p-4 rounded-xl shadow hover:scale-105 transition no-underline flex flex-col items-center"
+          to="/dash-Qr"
+          class="text-center p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col items-center"
+          style="background-color: #7ED957; color: #212529;"
         >
           <div class="text-3xl mb-2">📱</div>
           <h3 class="text-lg font-bold">Escanear QR</h3>
           <p class="text-sm">Registrar asistencia con código QR</p>
         </router-link>
 
-        <!-- Acciones solo para aprendices -->
         <router-link
-          v-if="user?.role === 'Aprendiz'"
-          to="/generar-qr"
-          class="bg-purple-800 text-white text-center p-4 rounded-xl shadow hover:scale-105 transition no-underline flex flex-col items-center"
+          v-if="user?.rol === 'aprendiz'"
+          to="/dash-Student"
+          class="text-center p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col items-center"
+          style="background-color: #7ED957; color: #212529;"
         >
           <div class="text-3xl mb-2">🎯</div>
           <h3 class="text-lg font-bold">Mi QR Personal</h3>
@@ -65,9 +64,10 @@
         </router-link>
 
         <router-link
-          v-if="user?.role === 'Aprendiz'"
-          to="/consultar-eventos"
-          class="bg-blue-700 text-white text-center p-4 rounded-xl shadow hover:scale-105 transition no-underline flex flex-col items-center"
+          v-if="user?.rol === 'aprendiz'"
+          to="/dash-mapa"
+          class="text-center p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col items-center"
+          style="background-color: #7ED957; color: #212529;"
         >
           <div class="text-3xl mb-2">🎓</div>
           <h3 class="text-lg font-bold">Semana Inducción</h3>
@@ -75,19 +75,20 @@
         </router-link>
 
         <router-link
-          to="/campus-tour"
-          class="bg-purple-800 text-white text-center p-4 rounded-xl shadow hover:scale-105 transition no-underline flex flex-col items-center"
+          to="/dash-mapa"
+          class="text-center p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col items-center"
+          style="background-color: #7ED957; color: #212529;"
         >
           <div class="text-3xl mb-2">🗺</div>
           <h3 class="text-lg font-bold">Recorrido Virtual</h3>
           <p class="text-sm">Explorar el campus CBA</p>
         </router-link>
 
-        <!-- Acciones solo para instructores y administradores -->
         <router-link
-          v-if="user?.role !== 'Aprendiz'"
-          to="/qr-generator"
-          class="bg-blue-700 text-white text-center p-4 rounded-xl shadow hover:scale-105 transition no-underline flex flex-col items-center"
+          v-if="user?.rol !== 'aprendiz'"
+          to="/dash-Student"
+          class="text-center p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col items-center"
+          style="background-color: #7ED957; color: #212529;"
         >
           <div class="text-3xl mb-2">🎯</div>
           <h3 class="text-lg font-bold">Generar QR</h3>
@@ -95,9 +96,10 @@
         </router-link>
 
         <router-link
-          v-if="user?.role !== 'Aprendiz'"
-          to="/reports"
-          class="bg-purple-800 text-white text-center p-4 rounded-xl shadow hover:scale-105 transition no-underline flex flex-col items-center"
+          v-if="user?.rol !== 'aprendiz'"
+          to="/dash-Reportes"
+          class="text-center p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col items-center"
+          style="background-color: #7ED957; color: #212529;"
         >
           <div class="text-3xl mb-2">📈</div>
           <h3 class="text-lg font-bold">Reportes</h3>
@@ -108,24 +110,26 @@
 
     <!-- Recent Activity -->
     <div>
-      <h2 class="text-2xl font-semibold mb-4">Actividad Reciente</h2>
-      <div class="flex flex-col gap-3">
+      <h2 class="text-3xl font-bold mb-6" style="color: #7ED957;">Actividad Reciente</h2>
+      <div class="flex flex-col gap-6">
         <div
           v-for="activity in recentActivities"
           :key="activity.id"
-          class="bg-white p-3 rounded-xl flex items-center shadow"
+          class="p-5 rounded-2xl flex items-center shadow-lg hover:shadow-xl transition-shadow duration-200"
+          style="background-color: #212529; border: 2px solid #7ED957;"
         >
-          <div class="text-2xl mr-3">{{ activity.icon }}</div>
+          <div class="text-2xl mr-3" style="color: #7ED957;">{{ activity.icon }}</div>
           <div>
-            <h4 class="font-bold">{{ activity.title }}</h4>
-            <p class="text-sm text-gray-500">{{ activity.description }}</p>
-            <span class="text-xs text-gray-400">{{ formatTime(activity.timestamp) }}</span>
+            <h4 class="font-bold text-lg mb-1" style="color: #7ED957;">{{ activity.title }}</h4>
+            <p class="text-sm mb-1" style="color: #fff;">{{ activity.description }}</p>
+            <span class="text-xs" style="color: #7ED957;">{{ formatTime(activity.timestamp) }}</span>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import { ref, onMounted, watchEffect } from 'vue'

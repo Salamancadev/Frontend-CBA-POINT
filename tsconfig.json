@@ -5,7 +5,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [".src/tsconfig.json*"]
     },
     "strict": true,
     "noEmit": true

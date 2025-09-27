@@ -171,7 +171,7 @@ const form = reactive<RegisterFormData>({
   password: '',
   confirm: '',
   terms: false,
-})
+});
 
 const router = useRouter()
 

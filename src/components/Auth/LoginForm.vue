@@ -24,13 +24,19 @@
         placeholder="••••••••"
       />
     </div>
-    <button type="submit" class="w-full btn bg-[#7ED957] text-[#0b1220] hover:brightness-90">
+    <!-- <button type="submit" href="/dashboard" class="w-full btn bg-[#7ED957] text-[#0b1220] hover:brightness-90">
       Ingresar
-    </button>
+    </button> -->
+
+    <RouterLink
+       class="w-full btn bg-[#7ED957] text-[#0b1220] hover:brightness-90"
+      to="/dashboard"
+      >Ingresar
+      </RouterLink>
   </form>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router' // Asegúrate de que 'vue-router' esté correctamente instalado
 import axios from 'axios'

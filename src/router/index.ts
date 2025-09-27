@@ -1,12 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // Vistas por rol
+
+//Vista Principal de Header
 const Home = () => import('../views/HomeView.vue')
 const Login = () => import('../views/LoginView.vue')
 const Register = () => import('../views/RegisterView.vue')
+
+// Vista de los DashBoard
+const dashboard = () => import('../views/DashboardView.vue')
 const DashboardAprendiz = () => import('../views/Aprendiz/DashboardAprendiz.vue')
 const DashboardInstructor = () => import('../views/Instructor/DashboardInstructor.vue')
 const DashboardAdmin = () => import('../views/Admin/DashboardAdmin.vue')
+
+
+// Vista de la carpeta dashboard
+const DashMapa = () => import('../views/dashboard/CampusTourView.vue')
+const DashQr = () => import('../views/dashboard/EscanerView.vue')
+const DashReportes = () => import('../views/dashboard/ReportsView.vue')
+const DashStudent = () => import('../views/dashboard/StudentQRView.vue')
+
 
 // Asegúrate de tener la store configurada correctamente para obtener el rol del usuario
 import { useUserStore } from '../store/userStore'
@@ -15,6 +28,14 @@ const routes = [
   { path: '/', name: 'home', component: Home },
   { path: '/login', name: 'login', component: Login },
   { path: '/register', name: 'register', component: Register },
+
+  // Dashboard de vista generica
+  { path: '/dashboard', name: 'dashboard', component: dashboard },
+  { path: '/dash-mapa', name: 'dash-mapa', component: DashMapa },
+  { path: '/dash-Qr', name: 'dash-Qr', component: DashQr },
+  { path: '/dash-Reportes', name: 'dash-Reportes', component: DashReportes },
+  { path: '/dash-Student', name: 'dash-Student', component: DashStudent },
+
 
   // Dashboard específico según el rol
   {
