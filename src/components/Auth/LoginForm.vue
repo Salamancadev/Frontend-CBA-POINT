@@ -3,36 +3,20 @@
   <form @submit.prevent="onSubmit" class="space-y-4">
     <div>
       <label for="documento" class="block text-sm font-medium text-white">Documento</label>
-      <input
-        id="documento"
-        v-model="form.documentNumber"
-        type="text"
-        required
+      <input id="documento" v-model="form.documentNumber" type="text" required
         class="mt-1 w-full rounded-xl border border-gray-600 bg-[#2b2f33] p-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7ED957]"
-        placeholder="x.xxx.xxx.xxx"
-      />
+        placeholder="x.xxx.xxx.xxx" />
     </div>
     <div>
       <label for="password" class="block text-sm font-medium text-white">Contraseña</label>
-      <input
-        id="password"
-        v-model="form.password"
-        type="password"
-        required
-        minlength="6"
+      <input id="password" v-model="form.password" type="password" required minlength="6"
         class="mt-1 w-full rounded-xl border border-gray-600 bg-[#2b2f33] p-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7ED957]"
-        placeholder="••••••••"
-      />
+        placeholder="••••••••" />
     </div>
-    <!-- <button type="submit" href="/dashboard" class="w-full btn bg-[#7ED957] text-[#0b1220] hover:brightness-90">
+    <button type="submit" class="w-full btn bg-[#7ED957] text-[#0b1220] hover:brightness-90">
       Ingresar
-    </button> -->
+    </button>
 
-    <RouterLink
-       class="w-full btn bg-[#7ED957] text-[#0b1220] hover:brightness-90"
-      to="/dashboard"
-      >Ingresar
-      </RouterLink>
   </form>
 </template>
 
@@ -74,20 +58,23 @@ async function onSubmit() {
     // Guardar tokens
     localStorage.setItem('access_token', res.data.access)
     localStorage.setItem('refresh_token', res.data.refresh)
+    localStorage.setItem('cba_user', JSON.stringify(res.data)) // guardamos todo el res.data
 
-    // Setear el usuario en el store
+    // Setear usuario en store
     const userStore = useUserStore()
-    userStore.setUser(res.data.role)
+    userStore.setUser(res.data) // guardamos todo el objeto en la store
 
-    // Redirección según el rol
-    const userRole = res.data.role
+    // Redirigir según rol
+    const userRole = res.data.role // accedemos directamente al rol
 
     if (userRole === 'Aprendiz') {
       router.push({ name: 'dashboard-aprendiz' })
     } else if (userRole === 'Instructor') {
       router.push({ name: 'dashboard-instructor' })
-    } else if (userRole === 'Administrador') {
+    } else if (userRole === 'Administrativo') {
       router.push({ name: 'dashboard-admin' })
+    } else {
+      error.value = 'Rol de usuario no reconocido'
     }
   } catch (err: any) {
     console.error('Error completo del backend:', err)

@@ -1,78 +1,165 @@
 <template>
-  <div class="min-h-screen py-8 px-2 sm:px-8" style="background-color: #212529; color: #f8f9fa;">
+  <div class="min-h-screen py-8 px-2 sm:px-8" style="background-color: #212529; color: #f8f9fa">
     <div class="tour-header text-center mb-10">
-      <h1 class="text-4xl font-extrabold mb-2 drop-shadow" style="color: #7ED957;">Recorrido Virtual CBA</h1>
-      <p class="text-lg mb-6" style="color: #7ED957;">Explora el Centro de Biotecnología Agropecuaria</p>
+      <h1 class="text-4xl font-extrabold mb-2 drop-shadow" style="color: #7ed957">
+        Recorrido Virtual CBA
+      </h1>
+      <p class="text-lg mb-6" style="color: #7ed957">
+        Explora el Centro de Biotecnología Agropecuaria
+      </p>
     </div>
 
-  <div class="tour-content grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+    <div class="tour-content grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
       <div class="map-container h-[400px] lg:h-[600px]">
-        <div class="rounded-2xl shadow-lg h-full flex flex-col" style="background-color: #212529; border: 2px solid #7ED957;">
+        <div
+          class="rounded-2xl shadow-lg h-full flex flex-col"
+          style="background-color: #212529; border: 2px solid #7ed957"
+        >
           <div class="map-header flex justify-between items-center p-6 border-b border-[#7ED957]">
-            <h3 class="text-2xl font-bold" style="color: #7ED957;">Mapa Interactivo</h3>
+            <h3 class="text-2xl font-bold" style="color: #7ed957">Mapa Interactivo</h3>
             <div class="map-controls flex gap-2">
-              <button @click="centerMap" class="px-4 py-2 rounded-lg font-semibold shadow" style="background-color: #7ED957; color: #212529;">📍 Centrar</button>
-              <button @click="toggleSatellite" class="px-4 py-2 rounded-lg font-semibold shadow" style="background-color: #212529; color: #7ED957; border: 1px solid #7ED957;">🛰️ Satélite</button>
+              <button
+                @click="centerMap"
+                class="px-4 py-2 rounded-lg font-semibold shadow"
+                style="background-color: #7ed957; color: #212529"
+              >
+                📍 Centrar
+              </button>
+              <button
+                @click="toggleSatellite"
+                class="px-4 py-2 rounded-lg font-semibold shadow"
+                style="background-color: #212529; color: #7ed957; border: 1px solid #7ed957"
+              >
+                🛰️ Satélite
+              </button>
             </div>
           </div>
 
           <div ref="mapContainer" class="map-display flex-1 relative overflow-hidden">
             <div class="mock-map w-full h-full relative">
-              <div class="map-background absolute inset-0" style="background: linear-gradient(135deg, #212529 0%, #212529 100%);"></div>
-              <div v-for="location in campusLocations" :key="location.id"
+              <div
+                class="map-background absolute inset-0"
+                style="background: linear-gradient(135deg, #212529 0%, #212529 100%)"
+              ></div>
+              <div
+                v-for="location in campusLocations"
+                :key="location.id"
                 class="map-marker absolute cursor-pointer transition-all duration-200"
-                :style="{ left: location.position.x + '%', top: location.position.y + '%', zIndex: selectedLocation?.id === location.id ? 2 : 1 }"
+                :style="{
+                  left: location.position.x + '%',
+                  top: location.position.y + '%',
+                  zIndex: selectedLocation?.id === location.id ? 2 : 1,
+                }"
                 @click="selectLocation(location)"
                 :class="{ 'scale-125': selectedLocation?.id === location.id }"
               >
-                <div class="marker-icon w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold shadow-lg border-2" :style="selectedLocation?.id === location.id ? 'background-color: #7ED957; color: #212529; border-color: #7ED957;' : 'background-color: #212529; color: #7ED957; border-color: #7ED957;'">{{ location.icon }}</div>
-                <div class="marker-label mt-1 px-2 py-1 rounded text-xs font-semibold" style="background-color: #7ED957; color: #212529;">{{ location.nombre }}</div>
+                <div
+                  class="marker-icon w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold shadow-lg border-2"
+                  :style="
+                    selectedLocation?.id === location.id
+                      ? 'background-color: #7ED957; color: #212529; border-color: #7ED957;'
+                      : 'background-color: #212529; color: #7ED957; border-color: #7ED957;'
+                  "
+                >
+                  {{ location.icon }}
+                </div>
+                <div
+                  class="marker-label mt-1 px-2 py-1 rounded text-xs font-semibold"
+                  style="background-color: #7ed957; color: #212529"
+                >
+                  {{ location.nombre }}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="tour-sidebar rounded-2xl shadow-lg p-6 h-[400px] lg:h-[600px] overflow-y-auto" style="background-color: #212529; border: 2px solid #7ED957;">
+      <div
+        class="tour-sidebar rounded-2xl shadow-lg p-6 h-[400px] lg:h-[600px] overflow-y-auto"
+        style="background-color: #212529; border: 2px solid #7ed957"
+      >
         <div v-if="selectedLocation">
           <div class="info-header flex items-center gap-4 mb-6 pb-4 border-b border-[#7ED957]">
-            <div class="location-icon w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg" style="background-color: #7ED957; color: #212529;">{{ selectedLocation.icon }}</div>
+            <div
+              class="location-icon w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg"
+              style="background-color: #7ed957; color: #212529"
+            >
+              {{ selectedLocation.icon }}
+            </div>
             <div>
-              <h3 class="text-xl font-bold" style="color: #7ED957;">{{ selectedLocation.nombre }}</h3>
-              <p class="location-type text-sm" style="color: #f8f9fa;">{{ selectedLocation.tipo }}</p>
+              <h3 class="text-xl font-bold" style="color: #7ed957">
+                {{ selectedLocation.nombre }}
+              </h3>
+              <p class="location-type text-sm" style="color: #f8f9fa">
+                {{ selectedLocation.tipo }}
+              </p>
             </div>
           </div>
 
           <div class="location-description mb-6">
-            <p class="text-base" style="color: #fff;">{{ selectedLocation.descripcion }}</p>
+            <p class="text-base" style="color: #fff">{{ selectedLocation.descripcion }}</p>
           </div>
 
           <div class="location-details mb-6">
-            <div class="detail-item flex justify-between py-2 border-b border-[#7ED957] text-sm" style="color: #7ED957;">
-              <span>Capacidad:</span> <span style="color: #fff;">{{ selectedLocation.capacidad }}</span>
+            <div
+              class="detail-item flex justify-between py-2 border-b border-[#7ED957] text-sm"
+              style="color: #7ed957"
+            >
+              <span>Capacidad:</span>
+              <span style="color: #fff">{{ selectedLocation.capacidad }}</span>
             </div>
-            <div class="detail-item flex justify-between py-2 border-b border-[#7ED957] text-sm" style="color: #7ED957;">
-              <span>Horario:</span> <span style="color: #fff;">{{ selectedLocation.horario }}</span>
+            <div
+              class="detail-item flex justify-between py-2 border-b border-[#7ED957] text-sm"
+              style="color: #7ed957"
+            >
+              <span>Horario:</span> <span style="color: #fff">{{ selectedLocation.horario }}</span>
             </div>
-            <div class="detail-item flex justify-between py-2 border-b border-[#7ED957] text-sm" style="color: #7ED957;">
-              <span>Acceso:</span> <span style="color: #fff;">{{ selectedLocation.acceso }}</span>
+            <div
+              class="detail-item flex justify-between py-2 border-b border-[#7ED957] text-sm"
+              style="color: #7ed957"
+            >
+              <span>Acceso:</span> <span style="color: #fff">{{ selectedLocation.acceso }}</span>
             </div>
           </div>
 
           <div class="location-actions flex flex-col gap-4 mt-auto">
-            <button @click="navigateToLocation" class="px-4 py-2 rounded-lg font-semibold shadow" style="background-color: #7ED957; color: #212529;">🧭 Cómo llegar</button>
-            <button @click="checkInLocation" class="px-4 py-2 rounded-lg font-semibold shadow" style="background-color: #212529; color: #7ED957; border: 1px solid #7ED957;">📍 Check-in aquí</button>
+            <button
+              @click="navigateToLocation"
+              class="px-4 py-2 rounded-lg font-semibold shadow"
+              style="background-color: #7ed957; color: #212529"
+            >
+              🧭 Cómo llegar
+            </button>
+            <button
+              @click="checkInLocation"
+              class="px-4 py-2 rounded-lg font-semibold shadow"
+              style="background-color: #212529; color: #7ed957; border: 1px solid #7ed957"
+            >
+              📍 Check-in aquí
+            </button>
           </div>
         </div>
 
         <div v-else>
-          <h3 class="text-xl font-bold mb-6" style="color: #7ED957;">Puntos de Interés</h3>
+          <h3 class="text-xl font-bold mb-6" style="color: #7ed957">Puntos de Interés</h3>
           <div class="locations-grid flex flex-col gap-4">
-            <div v-for="location in campusLocations" :key="location.id" class="location-card flex items-center gap-4 p-4 rounded-lg cursor-pointer transition-all duration-200" style="background-color: #212529; border: 1px solid #7ED957;" @click="selectLocation(location)">
-              <div class="card-icon w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold shadow-lg" style="background-color: #7ED957; color: #212529;">{{ location.icon }}</div>
+            <div
+              v-for="location in campusLocations"
+              :key="location.id"
+              class="location-card flex items-center gap-4 p-4 rounded-lg cursor-pointer transition-all duration-200"
+              style="background-color: #212529; border: 1px solid #7ed957"
+              @click="selectLocation(location)"
+            >
+              <div
+                class="card-icon w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold shadow-lg"
+                style="background-color: #7ed957; color: #212529"
+              >
+                {{ location.icon }}
+              </div>
               <div class="card-content">
-                <h4 class="font-bold" style="color: #7ED957;">{{ location.nombre }}</h4>
-                <p class="text-sm" style="color: #fff;">{{ location.tipo }}</p>
+                <h4 class="font-bold" style="color: #7ed957">{{ location.nombre }}</h4>
+                <p class="text-sm" style="color: #fff">{{ location.tipo }}</p>
               </div>
             </div>
           </div>
@@ -81,47 +168,84 @@
     </div>
 
     <!-- Navigation Modal -->
-    <div v-if="showNavigationModal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50" @click="closeNavigationModal">
-      <div class="rounded-2xl shadow-lg p-8 w-full max-w-md relative" style="background-color: #212529; border: 2px solid #7ED957;" @click.stop>
-        <h3 class="text-xl font-bold mb-6 text-center" style="color: #7ED957;">Navegación a {{ selectedLocation?.nombre }}</h3>
+    <div
+      v-if="showNavigationModal"
+      class="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+      @click="closeNavigationModal"
+    >
+      <div
+        class="rounded-2xl shadow-lg p-8 w-full max-w-md relative"
+        style="background-color: #212529; border: 2px solid #7ed957"
+        @click.stop
+      >
+        <h3 class="text-xl font-bold mb-6 text-center" style="color: #7ed957">
+          Navegación a {{ selectedLocation?.nombre }}
+        </h3>
         <div class="navigation-info mb-6">
-          <div class="route-step flex gap-4 mb-4 p-4 rounded-lg" v-for="(step, index) in navigationSteps" :key="index" style="background-color: #212529; border: 1px solid #7ED957;">
-            <div class="step-number w-8 h-8 rounded-full flex items-center justify-center font-bold" style="background-color: #7ED957; color: #212529;">{{ index + 1 }}</div>
+          <div
+            class="route-step flex gap-4 mb-4 p-4 rounded-lg"
+            v-for="(step, index) in navigationSteps"
+            :key="index"
+            style="background-color: #212529; border: 1px solid #7ed957"
+          >
+            <div
+              class="step-number w-8 h-8 rounded-full flex items-center justify-center font-bold"
+              style="background-color: #7ed957; color: #212529"
+            >
+              {{ index + 1 }}
+            </div>
             <div class="step-content">
-              <p class="text-base" style="color: #fff;">{{ step.instruction }}</p>
-              <small style="color: #7ED957;">{{ step.distance }}</small>
+              <p class="text-base" style="color: #fff">{{ step.instruction }}</p>
+              <small style="color: #7ed957">{{ step.distance }}</small>
             </div>
           </div>
         </div>
         <div class="modal-actions flex gap-4 justify-end">
-          <button @click="closeNavigationModal" class="px-4 py-2 rounded-lg font-semibold shadow" style="background-color: #212529; color: #7ED957; border: 1px solid #7ED957;">Cerrar</button>
-          <button @click="startNavigation" class="px-4 py-2 rounded-lg font-semibold shadow" style="background-color: #7ED957; color: #212529;">Iniciar Navegación</button>
+          <button
+            @click="closeNavigationModal"
+            class="px-4 py-2 rounded-lg font-semibold shadow"
+            style="background-color: #212529; color: #7ed957; border: 1px solid #7ed957"
+          >
+            Cerrar
+          </button>
+          <button
+            @click="startNavigation"
+            class="px-4 py-2 rounded-lg font-semibold shadow"
+            style="background-color: #7ed957; color: #212529"
+          >
+            Iniciar Navegación
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Tour Statistics -->
-    <div class="tour-stats mt-10 rounded-2xl shadow-lg p-8" style="background-color: #212529; border: 2px solid #7ED957;">
+    <div
+      class="tour-stats mt-10 rounded-2xl shadow-lg p-8"
+      style="background-color: #212529; border: 2px solid #7ed957"
+    >
       <div class="stats-card grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="stat-item flex items-center gap-4 text-center">
-          <div class="stat-icon text-3xl" style="color: #7ED957;">🏢</div>
+          <div class="stat-icon text-3xl" style="color: #7ed957">🏢</div>
           <div class="stat-content">
-            <h4 class="font-bold text-2xl" style="color: #7ED957;">{{ campusLocations.length }}</h4>
-            <p class="text-sm" style="color: #fff;">Ubicaciones</p>
+            <h4 class="font-bold text-2xl" style="color: #7ed957">{{ campusLocations.length }}</h4>
+            <p class="text-sm" style="color: #fff">Ubicaciones</p>
           </div>
         </div>
         <div class="stat-item flex items-center gap-4 text-center">
-          <div class="stat-icon text-3xl" style="color: #7ED957;">👥</div>
+          <div class="stat-icon text-3xl" style="color: #7ed957">👥</div>
           <div class="stat-content">
-            <h4 class="font-bold text-2xl" style="color: #7ED957;">{{ visitedLocations }}</h4>
-            <p class="text-sm" style="color: #fff;">Visitadas</p>
+            <h4 class="font-bold text-2xl" style="color: #7ed957">{{ visitedLocations }}</h4>
+            <p class="text-sm" style="color: #fff">Visitadas</p>
           </div>
         </div>
         <div class="stat-item flex items-center gap-4 text-center">
-          <div class="stat-icon text-3xl" style="color: #7ED957;">🎯</div>
+          <div class="stat-icon text-3xl" style="color: #7ed957">🎯</div>
           <div class="stat-content">
-            <h4 class="font-bold text-2xl" style="color: #7ED957;">{{ Math.round((visitedLocations / campusLocations.length) * 100) }}%</h4>
-            <p class="text-sm" style="color: #fff;">Progreso</p>
+            <h4 class="font-bold text-2xl" style="color: #7ed957">
+              {{ Math.round((visitedLocations / campusLocations.length) * 100) }}%
+            </h4>
+            <p class="text-sm" style="color: #fff">Progreso</p>
           </div>
         </div>
       </div>
@@ -154,13 +278,14 @@ const campusLocations = ref<CampusLocation[]>([
   {
     id: '1',
     nombre: 'Laboratorio de Biotecnología',
-    descripcion: 'Laboratorio principal equipado con tecnología de punta para investigación en biotecnología agropecuaria.',
+    descripcion:
+      'Laboratorio principal equipado con tecnología de punta para investigación en biotecnología agropecuaria.',
     tipo: 'Laboratorio',
     icon: '🧪',
     position: { x: 25, y: 30 },
     capacidad: '30 estudiantes',
     horario: '6:00 AM - 10:00 PM',
-    acceso: 'Estudiantes y docentes'
+    acceso: 'Estudiantes y docentes',
   },
   {
     id: '2',
@@ -171,7 +296,7 @@ const campusLocations = ref<CampusLocation[]>([
     position: { x: 60, y: 20 },
     capacidad: '200 personas',
     horario: '7:00 AM - 9:00 PM',
-    acceso: 'Comunidad académica'
+    acceso: 'Comunidad académica',
   },
   {
     id: '3',
@@ -182,7 +307,7 @@ const campusLocations = ref<CampusLocation[]>([
     position: { x: 40, y: 50 },
     capacidad: '80 personas',
     horario: '6:00 AM - 8:00 PM',
-    acceso: 'Estudiantes y docentes'
+    acceso: 'Estudiantes y docentes',
   },
   {
     id: '4',
@@ -193,7 +318,7 @@ const campusLocations = ref<CampusLocation[]>([
     position: { x: 70, y: 60 },
     capacidad: '120 personas',
     horario: '6:00 AM - 6:00 PM',
-    acceso: 'Comunidad académica'
+    acceso: 'Comunidad académica',
   },
   {
     id: '5',
@@ -204,7 +329,7 @@ const campusLocations = ref<CampusLocation[]>([
     position: { x: 20, y: 70 },
     capacidad: '15 estudiantes',
     horario: '6:00 AM - 5:00 PM',
-    acceso: 'Estudiantes de agronomía'
+    acceso: 'Estudiantes de agronomía',
   },
   {
     id: '6',
@@ -215,23 +340,23 @@ const campusLocations = ref<CampusLocation[]>([
     position: { x: 80, y: 35 },
     capacidad: '20 funcionarios',
     horario: '7:00 AM - 5:00 PM',
-    acceso: 'Personal autorizado'
-  }
+    acceso: 'Personal autorizado',
+  },
 ])
 
 const navigationSteps = ref([
   {
     instruction: 'Salir del edificio actual y dirigirse hacia el norte',
-    distance: '50 metros'
+    distance: '50 metros',
   },
   {
     instruction: 'Tomar el sendero principal hacia la derecha',
-    distance: '100 metros'
+    distance: '100 metros',
   },
   {
     instruction: 'Continuar hasta llegar al edificio de destino',
-    distance: '75 metros'
-  }
+    distance: '75 metros',
+  },
 ])
 
 onMounted(() => {

@@ -1,23 +1,38 @@
 <template>
-  <div class="max-w-3xl mx-auto py-8 px-4" style="background-color: #212529; color: #f8f9fa; border-radius: 2rem;">
+  <div
+    class="max-w-3xl mx-auto py-8 px-4"
+    style="background-color: #212529; color: #f8f9fa; border-radius: 2rem"
+  >
     <!-- Header -->
     <div class="text-center mb-8">
-      <h1 class="text-4xl font-extrabold mb-2 drop-shadow px-6 py-2 rounded-xl shadow-lg animate-fade-in" style="color: #7ED957; background-color: #212529;">Escáner QR</h1>
-      <p class="text-lg mb-4" style="color: #7ED957;">Registra tu asistencia escaneando el código QR</p>
+      <h1
+        class="text-4xl font-extrabold mb-2 drop-shadow px-6 py-2 rounded-xl shadow-lg animate-fade-in"
+        style="color: #7ed957; background-color: #212529"
+      >
+        Escáner QR
+      </h1>
+      <p class="text-lg mb-4" style="color: #7ed957">
+        Registra tu asistencia escaneando el código QR
+      </p>
     </div>
 
     <!-- Scanner Card -->
     <div class="mb-12">
-      <div class="rounded-2xl p-8 shadow-2xl" style="background-color: #212529; border: 2px solid #7ED957;">
+      <div
+        class="rounded-2xl p-8 shadow-2xl"
+        style="background-color: #212529; border: 2px solid #7ed957"
+      >
         <!-- Placeholder -->
         <div v-if="!scannerActive" class="text-center py-10">
-          <div class="text-6xl mb-4 animate-bounce" style="color: #7ED957;">📱</div>
-          <h3 class="text-2xl font-bold mb-2" style="color: #7ED957;">Activar Escáner</h3>
-          <p class="mb-6" style="color: #fff;">Presiona el botón para activar la cámara y escanear códigos QR</p>
+          <div class="text-6xl mb-4 animate-bounce" style="color: #7ed957">📱</div>
+          <h3 class="text-2xl font-bold mb-2" style="color: #7ed957">Activar Escáner</h3>
+          <p class="mb-6" style="color: #fff">
+            Presiona el botón para activar la cámara y escanear códigos QR
+          </p>
           <button
             @click="startScanner"
             class="px-8 py-3 rounded-lg font-semibold shadow-lg hover:scale-105 transition disabled:opacity-50"
-            style="background-color: #7ED957; color: #212529;"
+            style="background-color: #7ed957; color: #212529"
             :disabled="loading"
           >
             <span v-if="loading">Iniciando...</span>
@@ -28,17 +43,42 @@
         <!-- Scanner Active -->
         <div v-else class="text-center">
           <div class="relative w-full max-w-md mx-auto mb-6 rounded-xl overflow-hidden shadow-lg">
-            <video ref="videoElement" autoplay muted playsinline class="w-full h-72 object-cover rounded-xl border-4" style="border-color: #7ED957;"></video>
+            <video
+              ref="videoElement"
+              autoplay
+              muted
+              playsinline
+              class="w-full h-72 object-cover rounded-xl border-4"
+              style="border-color: #7ed957"
+            ></video>
             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div class="w-40 h-40 border-4 rounded-xl relative" style="border-color: #7ED957;">
-                <div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 rounded-tl-xl" style="border-color: #7ED957;"></div>
-                <div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 rounded-br-xl" style="border-color: #7ED957;"></div>
+              <div class="w-40 h-40 border-4 rounded-xl relative" style="border-color: #7ed957">
+                <div
+                  class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 rounded-tl-xl"
+                  style="border-color: #7ed957"
+                ></div>
+                <div
+                  class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 rounded-br-xl"
+                  style="border-color: #7ed957"
+                ></div>
               </div>
             </div>
           </div>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <button @click="stopScanner" class="px-6 py-2 rounded-lg font-bold shadow hover:scale-105 transition" style="background-color: #ff4d4f; color: #fff;">Detener</button>
-            <button @click="manualEntry" class="px-6 py-2 rounded-lg font-bold shadow hover:scale-105 transition" style="background-color: #7ED957; color: #212529;">Entrada Manual</button>
+            <button
+              @click="stopScanner"
+              class="px-6 py-2 rounded-lg font-bold shadow hover:scale-105 transition"
+              style="background-color: #ff4d4f; color: #fff"
+            >
+              Detener
+            </button>
+            <button
+              @click="manualEntry"
+              class="px-6 py-2 rounded-lg font-bold shadow hover:scale-105 transition"
+              style="background-color: #7ed957; color: #212529"
+            >
+              Entrada Manual
+            </button>
           </div>
         </div>
 
@@ -46,13 +86,19 @@
         <div
           v-if="scanResult"
           class="flex items-center gap-4 px-6 py-4 rounded-xl mt-8"
-          :style="scanResult.success ? 'background-color: #7ED957; color: #212529; border: 2px solid #7ED957;' : 'background-color: #ff4d4f; color: #fff; border: 2px solid #ff4d4f;'"
+          :style="
+            scanResult.success
+              ? 'background-color: #7ED957; color: #212529; border: 2px solid #7ED957;'
+              : 'background-color: #ff4d4f; color: #fff; border: 2px solid #ff4d4f;'
+          "
         >
           <div class="text-3xl">
             {{ scanResult.success ? '✅' : '❌' }}
           </div>
           <div>
-            <h4 class="font-bold text-lg mb-1">{{ scanResult.success ? 'Asistencia Registrada' : 'Error en el Escaneo' }}</h4>
+            <h4 class="font-bold text-lg mb-1">
+              {{ scanResult.success ? 'Asistencia Registrada' : 'Error en el Escaneo' }}
+            </h4>
             <p class="mb-1">{{ scanResult.message }}</p>
             <small v-if="scanResult.success">{{ formatTime(new Date()) }}</small>
           </div>
@@ -61,12 +107,24 @@
     </div>
 
     <!-- Manual Entry Modal -->
-    <div v-if="showManualModal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50" @click="closeManualModal">
-      <div class="rounded-2xl p-8 w-full max-w-md shadow-xl" style="background-color: #212529; border: 2px solid #7ED957;" @click.stop>
-        <h3 class="text-2xl font-bold mb-6 text-center" style="color: #7ED957;">Entrada Manual de Código</h3>
+    <div
+      v-if="showManualModal"
+      class="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+      @click="closeManualModal"
+    >
+      <div
+        class="rounded-2xl p-8 w-full max-w-md shadow-xl"
+        style="background-color: #212529; border: 2px solid #7ed957"
+        @click.stop
+      >
+        <h3 class="text-2xl font-bold mb-6 text-center" style="color: #7ed957">
+          Entrada Manual de Código
+        </h3>
         <form @submit.prevent="processManualCode">
           <div class="mb-6">
-            <label for="manualCode" class="block font-semibold mb-2" style="color: #7ED957;">Código del Evento</label>
+            <label for="manualCode" class="block font-semibold mb-2" style="color: #7ed957"
+              >Código del Evento</label
+            >
             <input
               id="manualCode"
               v-model="manualCode"
@@ -74,31 +132,61 @@
               placeholder="Ingrese el código del evento"
               required
               class="w-full px-4 py-3 rounded-lg focus:outline-none"
-              style="background-color: #212529; color: #7ED957; border: 2px solid #7ED957;"
+              style="background-color: #212529; color: #7ed957; border: 2px solid #7ed957"
             />
           </div>
           <div class="flex gap-4 justify-end">
-            <button type="button" @click="closeManualModal" class="px-6 py-2 rounded-lg font-semibold hover:scale-105 transition" style="background-color: #ff4d4f; color: #fff;">Cancelar</button>
-            <button type="submit" class="px-6 py-2 rounded-lg font-semibold hover:scale-105 transition" style="background-color: #7ED957; color: #212529;">Registrar</button>
+            <button
+              type="button"
+              @click="closeManualModal"
+              class="px-6 py-2 rounded-lg font-semibold hover:scale-105 transition"
+              style="background-color: #ff4d4f; color: #fff"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              class="px-6 py-2 rounded-lg font-semibold hover:scale-105 transition"
+              style="background-color: #7ed957; color: #212529"
+            >
+              Registrar
+            </button>
           </div>
         </form>
       </div>
     </div>
 
     <!-- Recent Scans -->
-    <div class="rounded-xl p-8 shadow-xl mt-10" style="background-color: #212529; border: 2px solid #7ED957;">
-      <h2 class="text-2xl font-bold mb-6" style="color: #7ED957;">Escaneos Recientes</h2>
+    <div
+      class="rounded-xl p-8 shadow-xl mt-10"
+      style="background-color: #212529; border: 2px solid #7ed957"
+    >
+      <h2 class="text-2xl font-bold mb-6" style="color: #7ed957">Escaneos Recientes</h2>
       <div class="flex flex-col gap-4">
-        <div v-for="scan in recentScans" :key="scan.id" class="flex items-center gap-4 p-4 rounded-lg transition" style="background-color: #212529; border: 1px solid #7ED957;">
-          <div class="text-2xl w-12 text-center" :style="scan.success ? 'color: #7ED957;' : 'color: #ff4d4f;'">{{ scan.success ? '✅' : '❌' }}</div>
+        <div
+          v-for="scan in recentScans"
+          :key="scan.id"
+          class="flex items-center gap-4 p-4 rounded-lg transition"
+          style="background-color: #212529; border: 1px solid #7ed957"
+        >
+          <div
+            class="text-2xl w-12 text-center"
+            :style="scan.success ? 'color: #7ED957;' : 'color: #ff4d4f;'"
+          >
+            {{ scan.success ? '✅' : '❌' }}
+          </div>
           <div class="flex-1">
-            <h4 class="font-bold mb-1" style="color: #7ED957;">{{ scan.eventName }}</h4>
-            <p class="text-sm mb-1" style="color: #fff;">{{ scan.location }}</p>
-            <small style="color: #7ED957;">{{ formatTime(scan.timestamp) }}</small>
+            <h4 class="font-bold mb-1" style="color: #7ed957">{{ scan.eventName }}</h4>
+            <p class="text-sm mb-1" style="color: #fff">{{ scan.location }}</p>
+            <small style="color: #7ed957">{{ formatTime(scan.timestamp) }}</small>
           </div>
           <div
             class="px-3 py-1 rounded-full text-xs font-bold"
-            :style="scan.success ? 'background-color: #7ED957; color: #212529;' : 'background-color: #ff4d4f; color: #fff;'"
+            :style="
+              scan.success
+                ? 'background-color: #7ED957; color: #212529;'
+                : 'background-color: #ff4d4f; color: #fff;'
+            "
           >
             {{ scan.success ? 'Exitoso' : 'Fallido' }}
           </div>
@@ -110,7 +198,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import type { User } from '../types'
+import type { User } from '../../types/User'
 
 const videoElement = ref<HTMLVideoElement | null>(null)
 const scannerActive = ref(false)

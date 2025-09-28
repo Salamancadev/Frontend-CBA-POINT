@@ -13,13 +13,11 @@ const DashboardAprendiz = () => import('../views/Aprendiz/DashboardAprendiz.vue'
 const DashboardInstructor = () => import('../views/Instructor/DashboardInstructor.vue')
 const DashboardAdmin = () => import('../views/Admin/DashboardAdmin.vue')
 
-
 // Vista de la carpeta dashboard
 const DashMapa = () => import('../views/dashboard/CampusTourView.vue')
 const DashQr = () => import('../views/dashboard/EscanerView.vue')
 const DashReportes = () => import('../views/dashboard/ReportsView.vue')
 const DashStudent = () => import('../views/dashboard/StudentQRView.vue')
-
 
 // Asegúrate de tener la store configurada correctamente para obtener el rol del usuario
 import { useUserStore } from '../store/userStore'
@@ -35,7 +33,6 @@ const routes = [
   { path: '/dash-Qr', name: 'dash-Qr', component: DashQr },
   { path: '/dash-Reportes', name: 'dash-Reportes', component: DashReportes },
   { path: '/dash-Student', name: 'dash-Student', component: DashStudent },
-
 
   // Dashboard específico según el rol
   {
@@ -54,7 +51,7 @@ const routes = [
     path: '/dashboard-admin',
     name: 'dashboard-admin',
     component: DashboardAdmin,
-    meta: { requiresAuth: true, role: 'Administrador' },
+    meta: { requiresAuth: true, role: 'Administrativo' },
   },
 
   // Rutas adicionales específicas para cada rol
@@ -86,30 +83,30 @@ const routes = [
     meta: { requiresAuth: true, role: 'Instructor' },
   },
 
-  // Para Administrador
+  // Para Administrativo
   {
     path: '/gestion-usuarios',
     name: 'gestion-usuarios',
     component: () => import('../views/Admin/GestionUsuarios.vue'),
-    meta: { requiresAuth: true, role: 'Administrador' },
+    meta: { requiresAuth: true, role: 'Administrativo' },
   },
   {
     path: '/gestion-eventos',
     name: 'gestion-eventos',
     component: () => import('../views/Admin/GestionEventos.vue'),
-    meta: { requiresAuth: true, role: 'Administrador' },
+    meta: { requiresAuth: true, role: 'Administrativo' },
   },
   {
     path: '/registro-asistencias',
     name: 'registro-asistencias',
     component: () => import('../views/Admin/RegistroAsistencias.vue'),
-    meta: { requiresAuth: true, role: 'Administrador' },
+    meta: { requiresAuth: true, role: 'Administrativo' },
   },
   {
     path: '/reportes-generales',
     name: 'reportes-generales',
     component: () => import('../views/Admin/ReportesGenerales.vue'),
-    meta: { requiresAuth: true, role: 'Administrador' },
+    meta: { requiresAuth: true, role: 'Administrativo' },
   },
 ]
 
@@ -125,7 +122,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
   const isAuthenticated = userStore.isLoggedIn // Booleano de login
-  const userRole = userStore.role // 'Aprendiz', 'Instructor', 'Administrador'
+  const userRole = userStore.role // 'Aprendiz', 'Instructor', 'Administrativo'
 
   // Si la ruta requiere autenticación
   if (to.meta.requiresAuth) {
