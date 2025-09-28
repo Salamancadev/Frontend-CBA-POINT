@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="mb-8">
       <h1 class="text-4xl font-bold mb-1">Dashboard Administrador</h1>
-      <p class="text-lg text-gray-500">Bienvenido, {{ user?.name }} {{ user?.lastName }}</p>
+      <p class="text-lg text-gray-500">Bienvenido, {{ mappedUser.nombre }} {{ mappedUser.apellido }}</p>
     </div>
 
     <!-- Stats Grid -->
@@ -98,12 +98,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { api } from '../../services/api'
 import { useUserStore } from '../../store/userStore'
 
 const userStore = useUserStore()
-const user = ref(userStore.user || null)
+
+// Computed para mapear nombres según backend
+const mappedUser = computed(() => {
+  const u = userStore.user
+  return {
+    nombre: u?.nombre ?? '',
+    apellido: u?.apellido ?? ''
+  }
+})
 
 // Estadísticas
 const totalAprendices = ref(0)
@@ -117,7 +125,6 @@ const recentActivities = ref([
   { id: 2, icon: '📅', title: 'Evento creado', description: 'Semana de inducción', timestamp: new Date() },
 ])
 
-// Formatear fecha/hora
 const formatTime = (timestamp: Date) => {
   const now = new Date()
   const diff = now.getTime() - timestamp.getTime()
@@ -128,7 +135,6 @@ const formatTime = (timestamp: Date) => {
   else return timestamp.toLocaleDateString()
 }
 
-// Traer estadísticas del backend
 const fetchStats = async () => {
   try {
     const res = await api.get('/admin/stats/')

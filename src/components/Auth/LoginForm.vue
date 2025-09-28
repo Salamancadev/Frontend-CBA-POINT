@@ -22,9 +22,10 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router' // Asegúrate de que 'vue-router' esté correctamente instalado
+import { useRouter } from 'vue-router'
 import axios from 'axios'
 import { useUserStore } from '../../store/userStore'
+import { mapBackendUser } from '../../utils/userMapper'
 
 interface LoginFormData {
   documentNumber: string
@@ -37,8 +38,7 @@ const form = reactive<LoginFormData>({
 })
 
 const error = ref('')
-const router = useRouter() // Instancia el router correctamente
-
+const router = useRouter()
 const api = axios.create({
   baseURL: 'http://127.0.0.1:8000/api',
   headers: { 'Content-Type': 'application/json' },
@@ -48,34 +48,36 @@ async function onSubmit() {
   error.value = ''
 
   try {
-    const payload = {
+    // 1️⃣ Login
+    const res = await api.post('/login/', {
       documento: form.documentNumber,
       password: form.password,
-    }
-
-    const res = await api.post('/login/', payload)
+    })
 
     // Guardar tokens
     localStorage.setItem('access_token', res.data.access)
     localStorage.setItem('refresh_token', res.data.refresh)
-    localStorage.setItem('cba_user', JSON.stringify(res.data)) // guardamos todo el res.data
 
-    // Setear usuario en store
     const userStore = useUserStore()
-    userStore.setUser(res.data) // guardamos todo el objeto en la store
+
+    // 2️⃣ Traer perfil completo del usuario
+    const perfilRes = await api.get('/perfil/', {
+      headers: { Authorization: `Bearer ${res.data.access}` }
+    })
+
+    // Mapear y guardar usuario en Pinia
+    userStore.setUser(mapBackendUser(perfilRes.data))
+
+    // Guardar en localStorage
+    localStorage.setItem('cba_user', JSON.stringify(userStore.user))
 
     // Redirigir según rol
-    const userRole = res.data.role // accedemos directamente al rol
+    const userRole = res.data.role
+    if (userRole === 'Aprendiz') router.push({ name: 'dashboard-aprendiz' })
+    else if (userRole === 'Instructor') router.push({ name: 'dashboard-instructor' })
+    else if (userRole === 'Administrativo') router.push({ name: 'dashboard-admin' })
+    else error.value = 'Rol de usuario no reconocido'
 
-    if (userRole === 'Aprendiz') {
-      router.push({ name: 'dashboard-aprendiz' })
-    } else if (userRole === 'Instructor') {
-      router.push({ name: 'dashboard-instructor' })
-    } else if (userRole === 'Administrativo') {
-      router.push({ name: 'dashboard-admin' })
-    } else {
-      error.value = 'Rol de usuario no reconocido'
-    }
   } catch (err: any) {
     console.error('Error completo del backend:', err)
     error.value = err.response?.data?.error || 'Error en el login'

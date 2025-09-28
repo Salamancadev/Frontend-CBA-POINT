@@ -45,9 +45,7 @@
     <!-- Tipo y número de documento -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div>
-        <label for="documentType" class="block text-sm font-medium text-white"
-          >Tipo de documento</label
-        >
+        <label for="documentType" class="block text-sm font-medium text-white">Tipo de documento</label>
         <select
           id="documentType"
           v-model="form.documentType"
@@ -61,9 +59,7 @@
         </select>
       </div>
       <div>
-        <label for="documentNumber" class="block text-sm font-medium text-white"
-          >Número de documento</label
-        >
+        <label for="documentNumber" class="block text-sm font-medium text-white">Número de documento</label>
         <input
           id="documentNumber"
           v-model="form.documentNumber"
@@ -103,9 +99,7 @@
         />
       </div>
       <div>
-        <label for="confirm" class="block text-sm font-medium text-white"
-          >Confirmar contraseña</label
-        >
+        <label for="confirm" class="block text-sm font-medium text-white">Confirmar contraseña</label>
         <input
           id="confirm"
           v-model="form.confirm"
@@ -120,12 +114,7 @@
 
     <!-- Términos -->
     <label class="inline-flex items-center gap-2 text-sm text-gray-300">
-      <input
-        type="checkbox"
-        v-model="form.terms"
-        required
-        class="rounded border-gray-600 bg-[#2b2f33]"
-      />
+      <input type="checkbox" v-model="form.terms" required class="rounded border-gray-600 bg-[#2b2f33]" />
       <span>Acepto los términos y condiciones</span>
     </label>
 
@@ -139,7 +128,7 @@
   </form>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
@@ -155,10 +144,6 @@ interface RegisterFormData {
   confirm: string
   terms: boolean
 }
-
-const emit = defineEmits<{
-  (e: 'submit', payload: RegisterFormData): void
-}>()
 
 const error = ref('')
 const form = reactive<RegisterFormData>({
@@ -177,9 +162,7 @@ const router = useRouter()
 
 const api = axios.create({
   baseURL: 'http://127.0.0.1:8000/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  headers: { 'Content-Type': 'application/json' },
 })
 
 async function onSubmit() {
@@ -191,29 +174,26 @@ async function onSubmit() {
   }
 
   try {
-    // Payload exacto que Django espera
+    // Payload ajustado a lo que espera el backend
     const payload = {
-      nombre: form.name, // nombre en serializer
-      apellido: form.lastName, // apellido en serializer
-      rol: form.role, // rol en serializer
-      tipo_documento: form.documentType, // tipo_documento en serializer
-      documento: form.documentNumber, // documento en serializer
+      nombre: form.name,
+      apellido: form.lastName,
+      rol: form.role,
+      tipo_documento: form.documentType,
+      documento: form.documentNumber,
       email: form.email,
       password: form.password,
-      confirm: form.confirm, // confirm en serializer
-      acepta_terminos: form.terms, // acepta_terminos en serializer
+      confirm: form.confirm,
+      acepta_terminos: form.terms,
     }
 
-    const res = await api.post('/register/', payload)
+    await api.post('/register/', payload)
 
-    console.log('Registro exitoso', res.data)
     alert('Registro exitoso')
     router.push('/login')
   } catch (err: any) {
-    console.error('Error completo del backend:', err)
+    console.error('Error backend:', err)
     error.value = err.response?.data || 'Error en el registro'
   }
-
-  emit('submit', { ...form })
 }
 </script>

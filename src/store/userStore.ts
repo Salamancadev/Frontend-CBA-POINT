@@ -3,15 +3,13 @@ import type { User } from '../types/User'
 
 export const useUserStore = defineStore('userStore', {
   state: () => ({
-    user: null as User | null, // Guardamos todo el usuario
+    user: null as User | null,
   }),
-
   getters: {
-    isLoggedIn: (state) => !!state.user, // Verdadero si hay usuario
-    role: (state) => state.user?.role || '', // Rol del usuario
-    fullName: (state) => state.user ? `${state.user.name} ${state.user.lastName}` : 'Usuario',
+    isLoggedIn: (state) => !!state.user,
+    role: (state) => state.user?.rol || '',
+    fullName: (state) => state.user ? `${state.user.nombre} ${state.user.apellido}` : 'Usuario',
   },
-
   actions: {
     setUser(userData: User) {
       this.user = userData
