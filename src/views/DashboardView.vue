@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="mb-10">
       <h1 class="text-5xl font-extrabold mb-2 drop-shadow" style="color: #7ED957;">Dashboard</h1>
-      <p class="text-lg">Bienvenido, <span class="font-semibold" style="color: #7ED957;">{{ user?.nombre }} {{ user?.apellido }}</span></p>
+      <p class="text-lg">Bienvenido, <span class="font-semibold" style="color: #7ED957;">{{ user?.name }} {{ user?.lastName }}</span></p>
     </div>
 
     <!-- Stats Grid -->
@@ -53,7 +53,7 @@
         </router-link>
 
         <router-link
-          v-if="user?.rol === 'Aprendiz'"
+          v-if="user?.role === 'Aprendiz'"
           to="/dash-Student"
           class="text-center p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col items-center"
           style="background-color: #7ED957; color: #212529;"
@@ -64,7 +64,7 @@
         </router-link>
 
         <router-link
-          v-if="user?.rol === 'Aprendiz'"
+          v-if="user?.role === 'Aprendiz'"
           to="/dash-mapa"
           class="text-center p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col items-center"
           style="background-color: #7ED957; color: #212529;"
@@ -85,7 +85,7 @@
         </router-link>
 
         <router-link
-          v-if="user?.rol !== 'Aprendiz'"
+          v-if="user?.role !== 'Aprendiz'"
           to="/dash-Student"
           class="text-center p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col items-center"
           style="background-color: #7ED957; color: #212529;"
@@ -96,7 +96,7 @@
         </router-link>
 
         <router-link
-          v-if="user?.rol !== 'Aprendiz'"
+          v-if="user?.role !== 'Aprendiz'"
           to="/dash-Reportes"
           class="text-center p-6 rounded-2xl shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col items-center"
           style="background-color: #7ED957; color: #212529;"
