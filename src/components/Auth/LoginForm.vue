@@ -41,7 +41,12 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+
+// Store del usuario (perfil)
 import { useUserStore } from '../../store/userStore'
+// Store de autenticación (navbar reactivo)
+import { useAuthStore } from '@/store/useAuthStore'
+// Función para mapear el perfil
 import { mapBackendUser } from '../../utils/userMapper'
 
 interface LoginFormData {
@@ -55,15 +60,13 @@ const form = reactive<LoginFormData>({
 })
 
 const error = ref('')
-const success = ref('') // <-- nuevo
+const success = ref('')
 const router = useRouter()
-// const api = axios.create({
-//   baseURL: 'http://127.0.0.1:8000/api',
-//   headers: { 'Content-Type': 'application/json' },
-// })
+const userStore = useUserStore()
+const authStore = useAuthStore()
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL_DEPLOY,
+  baseURL: 'http://127.0.0.1:8000/api',
   headers: { 'Content-Type': 'application/json' },
 })
 
@@ -72,28 +75,31 @@ async function onSubmit() {
   success.value = ''
 
   try {
+    // 1. Enviar credenciales al backend
     const res = await api.post('/login/', {
       documento: form.documentNumber,
       password: form.password,
     })
 
-    // Guardar tokens
+    // 2. Guardar tokens
     localStorage.setItem('access_token', res.data.access)
     localStorage.setItem('refresh_token', res.data.refresh)
 
-    const userStore = useUserStore()
-
-    // Traer perfil completo
+    // 3. Traer perfil del usuario autenticado
     const perfilRes = await api.get('/perfil/', {
       headers: { Authorization: `Bearer ${res.data.access}` },
     })
 
-    userStore.setUser(mapBackendUser(perfilRes.data))
-    localStorage.setItem('cba_user', JSON.stringify(userStore.user))
+    const userMapped = mapBackendUser(perfilRes.data)
+    userStore.setUser(userMapped)
+    localStorage.setItem('cba_user', JSON.stringify(userMapped))
 
-    success.value = 'Ingreso exitoso'
+    // 4. Notificar al store de auth (Navbar reacciona)
+    authStore.loginSuccess(userMapped)
 
-    // Redirigir según rol
+    success.value = 'Ingreso exitoso ✅'
+
+    // 5. Redirigir según rol
     const userRole = res.data.role
     if (userRole === 'Aprendiz') router.push({ name: 'dashboard-aprendiz' })
     else if (userRole === 'Instructor') router.push({ name: 'dashboard-instructor' })

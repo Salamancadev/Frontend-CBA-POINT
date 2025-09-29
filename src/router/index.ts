@@ -32,6 +32,9 @@ const Aprendiz_Scann = () => import('../views/Aprendiz/ScanPuntoControl.vue')
 // Asegúrate de tener la store configurada correctamente para obtener el rol del usuario
 import { useUserStore } from '../store/userStore'
 
+
+
+
 const routes = [
   { path: '/', name: 'home', component: Home },
   { path: '/login', name: 'login', component: Login },
