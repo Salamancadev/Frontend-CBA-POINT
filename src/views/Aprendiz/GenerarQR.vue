@@ -1,10 +1,10 @@
 <template>
-  <RouterLink
-    to="/dashboard-aprendiz"
-    class="bg-red-600 text-black font-semibold px-4 py-2 rounded hover:bg-red-700"
-  >
-    Back
-  </RouterLink>
+   <RouterLink
+  to="/dashboard-aprendiz"
+  class="bg-red-600 text-black font-semibold px-4 py-2 rounded hover:bg-red-700"
+>
+  Back
+</RouterLink>
   <div class="min-h-screen py-8 px-2 sm:px-8 text-gray-100" style="background-color: #212529">
     <div class="qr-header mb-10">
       <h1 class="text-4xl font-extrabold mb-2 drop-shadow" style="color: #7ed957">
@@ -64,11 +64,11 @@
               <div class="qr-details flex flex-col gap-2">
                 <div class="student-info mb-2">
                   <h4 class="text-lg font-bold" style="color: #7ed957">
-                    {{ user?.name || 'Estudiante' }}
+                    {{ user?.nombre || 'Estudiante' }}
                   </h4>
                   <p class="text-sm">
                     <span class="font-semibold" style="color: #7ed957">Cédula:</span>
-                    {{ user?.documentNumber }}
+                    {{ user?.tipo_documento }}
                   </p>
                   <p class="text-sm">
                     <span class="font-semibold" style="color: #7ed957">Ficha:</span>
@@ -412,7 +412,7 @@ onMounted(async () => {
 const generateInitialQR = () => {
   if (user.value) {
     const timestamp = Date.now()
-    currentQR.value.codigo = `STU-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}-${user.value.documentNumber}`
+    currentQR.value.codigo = `STU-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}-${user.value.tipo_documento}`
   }
 }
 
@@ -432,7 +432,7 @@ const regenerateQR = async () => {
     const timestamp = Date.now()
     currentQR.value = {
       id: Date.now().toString(),
-      codigo: `STU-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}-${user.value?.documentNumber}`,
+      codigo: `STU-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}-${user.value?.tipo_documento}`,
       fechaGeneracion: new Date(),
       fechaExpiracion: new Date(Date.now() + 24 * 60 * 60 * 1000),
       activo: true,
@@ -452,12 +452,12 @@ const shareQR = () => {
   if (navigator.share) {
     navigator.share({
       title: 'Mi QR de Asistencia - CbaPoint',
-      text: `QR de asistencia de ${user.value?.name}`,
+      text: `QR de asistencia de ${user.value?.nombre}`,
       url: window.location.href,
     })
   } else {
     // Fallback: copy to clipboard
-    const qrData = `${user.value?.name} - ${currentQR.value.codigo}`
+    const qrData = `${user.value?.nombre} - ${currentQR.value.codigo}`
     navigator.clipboard.writeText(qrData)
     alert('Datos del QR copiados al portapapeles')
   }
@@ -498,7 +498,7 @@ const closeLocationModal = () => {
 
 const getQRPattern = (index: number): boolean => {
   // Create a pseudo-random pattern based on user data and current time
-  const seed = (user.value?.documentNumber || '123456789') + currentQR.value.codigo
+  const seed = (user.value?.tipo_documento || '123456789') + currentQR.value.codigo
   const hash = seed.split('').reduce((a, b) => {
     a = (a << 5) - a + b.charCodeAt(0)
     return a & a
