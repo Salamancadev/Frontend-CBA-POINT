@@ -1,120 +1,40 @@
 <template>
-  <nav class="bg-gray-800 p-4">
-    <ul class="flex space-x-6 justify-center">
-      <li>
-        <RouterLink to="/inst_ConsulEvent" class="text-white hover:text-yellow-400 font-semibold">
-          Evento
-        </RouterLink>
-      </li>
-      <li>
-        <RouterLink to="/inst_Reportes" class="text-white hover:text-yellow-400 font-semibold">
-          Reportes
-        </RouterLink>
-      </li>
-      <li>
-        <RouterLink to="/inst_Scann" class="text-white hover:text-yellow-400 font-semibold">
-          Scann Qr
-        </RouterLink>
-      </li>
-    </ul>
-  </nav>
-  <div class="max-w-3xl mx-auto p-6">
-    <h2 class="text-2xl font-bold mb-6 text-center">Historial de Asistencia</h2>
+  <!-- 🔹 NAVBAR con botones tipo tarjetas -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-6">
+    <!-- Eventos -->
+    <RouterLink
+      to="/inst_ConsulEvent"
+      class="bg-blue-600 text-white p-6 rounded-xl shadow-lg hover:bg-blue-700 transition transform hover:-translate-y-1"
+    >
+      <div class="flex flex-col items-center text-center">
+        <span class="text-3xl mb-2">📅</span>
+        <h3 class="font-bold text-lg">Gestionar Eventos</h3>
+        <p class="text-sm opacity-80">Ver y administrar eventos propios</p>
+      </div>
+    </RouterLink>
 
-    <!-- Cargando -->
-    <div v-if="loading" class="text-blue-600">Cargando historial...</div>
+    <!-- Reportes -->
+    <RouterLink
+      to="/inst_Reportes"
+      class="bg-purple-600 text-white p-6 rounded-xl shadow-lg hover:bg-purple-700 transition transform hover:-translate-y-1"
+    >
+      <div class="flex flex-col items-center text-center">
+        <span class="text-3xl mb-2">📊</span>
+        <h3 class="font-bold text-lg">Reportes</h3>
+        <p class="text-sm opacity-80">Visualizar estadísticas y exportar</p>
+      </div>
+    </RouterLink>
 
-    <!-- Error -->
-    <div v-if="error" class="text-red-600">{{ error }}</div>
-
-    <!-- Gráfico -->
-    <div v-if="!loading && !error" class="bg-white p-4 rounded-lg shadow">
-      <BarChart :chart-data="chartData" :chart-options="chartOptions" />
-    </div>
+    <!-- Escanear QR -->
+    <RouterLink
+      to="/inst_Scann"
+      class="bg-green-600 text-white p-6 rounded-xl shadow-lg hover:bg-green-700 transition transform hover:-translate-y-1"
+    >
+      <div class="flex flex-col items-center text-center">
+        <span class="text-3xl mb-2">📷</span>
+        <h3 class="font-bold text-lg">Escanear QR</h3>
+        <p class="text-sm opacity-80">Registrar asistencia inmediata</p>
+      </div>
+    </RouterLink>
   </div>
 </template>
-
-<script>
-import axios from 'axios'
-import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-} from 'chart.js'
-import { defineComponent } from 'vue'
-import { Bar } from 'vue-chartjs'
-
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
-
-export default defineComponent({
-  name: 'HistorialAsistencia',
-  components: {
-    BarChart: Bar,
-  },
-  data() {
-    return {
-      asistencias: [],
-      loading: true,
-      error: null,
-      chartData: {
-        labels: [],
-        datasets: [],
-      },
-      chartOptions: {
-        responsive: true,
-        plugins: {
-          legend: { position: 'top' },
-          title: {
-            display: true,
-            text: 'Asistencias del Usuario',
-          },
-        },
-      },
-    }
-  },
-  mounted() {
-    this.getHistorial()
-  },
-  methods: {
-    async getHistorial() {
-      try {
-        const token = localStorage.getItem('access') // 🔑 ahora sí correcto
-        console.log('🔑 Token usado en la petición:', token)
-
-        const response = await axios.get('http://127.0.0.1:8000/api/asistencias/historial/', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        })
-        this.asistencias = response.data
-
-        // Contar presentes y ausentes
-        const presentes = this.asistencias.filter((a) => a.estado === 'presente').length
-        const ausentes = this.asistencias.filter((a) => a.estado === 'ausente').length
-
-        // Preparar datos para el gráfico
-        this.chartData = {
-          labels: ['Presentes', 'Ausentes'],
-          datasets: [
-            {
-              label: 'Cantidad',
-              data: [presentes, ausentes],
-              backgroundColor: ['#4ade80', '#f87171'],
-            },
-          ],
-        }
-      } catch (err) {
-        this.error = 'Error al cargar el historial ❌'
-        console.error('❌ Error en getHistorial:', err)
-      } finally {
-        this.loading = false
-      }
-    },
-  },
-})
-</script>
