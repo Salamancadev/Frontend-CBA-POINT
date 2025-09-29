@@ -13,10 +13,16 @@
         class="mt-1 w-full rounded-xl border border-gray-600 bg-[#2b2f33] p-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7ED957]"
         placeholder="••••••••" />
     </div>
+
+    <!-- Mensaje de error -->
+    <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
+
+    <!-- Mensaje de éxito -->
+    <p v-if="success" class="text-green-500 text-sm">{{ success }}</p>
+
     <button type="submit" class="w-full btn bg-[#7ED957] text-[#0b1220] hover:brightness-90">
       Ingresar
     </button>
-
   </form>
 </template>
 
@@ -38,6 +44,7 @@ const form = reactive<LoginFormData>({
 })
 
 const error = ref('')
+const success = ref('') // <-- nuevo
 const router = useRouter()
 const api = axios.create({
   baseURL: 'http://127.0.0.1:8000/api',
@@ -46,9 +53,9 @@ const api = axios.create({
 
 async function onSubmit() {
   error.value = ''
+  success.value = ''
 
   try {
-    // 1️⃣ Login
     const res = await api.post('/login/', {
       documento: form.documentNumber,
       password: form.password,
@@ -60,16 +67,15 @@ async function onSubmit() {
 
     const userStore = useUserStore()
 
-    // 2️⃣ Traer perfil completo del usuario
+    // Traer perfil completo
     const perfilRes = await api.get('/perfil/', {
       headers: { Authorization: `Bearer ${res.data.access}` }
     })
 
-    // Mapear y guardar usuario en Pinia
     userStore.setUser(mapBackendUser(perfilRes.data))
-
-    // Guardar en localStorage
     localStorage.setItem('cba_user', JSON.stringify(userStore.user))
+
+    success.value = 'Ingreso exitoso'
 
     // Redirigir según rol
     const userRole = res.data.role
