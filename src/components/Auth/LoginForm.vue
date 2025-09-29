@@ -62,11 +62,13 @@ const form = reactive<LoginFormData>({
 const error = ref('')
 const success = ref('')
 const router = useRouter()
-const userStore = useUserStore()
-const authStore = useAuthStore()
+// const api = axios.create({
+//   baseURL: 'http://127.0.0.1:8000/api',
+//   headers: { 'Content-Type': 'application/json' },
+// })
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL_DEPLOY,
   headers: { 'Content-Type': 'application/json' },
 })
 

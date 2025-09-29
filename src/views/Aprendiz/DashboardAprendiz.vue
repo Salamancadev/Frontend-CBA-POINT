@@ -30,7 +30,7 @@
     <!-- Header -->
     <header class="bg-indigo-600 text-white p-4 rounded-lg shadow mb-6">
       <h1 class="text-2xl font-bold">🎓 Dashboard Estudiante</h1>
-      <p class="text-sm">Bienvenido, {{ name }}</p>
+      <p class="text-sm">Bienvenido {{ name }}</p>
     </header>
 
     <!-- Contenido -->
