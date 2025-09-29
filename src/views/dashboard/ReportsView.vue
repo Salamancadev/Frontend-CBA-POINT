@@ -1,3 +1,7 @@
+<template>
+  <h1>Hola</h1>
+</template>
+
 <!-- <template>
   <div
     class="max-w-screen-xl mx-auto py-8 px-4"
