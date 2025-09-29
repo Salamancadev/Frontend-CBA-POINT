@@ -1,25 +1,29 @@
 <template>
   <div class="p-5 bg-gray-100 min-h-screen">
     <!-- Botón volver -->
-    <button @click="$router.back()" class="bg-gray-700 text-white p-2 rounded mb-4">Volver al menú</button>
+    <button @click="$router.back()" class="bg-gray-700 text-white p-2 rounded mb-4">
+      Volver al menú
+    </button>
 
     <h1 class="text-2xl font-bold mb-4">Gestión de Usuarios</h1>
 
     <!-- Controles de búsqueda -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:gap-4 mb-4">
-      <input 
+      <input
         v-model="searchDocument"
-        type="text" 
-        placeholder="Buscar por documento..." 
+        type="text"
+        placeholder="Buscar por documento..."
         class="p-2 border rounded w-full sm:w-1/3"
       />
-      <input 
+      <input
         v-model="filterFicha"
-        type="text" 
-        placeholder="Filtrar por ficha (opcional)" 
+        type="text"
+        placeholder="Filtrar por ficha (opcional)"
         class="p-2 border rounded w-full sm:w-1/3"
       />
-      <button @click="openCreateModal" class="bg-blue-600 text-white p-2 rounded mt-2 sm:mt-0">Crear Usuario</button>
+      <button @click="openCreateModal" class="bg-blue-600 text-white p-2 rounded mt-2 sm:mt-0">
+        Crear Usuario
+      </button>
     </div>
 
     <!-- Tabla de usuarios -->
@@ -42,8 +46,12 @@
           <td class="p-2">{{ user.ficha ?? '' }}</td>
           <td class="p-2">{{ user.rol }}</td>
           <td class="p-2 flex gap-2">
-            <button @click="editUser(user)" class="bg-yellow-500 text-white p-1 rounded">Editar</button>
-            <button @click="deleteUser(user.id)" class="bg-red-500 text-white p-1 rounded">Eliminar</button>
+            <button @click="editUser(user)" class="bg-yellow-500 text-white p-1 rounded">
+              Editar
+            </button>
+            <button @click="deleteUser(user.id)" class="bg-red-500 text-white p-1 rounded">
+              Eliminar
+            </button>
           </td>
         </tr>
         <tr v-if="filteredUsers.length === 0">
@@ -53,18 +61,47 @@
     </table>
 
     <!-- Modal Crear/Editar -->
-    <div v-if="showCreate" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div
+      v-if="showCreate"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+    >
       <div class="bg-white p-5 rounded w-96">
-        <h2 class="text-lg font-bold mb-2">{{ editingUser ? 'Editar Usuario' : 'Crear Usuario' }}</h2>
+        <h2 class="text-lg font-bold mb-2">
+          {{ editingUser ? 'Editar Usuario' : 'Crear Usuario' }}
+        </h2>
         <form @submit.prevent="saveUser">
-          <input v-model="form.nombre" placeholder="Nombre" class="w-full p-2 mb-2 border rounded"/>
-          <input v-model="form.apellido" placeholder="Apellido" class="w-full p-2 mb-2 border rounded"/>
-          <input v-model="form.documento" placeholder="Documento" class="w-full p-2 mb-2 border rounded"/>
-          <input v-model="form.email" placeholder="Correo" class="w-full p-2 mb-2 border rounded"/>
-          
+          <input
+            v-model="form.nombre"
+            placeholder="Nombre"
+            class="w-full p-2 mb-2 border rounded"
+          />
+          <input
+            v-model="form.apellido"
+            placeholder="Apellido"
+            class="w-full p-2 mb-2 border rounded"
+          />
+          <input
+            v-model="form.documento"
+            placeholder="Documento"
+            class="w-full p-2 mb-2 border rounded"
+          />
+          <input v-model="form.email" placeholder="Correo" class="w-full p-2 mb-2 border rounded" />
+
           <!-- Contraseña solo al editar -->
-          <input v-if="editingUser" v-model="form.password" type="password" placeholder="Nueva contraseña" class="w-full p-2 mb-2 border rounded"/>
-          <input v-if="editingUser" v-model="form.confirm" type="password" placeholder="Confirmar nueva contraseña" class="w-full p-2 mb-2 border rounded"/>
+          <input
+            v-if="editingUser"
+            v-model="form.password"
+            type="password"
+            placeholder="Nueva contraseña"
+            class="w-full p-2 mb-2 border rounded"
+          />
+          <input
+            v-if="editingUser"
+            v-model="form.confirm"
+            type="password"
+            placeholder="Confirmar nueva contraseña"
+            class="w-full p-2 mb-2 border rounded"
+          />
 
           <select v-model="form.rol" class="w-full p-2 mb-2 border rounded">
             <option value="Aprendiz">Aprendiz</option>
@@ -72,10 +109,21 @@
             <option value="Administrativo">Administrativo</option>
           </select>
 
-          <input v-if="form.rol === 'Aprendiz'" v-model="form.ficha" placeholder="Ficha (solo aprendices)" class="w-full p-2 mb-2 border rounded"/>
+          <input
+            v-if="form.rol === 'Aprendiz'"
+            v-model="form.ficha"
+            placeholder="Ficha (solo aprendices)"
+            class="w-full p-2 mb-2 border rounded"
+          />
 
           <div class="flex justify-end gap-2 mt-2">
-            <button @click="showCreate=false" type="button" class="bg-gray-500 text-white p-1 rounded">Cancelar</button>
+            <button
+              @click="showCreate = false"
+              type="button"
+              class="bg-gray-500 text-white p-1 rounded"
+            >
+              Cancelar
+            </button>
             <button type="submit" class="bg-blue-600 text-white p-1 rounded">Guardar</button>
           </div>
         </form>
@@ -113,7 +161,7 @@ const form = reactive<User>({
   ficha: '',
   email: '',
   password: '',
-  confirm: ''
+  confirm: '',
 })
 
 const searchDocument = ref('')
@@ -121,9 +169,11 @@ const filterFicha = ref('')
 
 // Filtrado reactivo por documento y ficha
 const filteredUsers = computed(() => {
-  return users.value.filter(u => {
+  return users.value.filter((u) => {
     const docMatch = u.documento.toLowerCase().includes(searchDocument.value.toLowerCase())
-    const fichaMatch = filterFicha.value ? (u.ficha?.toLowerCase().includes(filterFicha.value.toLowerCase()) ?? false) : true
+    const fichaMatch = filterFicha.value
+      ? (u.ficha?.toLowerCase().includes(filterFicha.value.toLowerCase()) ?? false)
+      : true
     return docMatch && fichaMatch
   })
 })
@@ -167,11 +217,11 @@ const saveUser = async () => {
       documento: form.documento,
       rol: form.rol,
       ficha: form.rol === 'Aprendiz' ? form.ficha : null,
-      email: form.email
+      email: form.email,
     }
 
     if (editingUser.value) {
-      if(form.password && form.password === form.confirm){
+      if (form.password && form.password === form.confirm) {
         payload.password = form.password
         payload.confirm = form.confirm
       }

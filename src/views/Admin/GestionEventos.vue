@@ -32,10 +32,16 @@
           <td class="p-2">{{ event.fecha_inicio }}</td>
           <td class="p-2">{{ event.fecha_fin }}</td>
           <td class="p-2">{{ event.jornada ?? '-' }}</td>
-          <td class="p-2">{{ event.docente?.nombre ?? '-' }} {{ event.docente?.apellido ?? '' }}</td>
+          <td class="p-2">
+            {{ event.docente?.nombre ?? '-' }} {{ event.docente?.apellido ?? '' }}
+          </td>
           <td class="p-2 flex gap-2">
-            <button @click="editEvent(event)" class="bg-yellow-500 text-white p-1 rounded">Editar</button>
-            <button @click="deleteEvent(event.id)" class="bg-red-500 text-white p-1 rounded">Eliminar</button>
+            <button @click="editEvent(event)" class="bg-yellow-500 text-white p-1 rounded">
+              Editar
+            </button>
+            <button @click="deleteEvent(event.id)" class="bg-red-500 text-white p-1 rounded">
+              Eliminar
+            </button>
           </td>
         </tr>
         <tr v-if="events.length === 0">
@@ -45,11 +51,21 @@
     </table>
 
     <!-- Modal Crear/Editar Evento -->
-    <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div
+      v-if="showModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+    >
       <div class="bg-white p-5 rounded w-96">
-        <h2 class="text-lg font-bold mb-2">{{ editingEvent ? 'Editar Evento' : 'Crear Evento' }}</h2>
+        <h2 class="text-lg font-bold mb-2">
+          {{ editingEvent ? 'Editar Evento' : 'Crear Evento' }}
+        </h2>
         <form @submit.prevent="saveEvent">
-          <input v-model="form.nombre" placeholder="Nombre del evento" class="w-full p-2 mb-2 border rounded" required/>
+          <input
+            v-model="form.nombre"
+            placeholder="Nombre del evento"
+            class="w-full p-2 mb-2 border rounded"
+            required
+          />
 
           <select v-model="form.tipo" class="w-full p-2 mb-2 border rounded" required>
             <option value="">Seleccionar tipo</option>
@@ -58,8 +74,20 @@
             <option value="Charla">Charla</option>
           </select>
 
-          <input v-model="form.fecha_inicio" type="date" placeholder="Fecha inicio" class="w-full p-2 mb-2 border rounded" required/>
-          <input v-model="form.fecha_fin" type="date" placeholder="Fecha fin" class="w-full p-2 mb-2 border rounded" required/>
+          <input
+            v-model="form.fecha_inicio"
+            type="date"
+            placeholder="Fecha inicio"
+            class="w-full p-2 mb-2 border rounded"
+            required
+          />
+          <input
+            v-model="form.fecha_fin"
+            type="date"
+            placeholder="Fecha fin"
+            class="w-full p-2 mb-2 border rounded"
+            required
+          />
 
           <select v-model="form.jornada" class="w-full p-2 mb-2 border rounded" required>
             <option value="">Seleccionar jornada</option>
@@ -70,11 +98,15 @@
 
           <select v-model="form.docente_id" class="w-full p-2 mb-2 border rounded" required>
             <option value="">Seleccionar docente</option>
-            <option v-for="doc in docentes" :key="doc.id" :value="doc.id">{{ doc.nombre }} {{ doc.apellido }}</option>
+            <option v-for="doc in docentes" :key="doc.id" :value="doc.id">
+              {{ doc.nombre }} {{ doc.apellido }}
+            </option>
           </select>
 
           <div class="flex justify-end gap-2 mt-2">
-            <button @click="closeModal" type="button" class="bg-gray-500 text-white p-1 rounded">Cancelar</button>
+            <button @click="closeModal" type="button" class="bg-gray-500 text-white p-1 rounded">
+              Cancelar
+            </button>
             <button type="submit" class="bg-green-600 text-white p-1 rounded">Guardar</button>
           </div>
         </form>
@@ -95,7 +127,7 @@ interface Evento {
   fecha_fin: string
   jornada: string
   docente_id?: number
-  docente?: { id: number, nombre: string, apellido: string }
+  docente?: { id: number; nombre: string; apellido: string }
   activo?: boolean
 }
 
@@ -118,7 +150,7 @@ const form = reactive<Partial<Evento>>({
   fecha_inicio: '',
   fecha_fin: '',
   jornada: '',
-  docente_id: undefined
+  docente_id: undefined,
 })
 
 // --------------------------
@@ -148,7 +180,15 @@ const fetchDocentes = async () => {
 const openModal = () => {
   showModal.value = true
   editingEvent.value = false
-  Object.assign(form, { id: undefined, nombre: '', tipo: '', fecha_inicio: '', fecha_fin: '', jornada: '', docente_id: undefined })
+  Object.assign(form, {
+    id: undefined,
+    nombre: '',
+    tipo: '',
+    fecha_inicio: '',
+    fecha_fin: '',
+    jornada: '',
+    docente_id: undefined,
+  })
 }
 
 // --------------------------
@@ -163,7 +203,14 @@ const closeModal = () => {
 const saveEvent = async () => {
   try {
     // Validación básica
-    if (!form.nombre || !form.tipo || !form.fecha_inicio || !form.fecha_fin || !form.jornada || !form.docente_id) {
+    if (
+      !form.nombre ||
+      !form.tipo ||
+      !form.fecha_inicio ||
+      !form.fecha_fin ||
+      !form.jornada ||
+      !form.docente_id
+    ) {
       return alert('Todos los campos son obligatorios')
     }
 
@@ -174,7 +221,7 @@ const saveEvent = async () => {
       fecha_fin: form.fecha_fin,
       jornada: form.jornada,
       docente_id: form.docente_id,
-      activo: true
+      activo: true,
     }
 
     if (editingEvent.value && form.id) {
@@ -199,7 +246,7 @@ const editEvent = (event: Evento) => {
     fecha_inicio: event.fecha_inicio,
     fecha_fin: event.fecha_fin,
     jornada: event.jornada,
-    docente_id: event.docente?.id
+    docente_id: event.docente?.id,
   })
   editingEvent.value = true
   showModal.value = true

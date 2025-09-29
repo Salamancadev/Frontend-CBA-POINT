@@ -14,9 +14,7 @@
       <input type="date" v-model="startDate" class="p-2 border rounded" placeholder="Desde" />
       <input type="date" v-model="endDate" class="p-2 border rounded" placeholder="Hasta" />
 
-      <button @click="fetchReport" class="bg-blue-600 text-white px-4 py-2 rounded">
-        Filtrar
-      </button>
+      <button @click="fetchReport" class="bg-blue-600 text-white px-4 py-2 rounded">Filtrar</button>
 
       <button @click="exportCSV" class="bg-green-600 text-white px-4 py-2 rounded">
         Exportar CSV
@@ -45,9 +43,7 @@
       </tbody>
     </table>
 
-    <p v-if="reportData.length === 0" class="mt-4 text-gray-500">
-      No hay datos para mostrar.
-    </p>
+    <p v-if="reportData.length === 0" class="mt-4 text-gray-500">No hay datos para mostrar.</p>
   </div>
 </template>
 
@@ -93,7 +89,7 @@ const exportCSV = () => {
   if (reportData.value.length === 0) return
 
   const header = ['Evento', 'Aprendiz', 'Documento', 'Asistencias', 'Porcentaje']
-  const rows = reportData.value.map(row => [
+  const rows = reportData.value.map((row) => [
     row.eventName,
     `${row.name} ${row.lastName}`,
     row.documentNumber,
@@ -101,7 +97,7 @@ const exportCSV = () => {
     row.attendancePercentage,
   ])
 
-  let csvContent = [header, ...rows].map(e => e.join(',')).join('\n')
+  let csvContent = [header, ...rows].map((e) => e.join(',')).join('\n')
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
   const link = document.createElement('a')
   link.href = URL.createObjectURL(blob)

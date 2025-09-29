@@ -45,7 +45,9 @@
     <!-- Tipo y número de documento -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div>
-        <label for="documentType" class="block text-sm font-medium text-white">Tipo de documento</label>
+        <label for="documentType" class="block text-sm font-medium text-white"
+          >Tipo de documento</label
+        >
         <select
           id="documentType"
           v-model="form.documentType"
@@ -59,7 +61,9 @@
         </select>
       </div>
       <div>
-        <label for="documentNumber" class="block text-sm font-medium text-white">Número de documento</label>
+        <label for="documentNumber" class="block text-sm font-medium text-white"
+          >Número de documento</label
+        >
         <input
           id="documentNumber"
           v-model="form.documentNumber"
@@ -99,7 +103,9 @@
         />
       </div>
       <div>
-        <label for="confirm" class="block text-sm font-medium text-white">Confirmar contraseña</label>
+        <label for="confirm" class="block text-sm font-medium text-white"
+          >Confirmar contraseña</label
+        >
         <input
           id="confirm"
           v-model="form.confirm"
@@ -114,7 +120,12 @@
 
     <!-- Términos -->
     <label class="inline-flex items-center gap-2 text-sm text-gray-300">
-      <input type="checkbox" v-model="form.terms" required class="rounded border-gray-600 bg-[#2b2f33]" />
+      <input
+        type="checkbox"
+        v-model="form.terms"
+        required
+        class="rounded border-gray-600 bg-[#2b2f33]"
+      />
       <span>Acepto los términos y condiciones</span>
     </label>
 

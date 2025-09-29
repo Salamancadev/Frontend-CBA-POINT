@@ -77,8 +77,6 @@ const routes = [
     meta: { requiresAuth: true, role: 'Aprendiz' },
   },
 
-
-
   {
     path: '/dashboard-instructor',
     name: 'dashboard-instructor',
@@ -105,7 +103,6 @@ const routes = [
     component: Instructor_Scan,
     meta: { requiresAuth: true, role: 'Instructor' },
   },
-
 
   {
     path: '/dashboard-admin',

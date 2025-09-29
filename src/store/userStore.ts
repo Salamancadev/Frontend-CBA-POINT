@@ -8,7 +8,7 @@ export const useUserStore = defineStore('userStore', {
   getters: {
     isLoggedIn: (state) => !!state.user,
     role: (state) => state.user?.rol || '',
-    fullName: (state) => state.user ? `${state.user.nombre} ${state.user.apellido}` : 'Usuario',
+    fullName: (state) => (state.user ? `${state.user.nombre} ${state.user.apellido}` : 'Usuario'),
   },
   actions: {
     setUser(userData: User) {

@@ -1,10 +1,10 @@
 <template>
   <RouterLink
-  to="/dashboard-instructor"
-  class="bg-red-600 text-black font-semibold px-4 py-2 rounded hover:bg-red-700"
->
-  Back
-</RouterLink>
+    to="/dashboard-instructor"
+    class="bg-red-600 text-black font-semibold px-4 py-2 rounded hover:bg-red-700"
+  >
+    Back
+  </RouterLink>
   <div class="max-w-5xl mx-auto p-6">
     <h2 class="text-2xl font-bold mb-4 text-center">Eventos Registrados</h2>
 
@@ -30,11 +30,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="evento in eventos"
-          :key="evento.id"
-          class="hover:bg-gray-100"
-        >
+        <tr v-for="evento in eventos" :key="evento.id" class="hover:bg-gray-100">
           <td class="border border-gray-400 px-4 py-2">{{ evento.nombre }}</td>
           <td class="border border-gray-400 px-4 py-2 capitalize">{{ evento.tipo }}</td>
           <td class="border border-gray-400 px-4 py-2">
@@ -44,14 +40,11 @@
             {{ formatearFecha(evento.fecha_fin) }}
           </td>
           <td class="border border-gray-400 px-4 py-2">
-            {{ evento.docente || "Sin asignar" }}
+            {{ evento.docente || 'Sin asignar' }}
           </td>
           <td class="border border-gray-400 px-4 py-2">
-            <span
-              :class="evento.activo ? 'text-green-600' : 'text-red-600'"
-              class="font-semibold"
-            >
-              {{ evento.activo ? "Sí" : "No" }}
+            <span :class="evento.activo ? 'text-green-600' : 'text-red-600'" class="font-semibold">
+              {{ evento.activo ? 'Sí' : 'No' }}
             </span>
           </td>
         </tr>
@@ -66,15 +59,15 @@
 </template>
 
 <script lang="ts">
-import axios from "axios"
+import axios from 'axios'
 
 export default {
-  name: "VerEventos",
+  name: 'VerEventos',
   data() {
     return {
       eventos: [],
       loading: true,
-      error: null
+      error: null,
     }
   },
   mounted() {
@@ -83,26 +76,25 @@ export default {
   methods: {
     async obtenerEventos() {
       try {
-        const response = await axios.get("http://localhost:8000/api/eventos/listar/", {
+        const response = await axios.get('http://localhost:8000/api/eventos/listar/', {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // si usas JWT
-            "Content-Type": "application/json"
-          }
+            Authorization: `Bearer ${localStorage.getItem('token')}`, // si usas JWT
+            'Content-Type': 'application/json',
+          },
         })
         this.eventos = response.data
       } catch (err) {
-        this.error = "Error al cargar los eventos ❌"
+        this.error = 'Error al cargar los eventos ❌'
       } finally {
         this.loading = false
       }
     },
     formatearFecha(fecha) {
-      return new Date(fecha).toLocaleString("es-CO", {
-        dateStyle: "short",
-        timeStyle: "short"
+      return new Date(fecha).toLocaleString('es-CO', {
+        dateStyle: 'short',
+        timeStyle: 'short',
       })
-    }
-  }
+    },
+  },
 }
 </script>
-

@@ -5,7 +5,11 @@
     <!-- Seleccionar evento -->
     <div class="mb-4">
       <label class="block font-semibold mb-1">Selecciona un Evento</label>
-      <select v-model="selectedEventId" @change="fetchParticipants" class="p-2 border rounded w-full">
+      <select
+        v-model="selectedEventId"
+        @change="fetchParticipants"
+        class="p-2 border rounded w-full"
+      >
         <option value="" disabled>-- Selecciona un evento --</option>
         <option v-for="event in events" :key="event.id" :value="event.id">
           {{ event.name }} - {{ event.date }}
@@ -78,7 +82,7 @@ const fetchParticipants = async () => {
 // Guardar asistencias
 const saveAttendance = async () => {
   try {
-    const payload = participants.value.map(p => ({
+    const payload = participants.value.map((p) => ({
       id: p.id,
       attendance: p.attendance,
     }))

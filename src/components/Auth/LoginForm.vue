@@ -3,15 +3,26 @@
   <form @submit.prevent="onSubmit" class="space-y-4">
     <div>
       <label for="documento" class="block text-sm font-medium text-white">Documento</label>
-      <input id="documento" v-model="form.documentNumber" type="text" required
+      <input
+        id="documento"
+        v-model="form.documentNumber"
+        type="text"
+        required
         class="mt-1 w-full rounded-xl border border-gray-600 bg-[#2b2f33] p-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7ED957]"
-        placeholder="x.xxx.xxx.xxx" />
+        placeholder="x.xxx.xxx.xxx"
+      />
     </div>
     <div>
       <label for="password" class="block text-sm font-medium text-white">Contraseña</label>
-      <input id="password" v-model="form.password" type="password" required minlength="6"
+      <input
+        id="password"
+        v-model="form.password"
+        type="password"
+        required
+        minlength="6"
         class="mt-1 w-full rounded-xl border border-gray-600 bg-[#2b2f33] p-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7ED957]"
-        placeholder="••••••••" />
+        placeholder="••••••••"
+      />
     </div>
 
     <!-- Mensaje de error -->
@@ -69,7 +80,7 @@ async function onSubmit() {
 
     // Traer perfil completo
     const perfilRes = await api.get('/perfil/', {
-      headers: { Authorization: `Bearer ${res.data.access}` }
+      headers: { Authorization: `Bearer ${res.data.access}` },
     })
 
     userStore.setUser(mapBackendUser(perfilRes.data))
@@ -83,7 +94,6 @@ async function onSubmit() {
     else if (userRole === 'Instructor') router.push({ name: 'dashboard-instructor' })
     else if (userRole === 'Administrativo') router.push({ name: 'dashboard-admin' })
     else error.value = 'Rol de usuario no reconocido'
-
   } catch (err: any) {
     console.error('Error completo del backend:', err)
     error.value = err.response?.data?.error || 'Error en el login'

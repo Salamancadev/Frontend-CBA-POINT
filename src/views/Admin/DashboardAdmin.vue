@@ -3,7 +3,9 @@
     <!-- Header -->
     <div class="mb-8">
       <h1 class="text-4xl font-bold mb-1">Dashboard Administrador</h1>
-      <p class="text-lg text-gray-500">Bienvenido, {{ mappedUser.nombre }} {{ mappedUser.apellido }}</p>
+      <p class="text-lg text-gray-500">
+        Bienvenido, {{ mappedUser.nombre }} {{ mappedUser.apellido }}
+      </p>
     </div>
 
     <!-- Stats Grid -->
@@ -84,7 +86,11 @@
     <div>
       <h2 class="text-2xl font-semibold mb-4">Actividad Reciente</h2>
       <div class="flex flex-col gap-3">
-        <div v-for="activity in recentActivities" :key="activity.id" class="bg-white p-3 rounded-xl flex items-center shadow">
+        <div
+          v-for="activity in recentActivities"
+          :key="activity.id"
+          class="bg-white p-3 rounded-xl flex items-center shadow"
+        >
           <div class="text-2xl mr-3">{{ activity.icon }}</div>
           <div>
             <h4 class="font-bold">{{ activity.title }}</h4>
@@ -109,7 +115,7 @@ const mappedUser = computed(() => {
   const u = userStore.user
   return {
     nombre: u?.nombre ?? '',
-    apellido: u?.apellido ?? ''
+    apellido: u?.apellido ?? '',
   }
 })
 
@@ -121,8 +127,20 @@ const attendancePercentage = ref(0)
 
 // Actividad reciente
 const recentActivities = ref([
-  { id: 1, icon: '✅', title: 'Asistencia registrada', description: 'Juan Pérez - Laboratorio A', timestamp: new Date() },
-  { id: 2, icon: '📅', title: 'Evento creado', description: 'Semana de inducción', timestamp: new Date() },
+  {
+    id: 1,
+    icon: '✅',
+    title: 'Asistencia registrada',
+    description: 'Juan Pérez - Laboratorio A',
+    timestamp: new Date(),
+  },
+  {
+    id: 2,
+    icon: '📅',
+    title: 'Evento creado',
+    description: 'Semana de inducción',
+    timestamp: new Date(),
+  },
 ])
 
 const formatTime = (timestamp: Date) => {

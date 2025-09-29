@@ -1,10 +1,10 @@
 <template>
-   <RouterLink
-  to="/dashboard-aprendiz"
-  class="bg-red-600 text-black font-semibold px-4 py-2 rounded hover:bg-red-700"
->
-  Back
-</RouterLink>
+  <RouterLink
+    to="/dashboard-aprendiz"
+    class="bg-red-600 text-black font-semibold px-4 py-2 rounded hover:bg-red-700"
+  >
+    Back
+  </RouterLink>
   <div class="min-h-screen py-8 px-2 sm:px-8 text-gray-100" style="background-color: #212529">
     <div class="qr-header mb-10">
       <h1 class="text-4xl font-extrabold mb-2 drop-shadow" style="color: #7ed957">

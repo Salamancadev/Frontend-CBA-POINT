@@ -1,10 +1,10 @@
 <template>
   <RouterLink
-  to="/dashboard-aprendiz"
-  class="bg-red-600 text-black font-semibold px-4 py-2 rounded hover:bg-red-700"
->
-  Back
-</RouterLink>
+    to="/dashboard-aprendiz"
+    class="bg-red-600 text-black font-semibold px-4 py-2 rounded hover:bg-red-700"
+  >
+    Back
+  </RouterLink>
   <div class="max-w-4xl mx-auto p-6">
     <h2 class="text-2xl font-bold mb-4 text-center">Lista de Eventos</h2>
 
@@ -39,15 +39,15 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from 'axios'
 
 export default {
-  name: "ListaEventos",
+  name: 'ListaEventos',
   data() {
     return {
       eventos: [],
       loading: true,
-      error: null
+      error: null,
     }
   },
   async mounted() {
@@ -56,21 +56,21 @@ export default {
   methods: {
     async getEventos() {
       try {
-        const token = localStorage.getItem("access") // 👈 asegúrate de guardar tu token de login aquí
-        const response = await axios.get("http://127.0.0.1:8000/api/eventos/listar/", {
+        const token = localStorage.getItem('access') // 👈 asegúrate de guardar tu token de login aquí
+        const response = await axios.get('http://127.0.0.1:8000/api/eventos/listar/', {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          }
+            'Content-Type': 'application/json',
+          },
         })
         this.eventos = response.data
       } catch (err) {
-        console.error("Error cargando eventos:", err)
-        this.error = "❌ No se pudieron cargar los eventos (token inválido o expirado)"
+        console.error('Error cargando eventos:', err)
+        this.error = '❌ No se pudieron cargar los eventos (token inválido o expirado)'
       } finally {
         this.loading = false
       }
-    }
-  }
+    },
+  },
 }
 </script>
