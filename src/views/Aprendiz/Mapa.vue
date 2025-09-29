@@ -1,24 +1,32 @@
 <template>
   <RouterLink
     to="/dashboard-aprendiz"
-    class="bg-red-600 text-black font-semibold px-4 py-2 rounded hover:bg-red-700"
+    class="bg-red-600 text-white font-semibold px-4 py-2 rounded hover:bg-red-700 transition duration-300"
   >
-    Back
+    Volver
   </RouterLink>
-  <div>
-    <div class="controls">
-      <input
-        v-model="searchQuery"
-        id="searchBox"
-        placeholder="Buscar dirección o lugar..."
-        size="40"
-      />
-      <button @click="buscarLugar">Buscar</button>
-      <button @click="irDestino">Ir al destino</button>
-      <span id="status">{{ status }}</span>
-      <span id="routeInfo">{{ routeInfo }}</span>
+  <div class="container">
+    <!-- Contenedor para los controles y el mapa -->
+    <div class="main-content">
+      <!-- Controles a la izquierda -->
+      <div class="controls">
+        <input
+          v-model="searchQuery"
+          id="searchBox"
+          placeholder="Buscar dirección o lugar..."
+          class="search-input"
+        />
+        <button @click="buscarLugar" class="btn btn-search">Buscar</button>
+        <button @click="irDestino" class="btn btn-destination">Ir al destino</button>
+        <div class="status-container">
+          <span id="status" class="status">{{ status }}</span>
+          <span id="routeInfo" class="route-info">{{ routeInfo }}</span>
+        </div>
+      </div>
+
+      <!-- Mapa a la derecha -->
+      <div id="map"></div>
     </div>
-    <div id="map"></div>
   </div>
 </template>
 
@@ -98,21 +106,21 @@ export default {
     ]
 
     const bloques = [
-      { nombre: 'CBA Bloque A', lat: 4.695134, lng: -74.216396 },
-      { nombre: 'CBA Bloque B', lat: 4.695013, lng: -74.21654 },
-      { nombre: 'CBA Bloque C', lat: 4.694757, lng: -74.21672 },
-      { nombre: 'CBA Bloque D', lat: 4.695206, lng: -74.217199 },
-      { nombre: 'CBA Bloque Cunicultura', lat: 4.693664, lng: -74.218919 },
-      { nombre: 'CBA Bloque I', lat: 4.693242, lng: -74.219064 },
-      { nombre: 'CBA Bloque Caprinos', lat: 4.693258, lng: -74.220471 },
-      { nombre: 'CBA Bloque Porsicultura', lat: 4.692939, lng: -74.220107 },
-      { nombre: 'CBA Bloque H Ganaderia', lat: 4.691532, lng: -74.219067 },
-      { nombre: 'CBA Bloque G', lat: 4.694306, lng: -74.214459 },
+      { nombre: 'Sena Mosquera CBA Bloque A ', lat: 4.695134, lng: -74.216396 },
+      { nombre: 'Sena Mosquera CBA Bloque B', lat: 4.695013, lng: -74.21654 },
+      { nombre: 'Sena Mosquera CBA Bloque C', lat: 4.694757, lng: -74.21672 },
+      { nombre: 'Sena Mosquera CBA Bloque D', lat: 4.695206, lng: -74.217199 },
+      { nombre: 'Sena Mosquera CBA Bloque Cunicultura', lat: 4.693664, lng: -74.218919 },
+      { nombre: 'Sena Mosquera CBA Bloque I', lat: 4.693242, lng: -74.219064 },
+      { nombre: 'Sena Mosquera CBA Bloque Caprinos', lat: 4.693258, lng: -74.220471 },
+      { nombre: 'Sena Mosquera CBA Bloque Porsicultura', lat: 4.692939, lng: -74.220107 },
+      { nombre: 'Sena Mosquera CBA Bloque H Ganaderia', lat: 4.691532, lng: -74.219067 },
+      { nombre: 'Sena Mosquera CBA Bloque G', lat: 4.694306, lng: -74.214459 },
     ]
 
     const internado = [
-      { nombre: 'CBA Internado 1', lat: 4.694902, lng: -74.217449 },
-      { nombre: 'CBA Internado 2', lat: 4.694672, lng: -74.217108 },
+      { nombre: 'Sena Mosquera CBA Internado 1', lat: 4.694902, lng: -74.217449 },
+      { nombre: 'Sena Mosquera CBA Internado 2', lat: 4.694672, lng: -74.217108 },
     ]
 
     const redIcon = new L.Icon({
@@ -213,12 +221,102 @@ export default {
 </script>
 
 <style scoped>
-#map {
-  height: 85vh;
+/* Contenedor principal */
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f4f6f9;
+  min-height: 100vh;
+  flex-direction: column; /* Apilado en pantallas pequeñas */
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  flex-wrap: wrap; /* Permite que los elementos se ajusten cuando el espacio sea limitado */
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  max-width: 100%;
+}
+
+.search-input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 16px;
   width: 100%;
 }
-.controls {
-  padding: 8px;
-  background: #f7f7f7;
+
+.btn {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-search {
+  background-color: #3498db;
+  color: white;
+  border: none;
+}
+
+.btn-search:hover {
+  background-color: #2980b9;
+}
+
+.btn-destination {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+}
+
+.btn-destination:hover {
+  background-color: #27ae60;
+}
+
+.status-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.status, .route-info {
+  font-size: 14px;
+  color: #555;
+}
+
+#map {
+  height: 85vh;
+  width: calc(100% - 340px); /* Ajuste el mapa al espacio restante */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .controls {
+    width: 100%;
+  }
+
+  #map {
+    width: 100%;
+    height: 60vh; /* Ajuste del mapa en pantallas pequeñas */
+  }
 }
 </style>

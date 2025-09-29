@@ -1,76 +1,136 @@
 <template>
   <RouterLink
     to="/dashboard-aprendiz"
-    class="bg-red-600 text-black font-semibold px-4 py-2 rounded hover:bg-red-700"
+    class="bg-red-600 text-black font-semibold px-4 py-2 mt-8 rounded hover:bg-red-700"
   >
     Back
   </RouterLink>
-  <div class="max-w-4xl mx-auto p-6">
-    <h2 class="text-2xl font-bold mb-4 text-center">Lista de Eventos</h2>
+  <div class="events-container ">
+    <h1 class="events-title">Eventos Actuales</h1>
 
-    <!-- Loading -->
-    <div v-if="loading" class="text-blue-600">Cargando eventos...</div>
+    <!-- Lista de eventos -->
+    <div v-if="events.length > 0" class="events-list">
+      <div v-for="event in events" :key="event.id" class="event-card">
+        <h2 class="event-title">{{ event.name }}</h2>
+        <p class="event-date">{{ formatDate(event.date) }}</p>
+        <p class="event-description">{{ event.description }}</p>
+      </div>
+    </div>
 
-    <!-- Error -->
-    <div v-if="error" class="text-red-600">{{ error }}</div>
-
-    <!-- Tabla -->
-    <table v-if="!loading && !error" class="w-full border-collapse border border-gray-300 mt-4">
-      <thead class="bg-gray-100">
-        <tr>
-          <th class="border px-4 py-2">Nombre</th>
-          <th class="border px-4 py-2">Tipo</th>
-          <th class="border px-4 py-2">Fecha Inicio</th>
-          <th class="border px-4 py-2">Fecha Fin</th>
-          <th class="border px-4 py-2">Docente</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="evento in eventos" :key="evento.id" class="hover:bg-gray-50">
-          <td class="border px-4 py-2">{{ evento.nombre }}</td>
-          <td class="border px-4 py-2">{{ evento.tipo }}</td>
-          <td class="border px-4 py-2">{{ new Date(evento.fecha_inicio).toLocaleString() }}</td>
-          <td class="border px-4 py-2">{{ new Date(evento.fecha_fin).toLocaleString() }}</td>
-          <td class="border px-4 py-2">{{ evento.docente }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- Mensaje si no hay eventos -->
+    <div v-else class="no-events">
+      <p>No hay eventos disponibles actualmente.</p>
+    </div>
   </div>
 </template>
 
-<script>
-import axios from 'axios'
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
 
-export default {
-  name: 'ListaEventos',
-  data() {
+export default defineComponent({
+  name: 'Eventos',
+  setup() {
+    // Simulación de eventos
+    const events = ref([
+      {
+        id: 1,
+        name: 'Presentacio de proyectos finales',
+        date: new Date('2025-10-02T07:00:00'),
+        description: 'Una exposicion de diferentes proyectos de ADSO',
+      },
+      {
+        id: 2,
+        name: 'Exposiciones volumen 2',
+        date: new Date('2025-10-10T14:00:00'),
+        description: 'Podras ver mas exposiciones de el tegnologo de ADSO',
+      },
+      {
+        id: 3,
+        name: 'OctoberFest 🍻',
+        date: new Date('2025-10-12T09:00:00'),
+        description: 'Aqui no hay pero si deberian.',
+      },
+      {
+        id: 4,
+        name: 'Fiesta Helloween 🎃🦇',
+        date: new Date('2025-10-29T08:00:00'),
+        description: 'Disfrasate! Y se parte de nuestri equipo Sena',
+      },
+    ]);
+
+    // Función para formatear la fecha de los eventos
+    const formatDate = (date: Date) => {
+      const options: Intl.DateTimeFormatOptions = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      };
+      return date.toLocaleDateString('es-ES', options);
+    };
+
     return {
-      eventos: [],
-      loading: true,
-      error: null,
-    }
+      events,
+      formatDate,
+    };
   },
-  async mounted() {
-    await this.getEventos()
-  },
-  methods: {
-    async getEventos() {
-      try {
-        const token = localStorage.getItem('access') // 👈 asegúrate de guardar tu token de login aquí
-        const response = await axios.get('http://127.0.0.1:8000/api/eventos/listar/', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        })
-        this.eventos = response.data
-      } catch (err) {
-        console.error('Error cargando eventos:', err)
-        this.error = '❌ No se pudieron cargar los eventos (token inválido o expirado)'
-      } finally {
-        this.loading = false
-      }
-    },
-  },
-}
+});
 </script>
+
+<style scoped>
+.events-container {
+  padding: 20px;
+  background-color: #0200057a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.events-title {
+  font-size: 2rem;
+  color: #05b640;
+  margin-bottom: 20px;
+}
+
+.events-list {
+  width: 100%;
+  max-width: 800px;
+}
+
+.event-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.event-card:hover {
+  transform: scale(1.02);
+}
+
+.event-title {
+  font-size: 1.5rem;
+  color: #1c8a00;
+}
+
+.event-date {
+  font-size: 1rem;
+  color: #7f8c8d;
+  margin: 10px 0;
+}
+
+.event-description {
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+.no-events {
+  font-size: 1.2rem;
+  color: #e74c3c;
+}
+</style>
