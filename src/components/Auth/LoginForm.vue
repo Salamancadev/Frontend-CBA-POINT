@@ -62,15 +62,21 @@ const form = reactive<LoginFormData>({
 const error = ref('')
 const success = ref('')
 const router = useRouter()
-const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api',
-  headers: { 'Content-Type': 'application/json' },
-})
+
+// ✅ Instanciar los stores de Pinia
+const userStore = useUserStore()
+const authStore = useAuthStore()
 
 // const api = axios.create({
-//   baseURL: import.meta.env.VITE_API_BASE_URL_DEPLOY,
+//   baseURL: 'http://127.0.0.1:8000/api',
 //   headers: { 'Content-Type': 'application/json' },
 // })
+
+// ✅ Axios instancia con la URL desde .env
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL_DEPLOY,
+  headers: { 'Content-Type': 'application/json' },
+})
 
 async function onSubmit() {
   error.value = ''
@@ -113,3 +119,4 @@ async function onSubmit() {
   }
 }
 </script>
+
