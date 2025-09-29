@@ -19,6 +19,16 @@ const DashQr = () => import('../views/dashboard/EscanerView.vue')
 const DashReportes = () => import('../views/dashboard/ReportsView.vue')
 const DashStudent = () => import('../views/dashboard/StudentQRView.vue')
 
+//Vistas de Instructor
+const Instructor_ConsultaEvento = () => import('../views/Instructor/ConsultarEventos.vue')
+const Instructor_Reportes = () => import('../views/Instructor/Reportes.vue')
+const Instructor_Scan = () => import('../views/Instructor/ScanQR.vue')
+
+//Vistas de Aprendiz
+const Aprendiz_Consulta = () => import('../views/Aprendiz/ConsultarEventos.vue')
+const Aprendiz_GenerarQr = () => import('../views/Aprendiz/GenerarQR.vue')
+const Aprendiz_Mapa = () => import('../views/Aprendiz/Mapa.vue')
+const Aprendiz_Scann = () => import('../views/Aprendiz/ScanPuntoControl.vue')
 // Asegúrate de tener la store configurada correctamente para obtener el rol del usuario
 import { useUserStore } from '../store/userStore'
 
@@ -41,12 +51,62 @@ const routes = [
     component: DashboardAprendiz,
     meta: { requiresAuth: true, role: 'Aprendiz' },
   },
+  //Vista rol Aprendiz
+  {
+    path: '/ConsulEvent-aprendiz',
+    name: 'ConsulEvent-aprendiz',
+    component: Aprendiz_Consulta,
+    meta: { requiresAuth: true, role: 'Aprendiz' },
+  },
+  {
+    path: '/GenerarQR-aprendiz',
+    name: 'GenerarQR-aprendiz',
+    component: Aprendiz_GenerarQr,
+    meta: { requiresAuth: true, role: 'Aprendiz' },
+  },
+  {
+    path: '/Mapa-aprendiz',
+    name: 'Mapa-aprendiz',
+    component: Aprendiz_Mapa,
+    meta: { requiresAuth: true, role: 'Aprendiz' },
+  },
+  {
+    path: '/Scann-aprendiz',
+    name: 'Scann-aprendiz',
+    component: Aprendiz_Scann,
+    meta: { requiresAuth: true, role: 'Aprendiz' },
+  },
+
+
+
   {
     path: '/dashboard-instructor',
     name: 'dashboard-instructor',
     component: DashboardInstructor,
     meta: { requiresAuth: true, role: 'Instructor' },
   },
+
+  //Vistas del rol Instructor
+  {
+    path: '/inst_ConsulEvent',
+    name: 'instConsulEvent',
+    component: Instructor_ConsultaEvento,
+    meta: { requiresAuth: true, role: 'Instructor' },
+  },
+  {
+    path: '/inst_Reportes',
+    name: 'inst_Reportes',
+    component: Instructor_Reportes,
+    meta: { requiresAuth: true, role: 'Instructor' },
+  },
+  {
+    path: '/inst_Scann',
+    name: 'inst_Scann',
+    component: Instructor_Scan,
+    meta: { requiresAuth: true, role: 'Instructor' },
+  },
+
+
   {
     path: '/dashboard-admin',
     name: 'dashboard-admin',
