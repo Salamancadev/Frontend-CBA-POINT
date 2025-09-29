@@ -8,7 +8,7 @@ const Login = () => import('../views/LoginView.vue')
 const Register = () => import('../views/RegisterView.vue')
 
 // Vista de los DashBoard
-const dashboard = () => import('../views/DashboardView.vue')
+// const dashboard = () => import('../views/DashboardView.vue')
 const DashboardAprendiz = () => import('../views/Aprendiz/DashboardAprendiz.vue')
 const DashboardInstructor = () => import('../views/Instructor/DashboardInstructor.vue')
 const DashboardAdmin = () => import('../views/Admin/DashboardAdmin.vue')
@@ -38,7 +38,6 @@ const routes = [
   { path: '/register', name: 'register', component: Register },
 
   // Dashboard de vista generica
-  { path: '/dashboard', name: 'dashboard', component: dashboard },
   { path: '/dash-mapa', name: 'dash-mapa', component: DashMapa },
   { path: '/dash-Qr', name: 'dash-Qr', component: DashQr },
   { path: '/dash-Reportes', name: 'dash-Reportes', component: DashReportes },
