@@ -6,7 +6,7 @@
       <p class="text-lg">
         Bienvenido,
         <span class="font-semibold" style="color: #7ed957"
-          >{{ user?.name }} {{ user?.lastName }}</span
+          >{{ user?.nombre }} {{ user?.apellido }}</span
         >
       </p>
     </div>

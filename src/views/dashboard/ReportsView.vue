@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div
     class="max-w-screen-xl mx-auto py-8 px-4"
     style="background-color: #212529; color: #f8f9fa; border-radius: 2rem"
@@ -499,4 +499,4 @@ const getStatusText = (status: string) => {
 }
 </script>
 
-<style scoped></style>
+<style scoped></style> -->
