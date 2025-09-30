@@ -3,7 +3,7 @@
     to="/dashboard-aprendiz"
     class="bg-red-600 text-black font-semibold px-4 py-2 rounded hover:bg-red-700"
   >
-    Back
+    Volver  
   </RouterLink>
 
   <div class="generador-qr">

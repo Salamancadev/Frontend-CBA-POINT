@@ -1,29 +1,29 @@
 <template>
   <!-- Navbar -->
   <nav
-    class="bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-600 p-4 shadow-lg sticky top-0 z-50 flex justify-between items-center"
+    class="bg-gray-900 border-b border-gray-700 p-4 shadow-xl sticky top-0 z-50 flex justify-between items-center"
   >
     <!-- Botón menú hamburguesa (solo móvil) -->
     <button
       @click="drawerOpen = !drawerOpen"
-      class="lg:hidden text-white text-2xl focus:outline-none"
+      class="lg:hidden text-[#7ED957] text-2xl focus:outline-none transition-transform hover:scale-110 hover:text-[#66b047]"
     >
       ☰
     </button>
 
     <!-- Logo -->
-    <h1 class="text-white font-extrabold text-lg">🎓 Dashboard</h1>
+    <h1 class="text-white font-bold text-lg md:text-xl">🎓 Cba<span class="text-[#7ED957]">Point</span></h1>
 
     <!-- Menú desktop -->
     <ul class="hidden lg:flex space-x-6">
       <li
         v-for="item in menu"
         :key="item.path"
-        class="transition-transform transform hover:scale-110"
+        class="transition-all duration-300 transform hover:scale-105"
       >
         <RouterLink
           :to="item.path"
-          class="flex items-center text-white hover:text-yellow-300 font-semibold space-x-2"
+          class="flex items-center text-gray-300 hover:text-[#7ED957] font-semibold space-x-2 transition-colors duration-300"
         >
           <span class="text-xl">{{ item.icon }}</span>
           <span>{{ item.label }}</span>
@@ -32,70 +32,66 @@
     </ul>
 
     <!-- Dark mode -->
-    <button
-      @click="toggleDarkMode"
-      class="bg-white bg-opacity-20 text-white px-3 py-1 rounded-lg shadow hover:bg-opacity-40 transition"
-    >
-      {{ darkMode ? '🌙' : '☀️' }}
-    </button>
+    
   </nav>
 
   <!-- Drawer lateral (solo móvil) -->
   <div
     v-if="drawerOpen"
-    class="fixed inset-0 bg-black bg-opacity-40 z-40 lg:hidden"
+    class="fixed inset-0 bg-black bg-opacity-60 z-40 lg:hidden"
     @click="drawerOpen = false"
   ></div>
   <div
-    class="fixed top-0 left-0 w-72 h-full bg-gradient-to-b from-indigo-800 to-purple-700 text-white p-6 shadow-xl transform transition-transform duration-300 z-50 lg:hidden"
+    class="fixed top-0 left-0 w-72 h-full bg-gray-900 text-white p-6 shadow-2xl transform transition-transform duration-300 z-50 lg:hidden border-r border-gray-700"
     :class="drawerOpen ? 'translate-x-0' : '-translate-x-full'"
   >
     <div class="flex flex-col items-center mt-4">
       <img
         src="https://i.pravatar.cc/100"
         alt="Perfil"
-        class="rounded-full w-20 h-20 border-4 border-yellow-400"
+        class="rounded-full w-20 h-20 border-4 border-[#7ED957]"
       />
-      <p class="mt-3 font-bold text-lg">{{ estudianteNombre }}</p>
+      <p class="mt-3 font-bold text-lg text-white">{{ estudianteNombre }}</p>
+      <p class="text-[#7ED957] text-sm font-semibold">Aprendiz SENA</p>
     </div>
-    <ul class="space-y-6 mt-10">
+    <ul class="space-y-4 mt-10">
       <li v-for="item in menu" :key="item.path">
         <RouterLink
           :to="item.path"
-          class="flex items-center space-x-2 text-lg font-semibold hover:text-yellow-300"
+          class="flex items-center space-x-3 text-lg font-semibold text-gray-300 hover:text-[#7ED957] hover:bg-gray-800 px-4 py-3 rounded-xl transition-all duration-300"
           @click="drawerOpen = false"
         >
-          <span>{{ item.icon }}</span>
+          <span class="text-xl">{{ item.icon }}</span>
           <span>{{ item.label }}</span>
         </RouterLink>
       </li>
     </ul>
     <button
       @click="cerrarSesion"
-      class="mt-10 w-full bg-red-500 hover:bg-red-600 py-2 rounded-lg shadow-lg"
+      class="mt-10 w-full bg-gray-800 hover:bg-gray-700 text-[#7ED957] font-bold py-3 rounded-xl shadow-lg transition-all duration-300 border border-gray-600 hover:border-[#7ED957]"
     >
       🚪 Cerrar Sesión
     </button>
   </div>
 
   <!-- Contenido principal -->
-  <div
-    :class="darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-800'"
-    class="min-h-screen p-4 sm:p-6 transition-colors duration-500"
-  >
+  <div class="min-h-screen bg-gray-900 text-white p-4 sm:p-6">
     <!-- Header -->
     <header
-      class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-6 rounded-2xl shadow-lg mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center"
+      class="bg-gray-800 border border-gray-700 text-white p-6 rounded-2xl shadow-lg mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center"
     >
       <div>
-        <h2 class="text-2xl font-extrabold">Bienvenido {{ estudianteNombre }}</h2>
-        <p v-if="eventosHoy.length" class="text-yellow-300 font-semibold mt-2 animate-pulse">
+        <h2 class="text-2xl font-bold text-white">Bienvenido {{ estudianteNombre }}</h2>
+        <p v-if="eventosHoy.length" class="text-[#7ED957] font-semibold mt-2 animate-pulse">
           📢 Hoy tienes {{ eventosHoy.length }} evento(s)
+        </p>
+        <p v-else class="text-gray-400 font-semibold mt-2">
+          📅 No hay eventos para hoy
         </p>
       </div>
       <button
         @click="cerrarSesion"
-        class="mt-4 sm:mt-0 bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl shadow-lg transform transition hover:scale-105"
+        class="mt-4 sm:mt-0 bg-gray-800 hover:bg-gray-700 text-[#7ED957] px-5 py-3 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 font-bold border border-gray-600 hover:border-[#7ED957]"
       >
         🚪 Cerrar Sesión
       </button>
@@ -106,57 +102,86 @@
       <div
         v-for="(card, i) in resumen"
         :key="i"
-        class="p-6 rounded-2xl shadow-lg text-center bg-white/30 dark:bg-gray-800/40 backdrop-blur-md border border-gray-200/30 hover:shadow-2xl transition"
+        class="p-6 rounded-2xl shadow-lg text-center bg-gray-800 border border-gray-700 hover:border-[#7ED957] transition-all duration-300 hover:shadow-2xl hover:scale-105"
       >
-        <h3 class="text-gray-600 dark:text-gray-300">{{ card.titulo }}</h3>
-        <p :class="card.color" class="text-4xl font-extrabold">{{ card.valor }}</p>
+        <h3 class="text-gray-400 font-semibold mb-2">{{ card.titulo }}</h3>
+        <p :class="card.color" class="text-4xl font-bold">{{ card.valor }}</p>
+        <p class="text-xs text-gray-500 mt-2">Total registrado</p>
       </div>
     </div>
 
     <!-- Grid principal -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Eventos -->
-      <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg col-span-3">
-        <h2 class="text-2xl font-semibold mb-4">📅 Próximos Eventos</h2>
+      <div class="bg-gray-800 border border-gray-700 p-6 rounded-2xl shadow-lg col-span-3">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-[#7ED957]">📅 Próximos Eventos</h2>
+          <span class="bg-[#7ED957] text-gray-900 px-3 py-1 rounded-full text-sm font-bold">
+            {{ eventosFiltrados.length }} eventos
+          </span>
+        </div>
+        
         <!-- Filtros -->
-        <div class="flex flex-col sm:flex-row gap-3 mb-4">
+        <div class="flex flex-col sm:flex-row gap-3 mb-6">
           <input
             v-model="filtroNombre"
             type="text"
             placeholder="Buscar evento..."
-            class="border p-2 rounded w-full text-black"
+            class="bg-gray-700 border border-gray-600 text-white p-3 rounded-xl w-full transition-all duration-300 focus:ring-2 focus:ring-[#7ED957] focus:border-transparent placeholder-gray-400"
           />
-          <select v-model="filtroTipo" class="border p-2 rounded text-black">
-            <option value="">Todos</option>
-            <option v-for="tipo in tiposEventos" :key="tipo" :value="tipo">
+          <select v-model="filtroTipo" class="bg-gray-700 border border-gray-600 text-white p-3 rounded-xl transition-all duration-300 focus:ring-2 focus:ring-[#7ED957] focus:border-transparent">
+            <option value="" class="bg-gray-700">Todos los tipos</option>
+            <option v-for="tipo in tiposEventos" :key="tipo" :value="tipo" class="bg-gray-700">
               {{ tipo }}
             </option>
           </select>
           <button
             @click="ordenarEventos"
-            class="bg-indigo-500 text-white px-4 rounded-lg shadow hover:scale-105 transition"
+            class="bg-gray-700 hover:bg-gray-600 border border-gray-600 text-[#7ED957] px-6 py-3 rounded-xl shadow transition-all duration-300 hover:scale-105 font-bold hover:border-[#7ED957]"
           >
-            ⬇️ Fecha
+            ⬇️ Ordenar
           </button>
         </div>
+        
         <!-- Lista eventos -->
-        <ul v-if="eventosFiltrados.length" class="space-y-3">
-          <li
+        <div v-if="eventosFiltrados.length" class="space-y-4">
+          <div
             v-for="evento in eventosFiltrados"
             :key="evento.id"
-            class="p-4 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-gray-700 dark:to-gray-600 rounded-xl shadow hover:scale-[1.02] transform transition"
+            class="p-5 bg-gray-700 border border-gray-600 rounded-xl shadow hover:scale-[1.02] transform transition-all duration-300 hover:border-[#7ED957] group"
           >
-            <p class="font-bold text-indigo-600 dark:text-indigo-300">
-              {{ evento.nombre }}
-            </p>
-            <p class="text-sm">{{ evento.tipo }}</p>
-            <p class="text-xs opacity-80">
-              {{ new Date(evento.fecha_inicio).toLocaleString() }} -
-              {{ new Date(evento.fecha_fin).toLocaleString() }}
-            </p>
-          </li>
-        </ul>
-        <p v-else class="text-gray-500">No hay eventos disponibles</p>
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="font-bold text-[#7ED957] text-lg group-hover:text-white transition-colors">
+                  {{ evento.nombre }}
+                </p>
+                <span class="inline-block bg-gray-600 text-[#24DEFF] px-2 py-1 rounded text-xs font-semibold mt-1">
+                  {{ evento.tipo }}
+                </span>
+              </div>
+              <div class="text-right">
+                <p class="text-sm text-gray-300 font-semibold">
+                  {{ new Date(evento.fecha_inicio).toLocaleDateString() }}
+                </p>
+                <p class="text-xs text-gray-400">
+                  {{ new Date(evento.fecha_inicio).toLocaleTimeString() }}
+                </p>
+              </div>
+            </div>
+            <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-600">
+              <p class="text-xs text-gray-400">
+                Duración: {{ Math.round((new Date(evento.fecha_fin) - new Date(evento.fecha_inicio)) / (1000 * 60 * 60)) }}h
+              </p>
+              <span class="text-[#24DEFF] text-xs font-semibold">
+                📍 Activo
+              </span>
+            </div>
+          </div>
+        </div>
+        <div v-else class="text-center py-8">
+          <p class="text-gray-400 text-lg">No hay eventos disponibles</p>
+          <p class="text-gray-500 text-sm mt-2">Intenta con otros filtros</p>
+        </div>
       </div>
     </div>
 
@@ -164,11 +189,19 @@
     <div class="mt-12 text-center">
       <RouterLink
         to="/Scann-aprendiz"
-        class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-2xl shadow-lg text-lg font-bold transform transition hover:scale-110"
+        class="inline-flex items-center bg-gray-800 hover:bg-gray-700 border border-gray-600 hover:border-[#7ED957] text-[#7ED957] px-8 py-4 rounded-2xl shadow-lg text-lg font-bold transform transition-all duration-300 hover:scale-110 hover:shadow-2xl"
       >
-        📷 Escanear QR
+        <span class="mr-3">📷</span>
+        Escanear QR de Asistencia
       </RouterLink>
     </div>
+
+    <!-- Footer -->
+    <footer class="mt-12 text-center text-gray-500 text-sm">
+      <p>Sistema de Gestión Cba<span class="text-[#7ED957]">Point</span> • 
+        <span class="text-[#24DEFF]">v1.0.0</span>
+      </p>
+    </footer>
   </div>
 </template>
 
@@ -208,7 +241,7 @@ export default defineComponent({
     const historial = ref<Asistencia[]>([])
     const presentes = ref(0)
     const ausentes = ref(0)
-    const ingresos = ref(0) // 👈 contador de ingresos
+    const ingresos = ref(0)
 
     const filtroNombre = ref('')
     const filtroTipo = ref('')
@@ -222,10 +255,9 @@ export default defineComponent({
     const darkMode = ref(true)
 
     const menu = [
-      // { path: "/ConsulEvent-aprendiz", label: "Consultar Eventos", icon: "📅" },
       { path: '/GenerarQR-aprendiz', label: 'Generar QR', icon: '🔗' },
       { path: '/Mapa-aprendiz', label: 'Mapa', icon: '🗺️' },
-      { path: '/Scann-aprendiz', label: 'Scanear Punto de Control', icon: '📷' },
+      { path: '/Scann-aprendiz', label: 'Scanear QR', icon: '📷' },
     ]
 
     const eventosHoy = computed(() =>
@@ -263,11 +295,24 @@ export default defineComponent({
                 {
                   label: 'Asistencias',
                   data: [presentes.value, ausentes.value, ingresos.value],
-                  backgroundColor: ['#4ade80', '#f87171', '#60a5fa'],
+                  backgroundColor: ['#7ED957', '#ef4444', '#24DEFF'],
                 },
               ],
             },
-            options: { responsive: true, plugins: { legend: { display: false } } },
+            options: { 
+              responsive: true, 
+              plugins: { legend: { display: false } },
+              scales: {
+                x: {
+                  grid: { color: '#374151' },
+                  ticks: { color: '#9CA3AF' }
+                },
+                y: {
+                  grid: { color: '#374151' },
+                  ticks: { color: '#9CA3AF' }
+                }
+              }
+            },
           })
         }
       }
@@ -281,10 +326,17 @@ export default defineComponent({
               datasets: [
                 {
                   data: [presentes.value, ausentes.value, ingresos.value],
-                  backgroundColor: ['#34d399', '#ef4444', '#3b82f6'],
+                  backgroundColor: ['#7ED957', '#ef4444', '#24DEFF'],
                 },
               ],
             },
+            options: {
+              plugins: {
+                legend: {
+                  labels: { color: '#9CA3AF' }
+                }
+              }
+            }
           })
         }
       }
@@ -311,16 +363,16 @@ export default defineComponent({
     const toggleDarkMode = () => (darkMode.value = !darkMode.value)
 
     const resumen = computed(() => [
-      { titulo: 'Eventos', valor: eventos.value.length, color: 'text-indigo-500' },
-      { titulo: 'Asistencias', valor: presentes.value, color: 'text-green-500' },
-      { titulo: 'Ausencias', valor: ausentes.value, color: 'text-red-500' },
-      { titulo: 'Ingresos', valor: ingresos.value, color: 'text-blue-500' }, // 👈 agregado
+      { titulo: 'Eventos', valor: eventos.value.length, color: 'text-white' },
+      { titulo: 'Asistencias', valor: presentes.value, color: 'text-[#7ED957]' },
+      { titulo: 'Ausencias', valor: ausentes.value, color: 'text-red-400' },
+      { titulo: 'Ingresos', valor: ingresos.value, color: 'text-[#24DEFF]' },
     ])
 
     const generarEventosDummy = () => {
       const tipos = ['Conferencia', 'Taller', 'Recorrido', 'Evento']
       const nombres = [
-        'Presentacio de proyectos finales',
+        'Presentación de proyectos finales',
         'Exposiciones volumen 2',
         'OctoberFest 🍻',
         'Fiesta Helloween 🎃🦇',
@@ -348,10 +400,10 @@ export default defineComponent({
         const res = await axios.get<Evento[]>('http://127.0.0.1:8000/api/eventos/', {
           headers: { Authorization: `Bearer ${token}` },
         })
-        eventos.value = res.data.length ? res.data : generarEventosDummy() // 👈 si no hay datos, carga dummy
+        eventos.value = res.data.length ? res.data : generarEventosDummy()
       } catch (err) {
         console.error('Error cargando eventos:', err)
-        eventos.value = generarEventosDummy() // 👈 fallback en error
+        eventos.value = generarEventosDummy()
       }
     }
 
@@ -366,7 +418,7 @@ export default defineComponent({
 
         presentes.value = historial.value.filter((h) => h.estado === 'presente').length
         ausentes.value = historial.value.filter((h) => h.estado === 'ausente').length
-        ingresos.value = historial.value.length // 👈 cada registro cuenta como ingreso
+        ingresos.value = historial.value.length
 
         renderChart()
       } catch (err) {

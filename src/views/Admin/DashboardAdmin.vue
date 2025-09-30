@@ -1,135 +1,133 @@
 <template>
-  <div
-    class="bg-gradient-to-br from-gray-100 via-gray-50 to-white min-h-screen p-6 text-gray-800 font-sans"
-  >
+  <div class="min-h-screen bg-gray-900 p-6 text-white font-sans">
     <!-- Header -->
     <header class="mb-10">
-      <h1 class="text-4xl font-extrabold mb-2 text-gray-900 tracking-tight">
+      <h1 class="text-4xl font-bold mb-2 text-white">
         Dashboard Administrador
       </h1>
-      <p class="text-lg text-gray-600">
+      <p class="text-lg text-gray-400">
         Bienvenido,
-        <span class="font-semibold">{{ mappedUser.nombre }} {{ mappedUser.apellido }}</span>
+        <span class="font-semibold text-[#7ED957]">{{ mappedUser.nombre }} {{ mappedUser.apellido }}</span>
       </p>
     </header>
 
     <!-- Stats Grid -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
       <div
-        class="bg-white rounded-2xl p-6 flex items-center shadow-lg hover:-translate-y-1 hover:shadow-xl transition"
+        class="bg-gray-800 border border-gray-700 rounded-2xl p-6 flex items-center shadow-lg hover:-translate-y-1 hover:shadow-2xl hover:border-[#7ED957] transition-all duration-300"
       >
         <div
-          class="h-12 w-12 flex items-center justify-center rounded-full bg-green-100 text-green-600 text-2xl mr-4"
+          class="h-12 w-12 flex items-center justify-center rounded-full bg-gray-700 text-[#7ED957] text-2xl mr-4"
         >
           👥
         </div>
         <div>
-          <h3 class="text-sm text-gray-500">Total Aprendices</h3>
-          <p class="text-2xl font-bold text-gray-900">{{ totalAprendices }}</p>
+          <h3 class="text-sm text-gray-400">Total Aprendices</h3>
+          <p class="text-2xl font-bold text-white">{{ totalAprendices }}</p>
         </div>
       </div>
       <div
-        class="bg-white rounded-2xl p-6 flex items-center shadow-lg hover:-translate-y-1 hover:shadow-xl transition"
+        class="bg-gray-800 border border-gray-700 rounded-2xl p-6 flex items-center shadow-lg hover:-translate-y-1 hover:shadow-2xl hover:border-[#7ED957] transition-all duration-300"
       >
         <div
-          class="h-12 w-12 flex items-center justify-center rounded-full bg-purple-100 text-purple-600 text-2xl mr-4"
+          class="h-12 w-12 flex items-center justify-center rounded-full bg-gray-700 text-[#7ED957] text-2xl mr-4"
         >
           📅
         </div>
         <div>
-          <h3 class="text-sm text-gray-500">Eventos Activos</h3>
-          <p class="text-2xl font-bold text-gray-900">{{ activeEvents }}</p>
+          <h3 class="text-sm text-gray-400">Eventos Activos</h3>
+          <p class="text-2xl font-bold text-white">{{ activeEvents }}</p>
         </div>
       </div>
       <div
-        class="bg-white rounded-2xl p-6 flex items-center shadow-lg hover:-translate-y-1 hover:shadow-xl transition"
+        class="bg-gray-800 border border-gray-700 rounded-2xl p-6 flex items-center shadow-lg hover:-translate-y-1 hover:shadow-2xl hover:border-[#7ED957] transition-all duration-300"
       >
         <div
-          class="h-12 w-12 flex items-center justify-center rounded-full bg-blue-100 text-blue-600 text-2xl mr-4"
+          class="h-12 w-12 flex items-center justify-center rounded-full bg-gray-700 text-[#7ED957] text-2xl mr-4"
         >
           ✅
         </div>
         <div>
-          <h3 class="text-sm text-gray-500">Asistencias Hoy</h3>
-          <p class="text-2xl font-bold text-gray-900">{{ todayAttendance }}</p>
+          <h3 class="text-sm text-gray-400">Asistencias Hoy</h3>
+          <p class="text-2xl font-bold text-white">{{ todayAttendance }}</p>
         </div>
       </div>
       <div
-        class="bg-white rounded-2xl p-6 flex items-center shadow-lg hover:-translate-y-1 hover:shadow-xl transition"
+        class="bg-gray-800 border border-gray-700 rounded-2xl p-6 flex items-center shadow-lg hover:-translate-y-1 hover:shadow-2xl hover:border-[#7ED957] transition-all duration-300"
       >
         <div
-          class="h-12 w-12 flex items-center justify-center rounded-full bg-yellow-100 text-yellow-600 text-2xl mr-4"
+          class="h-12 w-12 flex items-center justify-center rounded-full bg-gray-700 text-[#7ED957] text-2xl mr-4"
         >
           📊
         </div>
         <div>
-          <h3 class="text-sm text-gray-500">Porcentaje Asistencia</h3>
-          <p class="text-2xl font-bold text-gray-900">{{ attendancePercentage }}%</p>
+          <h3 class="text-sm text-gray-400">Porcentaje Asistencia</h3>
+          <p class="text-2xl font-bold text-white">{{ attendancePercentage }}%</p>
         </div>
       </div>
     </section>
 
     <!-- Quick Actions -->
     <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-6 text-gray-800">Acciones Rápidas</h2>
+      <h2 class="text-2xl font-semibold mb-6 text-white">Acciones Rápidas</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <router-link
           to="/gestion-usuarios"
-          class="bg-gradient-to-r from-blue-600 to-blue-500 text-white text-center p-6 rounded-2xl shadow-lg hover:scale-105 transition transform no-underline flex flex-col items-center"
+          class="bg-gray-800 border border-gray-700 hover:border-[#7ED957] text-white text-center p-6 rounded-2xl shadow-lg hover:scale-105 transition-all duration-300 no-underline flex flex-col items-center group"
         >
-          <div class="text-4xl mb-3">👤</div>
-          <h3 class="text-lg font-bold">Gestionar Usuarios</h3>
-          <p class="text-sm text-blue-100">Agregar, modificar o eliminar usuarios</p>
+          <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">👤</div>
+          <h3 class="text-lg font-bold text-[#7ED957]">Gestionar Usuarios</h3>
+          <p class="text-sm text-gray-400 mt-2">Agregar, modificar o eliminar usuarios</p>
         </router-link>
 
         <router-link
           to="/gestion-eventos"
-          class="bg-gradient-to-r from-purple-700 to-purple-600 text-white text-center p-6 rounded-2xl shadow-lg hover:scale-105 transition transform no-underline flex flex-col items-center"
+          class="bg-gray-800 border border-gray-700 hover:border-[#7ED957] text-white text-center p-6 rounded-2xl shadow-lg hover:scale-105 transition-all duration-300 no-underline flex flex-col items-center group"
         >
-          <div class="text-4xl mb-3">📅</div>
-          <h3 class="text-lg font-bold">Gestionar Eventos</h3>
-          <p class="text-sm text-purple-100">Crear y administrar eventos</p>
+          <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">📅</div>
+          <h3 class="text-lg font-bold text-[#7ED957]">Gestionar Eventos</h3>
+          <p class="text-sm text-gray-400 mt-2">Crear y administrar eventos</p>
         </router-link>
 
         <router-link
           to="/registro-asistencias"
-          class="bg-gradient-to-r from-green-600 to-green-500 text-white text-center p-6 rounded-2xl shadow-lg hover:scale-105 transition transform no-underline flex flex-col items-center"
+          class="bg-gray-800 border border-gray-700 hover:border-[#7ED957] text-white text-center p-6 rounded-2xl shadow-lg hover:scale-105 transition-all duration-300 no-underline flex flex-col items-center group"
         >
-          <div class="text-4xl mb-3">✅</div>
-          <h3 class="text-lg font-bold">Registrar Asistencias</h3>
-          <p class="text-sm text-green-100">Marcar asistencias de aprendices</p>
+          <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">✅</div>
+          <h3 class="text-lg font-bold text-[#7ED957]">Registrar Asistencias</h3>
+          <p class="text-sm text-gray-400 mt-2">Marcar asistencias de aprendices</p>
         </router-link>
 
         <router-link
           to="/reportes-generales"
-          class="bg-gradient-to-r from-yellow-500 to-yellow-400 text-white text-center p-6 rounded-2xl shadow-lg hover:scale-105 transition transform no-underline flex flex-col items-center"
+          class="bg-gray-800 border border-gray-700 hover:border-[#24DEFF] text-white text-center p-6 rounded-2xl shadow-lg hover:scale-105 transition-all duration-300 no-underline flex flex-col items-center group"
         >
-          <div class="text-4xl mb-3">📊</div>
-          <h3 class="text-lg font-bold">Reportes Generales</h3>
-          <p class="text-sm text-yellow-100">Visualizar estadísticas y exportar reportes</p>
+          <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">📊</div>
+          <h3 class="text-lg font-bold text-[#24DEFF]">Reportes Generales</h3>
+          <p class="text-sm text-gray-400 mt-2">Visualizar estadísticas y exportar reportes</p>
         </router-link>
       </div>
     </section>
 
     <!-- Recent Activity -->
     <section>
-      <h2 class="text-2xl font-semibold mb-6 text-gray-800">Actividad Reciente</h2>
-      <div class="bg-white rounded-2xl shadow divide-y">
+      <h2 class="text-2xl font-semibold mb-6 text-white">Actividad Reciente</h2>
+      <div class="bg-gray-800 border border-gray-700 rounded-2xl shadow divide-y divide-gray-700">
         <div
           v-for="activity in recentActivities"
           :key="activity.id"
-          class="flex items-center p-4 hover:bg-gray-50 transition"
+          class="flex items-center p-4 hover:bg-gray-750 transition-all duration-300"
         >
           <div
-            class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-full bg-gray-100 text-xl mr-4"
+            class="flex-shrink-0 h-10 w-10 flex items-center justify-center rounded-full bg-gray-700 text-[#7ED957] text-xl mr-4"
           >
             {{ activity.icon }}
           </div>
           <div class="flex-1">
-            <h4 class="text-sm font-semibold text-gray-800">{{ activity.title }}</h4>
-            <p class="text-sm text-gray-500">{{ activity.description }}</p>
+            <h4 class="text-sm font-semibold text-white">{{ activity.title }}</h4>
+            <p class="text-sm text-gray-400">{{ activity.description }}</p>
           </div>
-          <div class="text-xs text-gray-400">{{ formatTime(activity.timestamp) }}</div>
+          <div class="text-xs text-gray-500">{{ formatTime(activity.timestamp) }}</div>
         </div>
       </div>
     </section>
@@ -174,6 +172,20 @@ const recentActivities = ref([
     description: 'Semana de inducción',
     timestamp: new Date(),
   },
+  {
+    id: 3,
+    icon: '👤',
+    title: 'Usuario registrado',
+    description: 'Nuevo aprendiz - María González',
+    timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 horas atrás
+  },
+  {
+    id: 4,
+    icon: '📊',
+    title: 'Reporte generado',
+    description: 'Asistencias mensuales - Octubre',
+    timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000), // 4 horas atrás
+  },
 ])
 
 const formatTime = (timestamp: Date) => {
@@ -195,6 +207,11 @@ const fetchStats = async () => {
     attendancePercentage.value = res.data.attendancePercentage
   } catch (err) {
     console.error('Error fetching admin stats:', err)
+    // Datos de ejemplo para desarrollo
+    totalAprendices.value = 156
+    activeEvents.value = 8
+    todayAttendance.value = 42
+    attendancePercentage.value = 87
   }
 }
 

@@ -1,39 +1,74 @@
 <template>
   <!-- Formulario de login -->
-  <form @submit.prevent="onSubmit" class="space-y-4">
+  <form @submit.prevent="onSubmit" class="space-y-6">
     <div>
-      <label for="documento" class="block text-sm font-medium text-white">Documento</label>
+      <label for="documento" class="block text-sm font-medium text-gray-300 mb-2">Número de documento</label>
       <input
         id="documento"
         v-model="form.documentNumber"
         type="text"
         required
-        class="mt-1 w-full rounded-xl border border-gray-600 bg-[#2b2f33] p-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7ED957]"
-        placeholder="x.xxx.xxx.xxx"
+        class="w-full bg-gray-800 border border-gray-600 text-white p-3 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7ED957] focus:border-transparent transition-all duration-300"
+        placeholder="Ingresa tu número de documento"
       />
     </div>
+    
     <div>
-      <label for="password" class="block text-sm font-medium text-white">Contraseña</label>
+      <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Contraseña</label>
       <input
         id="password"
         v-model="form.password"
         type="password"
         required
         minlength="6"
-        class="mt-1 w-full rounded-xl border border-gray-600 bg-[#2b2f33] p-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7ED957]"
+        class="w-full bg-gray-800 border border-gray-600 text-white p-3 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7ED957] focus:border-transparent transition-all duration-300"
         placeholder="••••••••"
       />
+      <p class="text-xs text-gray-400 mt-1">Mínimo 6 caracteres</p>
+    </div>
+
+    <!-- Enlace de recuperación -->
+    <div class="text-right">
+      <a 
+        href="/recuperar-contraseña" 
+        class="text-sm text-[#24DEFF] hover:text-[#1cb8d9] transition-colors"
+      >
+        ¿Olvidaste tu contraseña?
+      </a>
     </div>
 
     <!-- Mensaje de error -->
-    <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
+    <div v-if="error" class="p-3 bg-red-900/30 border border-red-700 rounded-lg">
+      <p class="text-red-400 text-sm flex items-center gap-2">
+        <span>⚠</span>
+        {{ error }}
+      </p>
+    </div>
 
     <!-- Mensaje de éxito -->
-    <p v-if="success" class="text-green-500 text-sm">{{ success }}</p>
+    <div v-if="success" class="p-3 bg-green-900/30 border border-green-700 rounded-lg">
+      <p class="text-green-400 text-sm flex items-center gap-2">
+        <span>✅</span>
+        {{ success }}
+      </p>
+    </div>
 
-    <button type="submit" class="w-full btn bg-[#7ED957] text-[#0b1220] hover:brightness-90">
-      Ingresar
+    <button 
+      type="submit" 
+      class="w-full bg-gray-800 hover:bg-gray-700 border border-gray-600 hover:border-[#7ED957] text-[#7ED957] font-bold py-3 px-4 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
+    >
+      🔐 Ingresar
     </button>
+
+    <!-- Enlace a registro -->
+    <div class="text-center pt-4 border-t border-gray-700">
+      <p class="text-gray-400 text-sm">
+        ¿No tienes cuenta? 
+        <RouterLink to="/register" class="text-[#24DEFF] hover:text-[#1cb8d9] font-semibold transition-colors">
+          Regístrate aquí
+        </RouterLink>
+      </p>
+    </div>
   </form>
 </template>
 
@@ -67,16 +102,16 @@ const router = useRouter()
 const userStore = useUserStore()
 const authStore = useAuthStore()
 
-// const api = axios.create({
-//   baseURL: 'http://127.0.0.1:8000/api',
-//   headers: { 'Content-Type': 'application/json' },
-// })
-
-// ✅ Axios instancia con la URL desde .env
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL_DEPLOY,
+  baseURL: 'http://127.0.0.1:8000/api',
   headers: { 'Content-Type': 'application/json' },
 })
+
+// ✅ Axios instancia con la URL desde .env
+// const api = axios.create({
+//   baseURL: import.meta.env.VITE_API_BASE_URL_DEPLOY,
+//   headers: { 'Content-Type': 'application/json' },
+// })
 
 async function onSubmit() {
   error.value = ''
@@ -105,17 +140,20 @@ async function onSubmit() {
     // 4. Notificar al store de auth (Navbar reacciona)
     authStore.loginSuccess(userMapped)
 
-    success.value = 'Ingreso exitoso ✅'
+    success.value = '🎉 Ingreso exitoso. Redirigiendo...'
 
     // 5. Redirigir según rol
     const userRole = res.data.role
-    if (userRole === 'Aprendiz') router.push({ name: 'dashboard-aprendiz' })
-    else if (userRole === 'Instructor') router.push({ name: 'dashboard-instructor' })
-    else if (userRole === 'Administrativo') router.push({ name: 'dashboard-admin' })
-    else error.value = 'Rol de usuario no reconocido'
+    setTimeout(() => {
+      if (userRole === 'Aprendiz') router.push({ name: 'dashboard-aprendiz' })
+      else if (userRole === 'Instructor') router.push({ name: 'dashboard-instructor' })
+      else if (userRole === 'Administrativo') router.push({ name: 'dashboard-admin' })
+      else error.value = 'Rol de usuario no reconocido'
+    }, 1500)
+    
   } catch (err: any) {
     console.error('Error completo del backend:', err)
-    error.value = err.response?.data?.error || 'Error en el login'
+    error.value = err.response?.data?.error || 'Error en el login. Verifica tus credenciales.'
   }
 }
 </script>

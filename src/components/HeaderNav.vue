@@ -1,38 +1,29 @@
 <template>
-  <header class="sticky top-0 z-50 bg-[#212529] text-white">
+  <header class="sticky top-0 z-50 bg-gray-900 border-b border-gray-700">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex h-16 items-center justify-between mb-8">
+      <div class="flex h-16 items-center justify-between">
         <!-- Logo -->
-        <RouterLink to="/" class="flex items-center gap-3">
-          <img src="/img/LOGO CBA PASS.png" alt="CbaPass logo" class="h-10 w-auto sm:h-12" />
+        <img src="/img/LOGO CBA PASS.png" alt="CbaPass logo" class="h-10 w-auto sm:h-12" />
           <span class="sr-only">CBA Pass</span>
-        </RouterLink>
 
         <!-- Desktop nav -->
         <nav class="hidden md:block">
-          <ul class="flex items-center gap-8">
+          <ul class="flex items-center gap-6">
             <!-- NO autenticado -->
             <template v-if="!auth.isAuthenticated">
               <li>
                 <RouterLink
                   to="/"
-                  class="font-semibold hover:text-[#7ED957] transition-colors duration-300"
+                  class="font-semibold text-gray-300 hover:text-[#7ED957] transition-all duration-300 hover:scale-105"
                 >
                   Inicio
                 </RouterLink>
               </li>
-              <li>
-                <RouterLink
-                  to="/ayuda"
-                  class="font-semibold hover:text-[#7ED957] transition-colors duration-300"
-                >
-                  Ayuda
-                </RouterLink>
-              </li>
+              
               <li>
                 <RouterLink
                   to="/login"
-                  class="font-semibold hover:text-[#7ED957] transition-colors duration-300"
+                  class="font-semibold text-gray-300 hover:text-[#7ED957] transition-all duration-300 hover:scale-105"
                 >
                   Iniciar sesión
                 </RouterLink>
@@ -40,7 +31,7 @@
               <li>
                 <RouterLink
                   to="/register"
-                  class="inline-flex items-center rounded-lg border border-[#7ED957]/30 px-3 py-2 font-semibold transition hover:border-[#7ED957] hover:bg-[#7ED957]/10 hover:text-[#7ED957]"
+                  class="inline-flex items-center rounded-lg bg-gray-800 border border-gray-600 hover:border-[#7ED957] px-4 py-2 font-semibold text-[#7ED957] transition-all duration-300 hover:scale-105 hover:bg-gray-700"
                 >
                   Registrarse
                 </RouterLink>
@@ -52,7 +43,7 @@
               <li>
                 <button
                   @click="handleLogout"
-                  class="inline-flex items-center rounded-lg border border-[#7ED957]/30 px-4 py-2 font-semibold transition hover:border-[#7ED957] hover:bg-[#7ED957]/10 hover:text-[#7ED957]"
+                  class="inline-flex items-center rounded-lg bg-gray-800 border border-gray-600 hover:border-[#7ED957] px-4 py-2 font-semibold text-[#7ED957] transition-all duration-300 hover:scale-105 hover:bg-gray-700"
                 >
                   Cerrar sesión
                 </button>
@@ -64,7 +55,7 @@
         <!-- Botón menú móvil -->
         <button
           @click="isOpen = !isOpen"
-          class="inline-flex items-center justify-center rounded-md p-2 md:hidden focus:outline-none focus:ring-2 focus:ring-[#7ED957] focus:ring-offset-2 focus:ring-offset-[#212529]"
+          class="inline-flex items-center justify-center rounded-md p-2 md:hidden focus:outline-none focus:ring-2 focus:ring-[#7ED957] focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-300"
           :aria-expanded="isOpen.toString()"
           aria-controls="mobile-menu"
         >
@@ -72,7 +63,7 @@
           <svg
             v-if="!isOpen"
             xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
+            class="h-6 w-6 text-gray-300 hover:text-[#7ED957] transition-colors duration-300"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -83,7 +74,7 @@
           <svg
             v-else
             xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
+            class="h-6 w-6 text-[#7ED957] transition-colors duration-300"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -96,14 +87,14 @@
     </div>
 
     <!-- Menú móvil -->
-    <nav v-if="isOpen" id="mobile-menu" class="md:hidden border-t border-white/10">
-      <ul class="space-y-1 px-4 py-3">
+    <nav v-if="isOpen" id="mobile-menu" class="md:hidden border-t border-gray-700 bg-gray-800">
+      <ul class="space-y-2 px-4 py-4">
         <!-- NO autenticado -->
         <template v-if="!auth.isAuthenticated">
           <li>
             <RouterLink
               to="/"
-              class="block rounded-md px-3 py-2 hover:bg-white/5"
+              class="block rounded-lg px-4 py-3 text-gray-300 hover:text-[#7ED957] hover:bg-gray-700 transition-all duration-300"
               @click="closeMenu"
               >Inicio</RouterLink
             >
@@ -111,7 +102,7 @@
           <li>
             <RouterLink
               to="/ayuda"
-              class="block rounded-md px-3 py-2 hover:bg-white/5"
+              class="block rounded-lg px-4 py-3 text-gray-300 hover:text-[#7ED957] hover:bg-gray-700 transition-all duration-300"
               @click="closeMenu"
               >Ayuda</RouterLink
             >
@@ -119,7 +110,7 @@
           <li>
             <RouterLink
               to="/login"
-              class="block rounded-md px-3 py-2 hover:bg-white/5"
+              class="block rounded-lg px-4 py-3 text-gray-300 hover:text-[#7ED957] hover:bg-gray-700 transition-all duration-300"
               @click="closeMenu"
               >Iniciar sesión</RouterLink
             >
@@ -127,7 +118,7 @@
           <li>
             <RouterLink
               to="/register"
-              class="block rounded-md border border-[#7ED957]/30 px-3 py-2 font-semibold hover:border-[#7ED957] hover:bg-[#7ED957]/10 hover:text-[#7ED957]"
+              class="block rounded-lg bg-gray-700 border border-gray-600 hover:border-[#7ED957] px-4 py-3 font-semibold text-[#7ED957] hover:bg-gray-600 transition-all duration-300 text-center"
               @click="closeMenu"
             >
               Registrarse
@@ -145,7 +136,7 @@
                   handleLogout()
                 }
               "
-              class="w-full text-left block rounded-md border border-[#7ED957]/30 px-3 py-2 font-semibold hover:border-[#7ED957] hover:bg-[#7ED957]/10 hover:text-[#7ED957]"
+              class="w-full text-left block rounded-lg bg-gray-700 border border-gray-600 hover:border-[#7ED957] px-4 py-3 font-semibold text-[#7ED957] hover:bg-gray-600 transition-all duration-300"
             >
               Cerrar sesión
             </button>

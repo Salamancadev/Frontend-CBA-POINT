@@ -1,30 +1,41 @@
 <template>
-  <RouterLink
-    to="/dashboard-aprendiz"
-    class="bg-red-600 text-white font-semibold px-4 py-2 rounded hover:bg-red-700 transition duration-300"
-  >
-    Volver
-  </RouterLink>
+  <div class="min-h-screen bg-gray-900 p-4 sm:p-6">
+    <!-- Botón Volver -->
+    <RouterLink
+      to="/dashboard-aprendiz"
+      class="inline-flex items-center bg-gray-800 hover:bg-gray-700 border border-gray-600 hover:border-[#7ED957] text-[#7ED957] px-4 py-2 rounded-lg font-semibold transition-all duration-300 hover:scale-105 mb-6"
+    >
+      ← Volver al Dashboard
+    </RouterLink>
 
-  <div class="container">
-    <!-- Encabezado con controles -->
-    <div class="controls-header">
-      <input
-        v-model="searchQuery"
-        id="searchBox"
-        placeholder="Buscar dirección o lugar..."
-        class="search-input"
-      />
-      <button @click="buscarLugar" class="btn btn-search">Buscar</button>
-      <button @click="irDestino" class="btn btn-destination">Ir al destino</button>
-      <div class="status-container">
-        <span id="status" class="status">{{ status }}</span>
-        <span id="routeInfo" class="route-info">{{ routeInfo }}</span>
+    <div class="container">
+      <!-- Encabezado con controles -->
+      <div class="controls-header bg-gray-800 border border-gray-700 rounded-xl shadow-lg p-4 mb-4">
+        <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center w-full">
+          <input
+            v-model="searchQuery"
+            id="searchBox"
+            placeholder="Buscar dirección o lugar..."
+            class="search-input bg-gray-700 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#7ED957] focus:border-transparent transition-all duration-300 flex-1"
+          />
+          <div class="flex gap-2">
+            <button @click="buscarLugar" class="btn btn-search bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-[#7ED957] text-[#7ED957] font-semibold px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105">
+              🔍 Buscar
+            </button>
+            <button @click="irDestino" class="btn btn-destination bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-[#24DEFF] text-[#24DEFF] font-semibold px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105">
+              🎯 Ir al destino
+            </button>
+          </div>
+        </div>
+        
+        <div class="status-container mt-3 flex flex-col sm:flex-row gap-2 text-sm">
+          <span id="routeInfo" class="route-info text-[#24DEFF] font-semibold bg-gray-700 px-3 py-1 rounded-lg">{{ routeInfo }}</span>
+        </div>
       </div>
-    </div>
 
-    <!-- Mapa -->
-    <div id="map"></div>
+      <!-- Mapa -->
+      <div id="map" class="bg-gray-800 border border-gray-700 rounded-xl shadow-lg overflow-hidden"></div>
+    </div>
   </div>
 </template>
 
@@ -42,7 +53,7 @@ export default {
       routeLayer: null,
       destCoords: null,
       searchQuery: '',
-      status: '',
+      status: 'Ubicación no disponible',
       routeInfo: '',
     }
   },
@@ -65,13 +76,13 @@ export default {
           const lng = pos.coords.longitude
           this.status = `Ubicación: ${lat.toFixed(5)}, ${lng.toFixed(5)}`
           if (!this.userMarker) {
-            this.userMarker = L.marker([lat, lng]).addTo(this.map).bindPopup('Tú')
+            this.userMarker = L.marker([lat, lng]).addTo(this.map).bindPopup('Tú estás aquí')
           } else {
             this.userMarker.setLatLng([lat, lng])
           }
         },
         (err) => {
-          this.status = 'Error geolocation: ' + err.message
+          this.status = 'Error geolocalización: ' + err.message
         },
         { enableHighAccuracy: true, maximumAge: 10000 },
       )
@@ -85,7 +96,12 @@ export default {
       [4.692324, -74.21455],
       [4.696692, -74.212033],
     ]
-    L.polygon(zonaCoords, { color: 'blue', fillColor: 'lightblue', fillOpacity: 0.4 })
+    L.polygon(zonaCoords, { 
+      color: '#7ED957', 
+      fillColor: '#7ED957', 
+      fillOpacity: 0.2,
+      weight: 2
+    })
       .addTo(this.map)
       .bindPopup('Centro de Biotecnologia Agropecuaria Sena')
 
@@ -207,7 +223,13 @@ export default {
 
       if (this.routeLayer) this.map.removeLayer(this.routeLayer)
 
-      this.routeLayer = L.geoJSON(route, { style: { color: 'red', weight: 5 } }).addTo(this.map)
+      this.routeLayer = L.geoJSON(route, { 
+        style: { 
+          color: '#7ED957', 
+          weight: 6,
+          opacity: 0.8
+        } 
+      }).addTo(this.map)
       this.map.fitBounds(this.routeLayer.getBounds(), { padding: [50, 50] })
 
       this.routeInfo = `Distancia: ${distance} km — Tiempo estimado: ${duration} min`
@@ -218,74 +240,48 @@ export default {
 
 <style scoped>
 .container {
-  padding: 10px;
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - 100px);
 }
 
-/* Barra de búsqueda horizontal */
 .controls-header {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 10px;
-  align-items: center;
-  background: #fff;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .search-input {
   flex: 1;
   min-width: 200px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 8px;
   font-size: 16px;
 }
 
 .btn {
-  padding: 10px 16px;
+  padding: 12px 16px;
   font-size: 15px;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   border: none;
-  transition: background-color 0.3s;
-}
-
-.btn-search {
-  background-color: #3498db;
-  color: white;
-}
-.btn-search:hover {
-  background-color: #2980b9;
-}
-
-.btn-destination {
-  background-color: #2ecc71;
-  color: white;
-}
-.btn-destination:hover {
-  background-color: #27ae60;
-}
-
-.status-container {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #555;
-  margin-left: auto; /* Pega el estado a la derecha */
+  transition: all 0.3s ease;
+  font-weight: 600;
 }
 
 #map {
   flex: 1;
-  height: calc(100vh - 120px); /* Ajusta al espacio disponible */
+  height: calc(100vh - 200px);
   width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}
+
+.status-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 14px;
 }
 
 /* Responsive */
@@ -294,11 +290,19 @@ export default {
     flex-direction: column;
     align-items: stretch;
   }
-  .status-container {
-    margin-left: 0;
-  }
+  
   #map {
     height: 60vh;
+  }
+  
+  .search-input {
+    min-width: unset;
+  }
+}
+
+@media (max-width: 640px) {
+  .status-container {
+    flex-direction: column;
   }
 }
 </style>

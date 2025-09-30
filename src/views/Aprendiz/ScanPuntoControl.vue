@@ -3,7 +3,7 @@
     <!-- Botón de volver -->
     <div class="w-full max-w-3xl flex justify-start mb-6">
       <RouterLink
-        to="/"
+        to="/dashboard-aprendiz"
         class="bg-red-600 text-white font-semibold px-4 py-2 rounded-lg shadow hover:bg-red-700 transition"
       >
         ⬅ Volver al Inicio
