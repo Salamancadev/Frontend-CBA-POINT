@@ -33,12 +33,7 @@
 
       <div class="input-group">
         <label for="ficha">Ficha:</label>
-        <input
-          v-model="estudiante.ficha"
-          type="text"
-          id="ficha"
-          placeholder="Ingrese la ficha"
-        />
+        <input v-model="estudiante.ficha" type="text" id="ficha" placeholder="Ingrese la ficha" />
       </div>
 
       <div class="input-group">
@@ -64,50 +59,55 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import QRCode from 'qrcode';
+import { defineComponent, ref } from 'vue'
+import QRCode from 'qrcode'
 
 interface Estudiante {
-  nombre: string;
-  apellido: string;
-  documento: string;
-  ficha: string;
+  nombre: string
+  apellido: string
+  documento: string
+  ficha: string
 }
 
 export default defineComponent({
   name: 'GeneradorQR',
   setup() {
-    const estudiante = ref<Estudiante>({ nombre: '', apellido: '', ficha: '', documento: '' });
-    const qrData = ref<string | null>(null);
+    const estudiante = ref<Estudiante>({ nombre: '', apellido: '', ficha: '', documento: '' })
+    const qrData = ref<string | null>(null)
 
     const generarQR = async () => {
-      if (estudiante.value.nombre && estudiante.value.apellido && estudiante.value.ficha && estudiante.value.documento) {
+      if (
+        estudiante.value.nombre &&
+        estudiante.value.apellido &&
+        estudiante.value.ficha &&
+        estudiante.value.documento
+      ) {
         // Aquí puedes poner tus datos o un enlace, yo uso los datos del estudiante
         // const datosEstudiante = `Nombre: ${estudiante.value.nombre}\nApellido: ${estudiante.value.apellido}\nFicha: ${estudiante.value.ficha}\nDocumento: ${estudiante.value.documento}`;
-        const url = "https://forms.gle/bqxyA4WNU2qD7HYd8"
+        const url = 'https://forms.gle/bqxyA4WNU2qD7HYd8'
         try {
-          qrData.value = await QRCode.toString(url, { type: 'svg' });
+          qrData.value = await QRCode.toString(url, { type: 'svg' })
         } catch (error) {
-          console.error('Error al generar el QR:', error);
+          console.error('Error al generar el QR:', error)
         }
       } else {
-        alert('Por favor, complete todos los campos.');
+        alert('Por favor, complete todos los campos.')
       }
-    };
+    }
 
     const resetFormulario = () => {
-      qrData.value = null;
-      estudiante.value = { nombre: '', apellido: '', ficha: '', documento: '' };
-    };
+      qrData.value = null
+      estudiante.value = { nombre: '', apellido: '', ficha: '', documento: '' }
+    }
 
     return {
       estudiante,
       qrData,
       generarQR,
-      resetFormulario
-    };
-  }
-});
+      resetFormulario,
+    }
+  },
+})
 </script>
 
 <style scoped>

@@ -5,7 +5,7 @@
   >
     Back
   </RouterLink>
-  <div class="events-container ">
+  <div class="events-container">
     <h1 class="events-title">Eventos Actuales</h1>
 
     <!-- Lista de eventos -->
@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'Eventos',
@@ -56,27 +56,27 @@ export default defineComponent({
         date: new Date('2025-10-29T08:00:00'),
         description: 'Disfrasate! Y se parte de nuestri equipo Sena',
       },
-    ]);
+    ])
 
     // Función para formatear la fecha de los eventos
     const formatDate = (date: Date) => {
-      const options: Intl.DateTimeFormatOptions = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric', 
-        hour: '2-digit', 
-        minute: '2-digit' 
-      };
-      return date.toLocaleDateString('es-ES', options);
-    };
+      const options: Intl.DateTimeFormatOptions = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      }
+      return date.toLocaleDateString('es-ES', options)
+    }
 
     return {
       events,
       formatDate,
-    };
+    }
   },
-});
+})
 </script>
 
 <style scoped>

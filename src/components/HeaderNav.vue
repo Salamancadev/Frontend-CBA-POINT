@@ -69,15 +69,27 @@
           aria-controls="mobile-menu"
         >
           <span class="sr-only">Abrir menú</span>
-          <svg v-if="!isOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-               viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"/>
+          <svg
+            v-if="!isOpen"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
-          <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-               viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12"/>
+          <svg
+            v-else
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
@@ -88,9 +100,30 @@
       <ul class="space-y-1 px-4 py-3">
         <!-- NO autenticado -->
         <template v-if="!auth.isAuthenticated">
-          <li><RouterLink to="/" class="block rounded-md px-3 py-2 hover:bg-white/5" @click="closeMenu">Inicio</RouterLink></li>
-          <li><RouterLink to="/ayuda" class="block rounded-md px-3 py-2 hover:bg-white/5" @click="closeMenu">Ayuda</RouterLink></li>
-          <li><RouterLink to="/login" class="block rounded-md px-3 py-2 hover:bg-white/5" @click="closeMenu">Iniciar sesión</RouterLink></li>
+          <li>
+            <RouterLink
+              to="/"
+              class="block rounded-md px-3 py-2 hover:bg-white/5"
+              @click="closeMenu"
+              >Inicio</RouterLink
+            >
+          </li>
+          <li>
+            <RouterLink
+              to="/ayuda"
+              class="block rounded-md px-3 py-2 hover:bg-white/5"
+              @click="closeMenu"
+              >Ayuda</RouterLink
+            >
+          </li>
+          <li>
+            <RouterLink
+              to="/login"
+              class="block rounded-md px-3 py-2 hover:bg-white/5"
+              @click="closeMenu"
+              >Iniciar sesión</RouterLink
+            >
+          </li>
           <li>
             <RouterLink
               to="/register"
@@ -106,7 +139,12 @@
         <template v-else>
           <li>
             <button
-              @click="() => { closeMenu(); handleLogout() }"
+              @click="
+                () => {
+                  closeMenu()
+                  handleLogout()
+                }
+              "
               class="w-full text-left block rounded-md border border-[#7ED957]/30 px-3 py-2 font-semibold hover:border-[#7ED957] hover:bg-[#7ED957]/10 hover:text-[#7ED957]"
             >
               Cerrar sesión
@@ -129,7 +167,9 @@ const auth = useAuthStore()
 onMounted(() => auth.hydrate())
 
 const isOpen = ref(false)
-const closeMenu = () => { isOpen.value = false }
+const closeMenu = () => {
+  isOpen.value = false
+}
 
 const handleLogout = () => {
   auth.simulateLogout()

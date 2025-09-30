@@ -4,12 +4,12 @@
       <!-- Layout: columna en móvil, dos columnas en md+ -->
       <div class="grid items-center gap-10 md:grid-cols-2">
         <!-- Columna izquierda: ilustración y círculos -->
-        <article class="relative mx-auto h-80 sm:h-[26rem] md:h-[28rem] w-full max-w-md md:max-w-none">
+        <article
+          class="relative mx-auto h-80 sm:h-[26rem] md:h-[28rem] w-full max-w-md md:max-w-none"
+        >
           <!-- Círculo principal (foto) -->
           <div
-            class="absolute left-1/2 top-1/2 aspect-square w-56 sm:w-72 md:w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-center bg-no-repeat
-                   bg-[url('/img/estudiante1.jpg')]
-                   bg-[length:140%] md:transition-[background-size] md:duration-[1500ms] md:hover:bg-[length:165%]"
+            class="absolute left-1/2 top-1/2 aspect-square w-56 sm:w-72 md:w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-center bg-no-repeat bg-[url('/img/estudiante1.jpg')] bg-[length:140%] md:transition-[background-size] md:duration-[1500ms] md:hover:bg-[length:165%]"
             aria-hidden="true"
           ></div>
 
@@ -27,9 +27,7 @@
 
           <!-- Círculo blanco con check -->
           <div
-            class="absolute left-6 sm:left-10 top-1/2 -translate-y-1/2 h-24 w-24 sm:h-28 sm:w-28 rounded-full border-[10px] border-[#212529] bg-white
-                   bg-[url('/img/check.png')] bg-cover bg-center
-                   md:transition-[background-size] md:duration-500 md:hover:bg-[length:120%]"
+            class="absolute left-6 sm:left-10 top-1/2 -translate-y-1/2 h-24 w-24 sm:h-28 sm:w-28 rounded-full border-[10px] border-[#212529] bg-white bg-[url('/img/check.png')] bg-cover bg-center md:transition-[background-size] md:duration-500 md:hover:bg-[length:120%]"
             aria-hidden="true"
           ></div>
         </article>
@@ -43,13 +41,12 @@
           </h2>
 
           <p
-            class="mt-6 rounded-2xl bg-[#343A40] p-6 sm:p-8 font-sans text-base sm:text-lg md:text-2xl text-[aliceblue]
-                   md:text-right"
+            class="mt-6 rounded-2xl bg-[#343A40] p-6 sm:p-8 font-sans text-base sm:text-lg md:text-2xl text-[aliceblue] md:text-right"
           >
-            Cba<span class="text-[#7ED957]">Point</span> te ayudará a llevar el control de asistencias
-            de aprendices por medio de códigos QR que generan reportes automáticos, dejando de lado el
-            uso de papel y contribuyendo al cuidado del medio ambiente. Además, podrás gestionar las
-            clases de inducción para nuevos aprendices con un tour virtual.
+            Cba<span class="text-[#7ED957]">Point</span> te ayudará a llevar el control de
+            asistencias de aprendices por medio de códigos QR que generan reportes automáticos,
+            dejando de lado el uso de papel y contribuyendo al cuidado del medio ambiente. Además,
+            podrás gestionar las clases de inducción para nuevos aprendices con un tour virtual.
           </p>
         </article>
       </div>
@@ -64,7 +61,7 @@
 <style scoped>
 /* Respeta reducción de movimiento: desactiva transiciones del zoom */
 @media (prefers-reduced-motion: reduce) {
-  [class*="transition"] {
+  [class*='transition'] {
     transition: none !important;
   }
 }

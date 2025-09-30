@@ -10,18 +10,18 @@
 </template>
 
 <script>
-import QRCodeVue from 'qrcode.vue';
+import QRCodeVue from 'qrcode.vue'
 
 export default {
   components: {
-    QRCodeVue
+    QRCodeVue,
   },
   data() {
     return {
-      qrValue: 'https://example.com'  // Puedes inicializar con cualquier valor
-    };
-  }
-};
+      qrValue: 'https://example.com', // Puedes inicializar con cualquier valor
+    }
+  },
+}
 </script>
 
 <style scoped>

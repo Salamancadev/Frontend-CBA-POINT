@@ -7,12 +7,11 @@
       // Tamaño del fondo y animación (solo md+ para evitar jank en móvil)
       'bg-[length:100%] md:transition-[background-size] md:duration-[1500ms] md:hover:bg-[length:110%]',
       // Altura y espaciado
-      'px-4 py-16 sm:py-20 lg:py-28'
+      'px-4 py-16 sm:py-20 lg:py-28',
     ]"
     style="
       background-image:
-        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.75)),
-        url('/img/principal.png');
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)), url('/img/principal.png');
       background-size: cover;
     "
   >
@@ -27,9 +26,7 @@
         </h1>
 
         <!-- Subtítulo -->
-        <h2
-          class="mt-3 font-sans font-bold text-base sm:text-xl md:text-2xl text-[aliceblue]"
-        >
+        <h2 class="mt-3 font-sans font-bold text-base sm:text-xl md:text-2xl text-[aliceblue]">
           Asiste <span class="text-[#7ED957]">fácil</span> y
           <span class="text-[#24DEFF]">seguro</span>
         </h2>
@@ -38,14 +35,11 @@
         <p
           class="mt-6 font-sans text-[1.05rem] sm:text-lg md:text-xl text-[aliceblue] w-full md:w-3/4 lg:w-1/2"
         >
-          <strong>
-            Cba<span class="text-[#7ED957]">Point</span>
-          </strong>
+          <strong> Cba<span class="text-[#7ED957]">Point</span> </strong>
           es un sistema de
           <span class="text-[#24DEFF] font-bold">gestión de asistencias</span>
           para instructores SENA y personal administrativo que facilita la
-          <span class="text-[#7ED957] font-bold">gestión</span> de aprendices en
-          la institución.
+          <span class="text-[#7ED957] font-bold">gestión</span> de aprendices en la institución.
         </p>
 
         <!-- CTA -->
@@ -53,11 +47,7 @@
           <a
             href="/descargas/cba-maps.apk"
             download="cba-maps.apk"
-            class="inline-flex items-center justify-center rounded-full
-                   bg-gradient-to-r from-[#7ED957] to-[#0097B2]
-                   px-6 py-3 text-base md:text-lg font-bold text-[aliceblue]
-                   transition-all duration-300 hover:from-[#66b047] hover:to-[#006e81]
-                   hover:shadow-inner focus:outline-none focus:ring-2 focus:ring-[#7ED957] focus:ring-offset-2 focus:ring-offset-black/30"
+            class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#7ED957] to-[#0097B2] px-6 py-3 text-base md:text-lg font-bold text-[aliceblue] transition-all duration-300 hover:from-[#66b047] hover:to-[#006e81] hover:shadow-inner focus:outline-none focus:ring-2 focus:ring-[#7ED957] focus:ring-offset-2 focus:ring-offset-black/30"
           >
             ¡Descárgala ya!
           </a>

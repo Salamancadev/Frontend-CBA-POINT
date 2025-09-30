@@ -10,61 +10,59 @@
       <h2>Datos del Estudiante</h2>
       <pre>{{ datosEstudiante }}</pre>
 
-      <button @click="marcarAsistencia" class="btn-asistio">
-        ✅ Asistió
-      </button>
+      <button @click="marcarAsistencia" class="btn-asistio">✅ Asistió</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref } from 'vue'
 
-import "vue-qrcode-reader/vue-qrcode-reader.css";
+import 'vue-qrcode-reader/vue-qrcode-reader.css'
 
-import { QrcodeStream } from "vue-qrcode-reader";
+import { QrcodeStream } from 'vue-qrcode-reader'
 
 export default defineComponent({
-  name: "EscanerQR",
+  name: 'EscanerQR',
   components: { QrcodeStream },
   setup() {
-    const datosEstudiante = ref<string | null>(null);
+    const datosEstudiante = ref<string | null>(null)
 
     // Cuando escanea correctamente
     const onDecode = (decodedText: string) => {
-      datosEstudiante.value = decodedText;
-    };
+      datosEstudiante.value = decodedText
+    }
 
     // Inicialización de la cámara
     const onInit = (promise: Promise<void>) => {
-      promise.catch(err => {
-        console.error("Error al iniciar la cámara:", err);
-        alert("No se pudo acceder a la cámara.");
-      });
-    };
+      promise.catch((err) => {
+        console.error('Error al iniciar la cámara:', err)
+        alert('No se pudo acceder a la cámara.')
+      })
+    }
 
     // Acción de marcar asistencia
     const marcarAsistencia = () => {
       if (datosEstudiante.value) {
-        alert("✅ Asistencia registrada para:\n" + datosEstudiante.value);
+        alert('✅ Asistencia registrada para:\n' + datosEstudiante.value)
         // Aquí podrías enviar un POST a tu backend (Django) para guardar la asistencia
       }
-    };
+    }
 
     return {
       datosEstudiante,
       onDecode,
       onInit,
       marcarAsistencia,
-    };
+    }
   },
-});
+})
 </script>
 
 <style scoped>
 .escaner-qr {
   background-color: #f9f9f9;
-  font-family: "Arial", sans-serif;
+  font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;

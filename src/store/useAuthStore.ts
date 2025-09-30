@@ -28,6 +28,6 @@ export const useAuthStore = defineStore('auth', {
       this.isAuthenticated = localStorage.getItem('auth_isAuthenticated') === '1'
       const raw = localStorage.getItem('auth_user')
       this.user = raw ? JSON.parse(raw) : null
-    }
+    },
   },
 })

@@ -42,19 +42,26 @@
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-600">Aprendiz</label>
-          <input v-model="filtro.aprendiz" class="w-full mt-1 p-2 border rounded-lg" placeholder="Buscar aprendiz"/>
+          <input
+            v-model="filtro.aprendiz"
+            class="w-full mt-1 p-2 border rounded-lg"
+            placeholder="Buscar aprendiz"
+          />
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-600">Fecha Desde</label>
-          <input type="date" v-model="filtro.desde" class="w-full mt-1 p-2 border rounded-lg"/>
+          <input type="date" v-model="filtro.desde" class="w-full mt-1 p-2 border rounded-lg" />
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-600">Fecha Hasta</label>
-          <input type="date" v-model="filtro.hasta" class="w-full mt-1 p-2 border rounded-lg"/>
+          <input type="date" v-model="filtro.hasta" class="w-full mt-1 p-2 border rounded-lg" />
         </div>
       </div>
       <div class="flex justify-end mt-4 space-x-3">
-        <button @click="limpiarFiltros" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">
+        <button
+          @click="limpiarFiltros"
+          class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600"
+        >
           ♻ Limpiar
         </button>
       </div>
@@ -66,7 +73,11 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div>
           <label class="block text-sm font-medium text-gray-600">Aprendiz</label>
-          <input v-model="nuevo.aprendiz" class="w-full mt-1 p-2 border rounded-lg" placeholder="Nombre aprendiz"/>
+          <input
+            v-model="nuevo.aprendiz"
+            class="w-full mt-1 p-2 border rounded-lg"
+            placeholder="Nombre aprendiz"
+          />
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-600">Evento</label>
@@ -86,20 +97,21 @@
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-600">Fecha</label>
-          <input type="date" v-model="nuevo.fecha" class="w-full mt-1 p-2 border rounded-lg"/>
+          <input type="date" v-model="nuevo.fecha" class="w-full mt-1 p-2 border rounded-lg" />
         </div>
       </div>
       <div class="flex justify-end mt-4">
-        <button @click="crearRegistro" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        <button
+          @click="crearRegistro"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        >
           ➕ Agregar
         </button>
       </div>
     </div>
 
     <!-- 🔹 Tabla de reportes -->
-    <div v-if="!filtrados.length" class="text-gray-600 text-center">
-      ⚠ No hay registros.
-    </div>
+    <div v-if="!filtrados.length" class="text-gray-600 text-center">⚠ No hay registros.</div>
 
     <div v-else class="bg-white p-6 rounded-xl shadow-lg overflow-x-auto">
       <table class="w-full border-collapse">
@@ -117,11 +129,13 @@
           <tr v-for="(r, index) in filtrados" :key="r.id" class="hover:bg-gray-50">
             <td class="p-3 border">{{ index + 1 }}</td>
             <td class="p-3 border">
-              <input v-model="r.aprendiz" class="w-full border rounded px-2 py-1"/>
+              <input v-model="r.aprendiz" class="w-full border rounded px-2 py-1" />
             </td>
             <td class="p-3 border">
               <select v-model="r.evento" class="w-full border rounded px-2 py-1">
-                <option v-for="ev in eventos" :key="ev.id" :value="ev.nombre">{{ ev.nombre }}</option>
+                <option v-for="ev in eventos" :key="ev.id" :value="ev.nombre">
+                  {{ ev.nombre }}
+                </option>
               </select>
             </td>
             <td class="p-3 border">
@@ -131,13 +145,19 @@
               </select>
             </td>
             <td class="p-3 border">
-              <input type="date" v-model="r.fecha" class="w-full border rounded px-2 py-1"/>
+              <input type="date" v-model="r.fecha" class="w-full border rounded px-2 py-1" />
             </td>
             <td class="p-3 border text-center space-x-2">
-              <button @click="guardarRegistro(r)" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
+              <button
+                @click="guardarRegistro(r)"
+                class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+              >
                 💾 Guardar
               </button>
-              <button @click="eliminarRegistro(r.id)" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+              <button
+                @click="eliminarRegistro(r.id)"
+                class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+              >
                 🗑 Eliminar
               </button>
             </td>
@@ -150,57 +170,59 @@
 
 <script>
 export default {
-  name: "ReportesInstructor",
+  name: 'ReportesInstructor',
   data() {
     return {
       // Eventos arranca vacío ✅
       eventos: [],
-      nuevoEvento: "",
+      nuevoEvento: '',
 
       // Registros arranca vacío ✅
       reportes: [],
 
       // Nuevo registro
-      nuevo: { aprendiz: "", evento: "", estado: "presente", fecha: "" },
+      nuevo: { aprendiz: '', evento: '', estado: 'presente', fecha: '' },
 
       // Filtros
-      filtro: { evento: "", aprendiz: "", desde: "", hasta: "" }
+      filtro: { evento: '', aprendiz: '', desde: '', hasta: '' },
     }
   },
   computed: {
     filtrados() {
-      return this.reportes.filter(r => {
+      return this.reportes.filter((r) => {
         const porEvento = !this.filtro.evento || r.evento === this.filtro.evento
-        const porAprendiz = !this.filtro.aprendiz || r.aprendiz.toLowerCase().includes(this.filtro.aprendiz.toLowerCase())
+        const porAprendiz =
+          !this.filtro.aprendiz ||
+          r.aprendiz.toLowerCase().includes(this.filtro.aprendiz.toLowerCase())
         const porFechaDesde = !this.filtro.desde || r.fecha >= this.filtro.desde
         const porFechaHasta = !this.filtro.hasta || r.fecha <= this.filtro.hasta
         return porEvento && porAprendiz && porFechaDesde && porFechaHasta
       })
-    }
+    },
   },
   methods: {
     crearEvento() {
       if (!this.nuevoEvento.trim()) return
       this.eventos.push({ id: Date.now(), nombre: this.nuevoEvento })
-      this.nuevoEvento = ""
+      this.nuevoEvento = ''
     },
     crearRegistro() {
       if (!this.nuevo.aprendiz || !this.nuevo.evento || !this.nuevo.fecha) {
-        alert("⚠ Debes completar todos los campos")
+        alert('⚠ Debes completar todos los campos')
         return
       }
       this.reportes.push({ id: Date.now(), ...this.nuevo })
-      this.nuevo = { aprendiz: "", evento: "", estado: "presente", fecha: "" }
+      this.nuevo = { aprendiz: '', evento: '', estado: 'presente', fecha: '' }
     },
     guardarRegistro(r) {
       alert(`✅ Registro de ${r.aprendiz} guardado correctamente.`)
     },
     eliminarRegistro(id) {
-      this.reportes = this.reportes.filter(r => r.id !== id)
+      this.reportes = this.reportes.filter((r) => r.id !== id)
     },
     limpiarFiltros() {
-      this.filtro = { evento: "", aprendiz: "", desde: "", hasta: "" }
-    }
-  }
+      this.filtro = { evento: '', aprendiz: '', desde: '', hasta: '' }
+    },
+  },
 }
 </script>

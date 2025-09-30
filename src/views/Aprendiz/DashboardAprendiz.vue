@@ -158,7 +158,6 @@
         </ul>
         <p v-else class="text-gray-500">No hay eventos disponibles</p>
       </div>
-
     </div>
 
     <!-- Escanear QR -->
@@ -174,8 +173,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted } from "vue";
-import axios from "axios";
+import { defineComponent, ref, computed, onMounted } from 'vue'
+import axios from 'axios'
 import {
   Chart,
   BarElement,
@@ -184,197 +183,201 @@ import {
   LinearScale,
   Tooltip,
   Legend,
-} from "chart.js";
+} from 'chart.js'
 
-Chart.register(BarElement, ArcElement, CategoryScale, LinearScale, Tooltip, Legend);
+Chart.register(BarElement, ArcElement, CategoryScale, LinearScale, Tooltip, Legend)
 
 interface Evento {
-  id: number;
-  nombre: string;
-  tipo: string;
-  fecha_inicio: string;
-  fecha_fin: string;
+  id: number
+  nombre: string
+  tipo: string
+  fecha_inicio: string
+  fecha_fin: string
 }
 interface Asistencia {
-  id: number;
-  estado: "presente" | "ausente";
-  fecha: string;
+  id: number
+  estado: 'presente' | 'ausente'
+  fecha: string
 }
 
 export default defineComponent({
-  name: "DashboardEstudiante",
+  name: 'DashboardEstudiante',
   setup() {
-    const estudianteNombre = ref("Estudiante");
-    const eventos = ref<Evento[]>([]);
-    const historial = ref<Asistencia[]>([]);
-    const presentes = ref(0);
-    const ausentes = ref(0);
-    const ingresos = ref(0); // 👈 contador de ingresos
+    const estudianteNombre = ref('Estudiante')
+    const eventos = ref<Evento[]>([])
+    const historial = ref<Asistencia[]>([])
+    const presentes = ref(0)
+    const ausentes = ref(0)
+    const ingresos = ref(0) // 👈 contador de ingresos
 
-    const filtroNombre = ref("");
-    const filtroTipo = ref("");
-    const fechaInicio = ref("");
-    const fechaFin = ref("");
+    const filtroNombre = ref('')
+    const filtroTipo = ref('')
+    const fechaInicio = ref('')
+    const fechaFin = ref('')
 
-    const chartCanvas = ref<HTMLCanvasElement | null>(null);
-    const pieCanvas = ref<HTMLCanvasElement | null>(null);
+    const chartCanvas = ref<HTMLCanvasElement | null>(null)
+    const pieCanvas = ref<HTMLCanvasElement | null>(null)
 
-    const drawerOpen = ref(false);
-    const darkMode = ref(true);
+    const drawerOpen = ref(false)
+    const darkMode = ref(true)
 
     const menu = [
       // { path: "/ConsulEvent-aprendiz", label: "Consultar Eventos", icon: "📅" },
-      { path: "/GenerarQR-aprendiz", label: "Generar QR", icon: "🔗" },
-      { path: "/Mapa-aprendiz", label: "Mapa", icon: "🗺️" },
-      { path: "/Scann-aprendiz", label: "Scanear Punto de Control", icon: "📷" },
-    ];
+      { path: '/GenerarQR-aprendiz', label: 'Generar QR', icon: '🔗' },
+      { path: '/Mapa-aprendiz', label: 'Mapa', icon: '🗺️' },
+      { path: '/Scann-aprendiz', label: 'Scanear Punto de Control', icon: '📷' },
+    ]
 
     const eventosHoy = computed(() =>
       eventos.value.filter((e) => {
-        const hoy = new Date().toDateString();
-        return new Date(e.fecha_inicio).toDateString() === hoy;
-      })
-    );
+        const hoy = new Date().toDateString()
+        return new Date(e.fecha_inicio).toDateString() === hoy
+      }),
+    )
 
-    const tiposEventos = computed(() => [...new Set(eventos.value.map((e) => e.tipo))]);
+    const tiposEventos = computed(() => [...new Set(eventos.value.map((e) => e.tipo))])
 
     const eventosFiltrados = computed(() =>
       eventos.value.filter((e) => {
-        const coincideNombre = e.nombre
-          .toLowerCase()
-          .includes(filtroNombre.value.toLowerCase());
-        const coincideTipo = filtroTipo.value ? e.tipo === filtroTipo.value : true;
-        return coincideNombre && coincideTipo;
-      })
-    );
+        const coincideNombre = e.nombre.toLowerCase().includes(filtroNombre.value.toLowerCase())
+        const coincideTipo = filtroTipo.value ? e.tipo === filtroTipo.value : true
+        return coincideNombre && coincideTipo
+      }),
+    )
 
     const ordenarEventos = () => {
       eventos.value.sort(
-        (a, b) =>
-          new Date(a.fecha_inicio).getTime() - new Date(b.fecha_inicio).getTime()
-      );
-    };
+        (a, b) => new Date(a.fecha_inicio).getTime() - new Date(b.fecha_inicio).getTime(),
+      )
+    }
 
     const renderChart = () => {
       if (chartCanvas.value) {
-        const ctx = chartCanvas.value.getContext("2d");
+        const ctx = chartCanvas.value.getContext('2d')
         if (ctx) {
           new Chart(ctx, {
-            type: "bar",
+            type: 'bar',
             data: {
-              labels: ["Presentes", "Ausentes", "Ingresos"],
+              labels: ['Presentes', 'Ausentes', 'Ingresos'],
               datasets: [
                 {
-                  label: "Asistencias",
+                  label: 'Asistencias',
                   data: [presentes.value, ausentes.value, ingresos.value],
-                  backgroundColor: ["#4ade80", "#f87171", "#60a5fa"],
+                  backgroundColor: ['#4ade80', '#f87171', '#60a5fa'],
                 },
               ],
             },
             options: { responsive: true, plugins: { legend: { display: false } } },
-          });
+          })
         }
       }
       if (pieCanvas.value) {
-        const ctx = pieCanvas.value.getContext("2d");
+        const ctx = pieCanvas.value.getContext('2d')
         if (ctx) {
           new Chart(ctx, {
-            type: "pie",
+            type: 'pie',
             data: {
-              labels: ["Presentes", "Ausentes", "Ingresos"],
+              labels: ['Presentes', 'Ausentes', 'Ingresos'],
               datasets: [
                 {
                   data: [presentes.value, ausentes.value, ingresos.value],
-                  backgroundColor: ["#34d399", "#ef4444", "#3b82f6"],
+                  backgroundColor: ['#34d399', '#ef4444', '#3b82f6'],
                 },
               ],
             },
-          });
+          })
         }
       }
-    };
+    }
 
     const exportarCSV = () => {
-      const rows = [["Fecha", "Estado"]];
-      historial.value.forEach((h) => rows.push([h.fecha, h.estado]));
-      const csv = rows.map((r) => r.join(",")).join("\n");
-      const blob = new Blob([csv], { type: "text/csv" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "historial.csv";
-      a.click();
-      URL.revokeObjectURL(url);
-    };
+      const rows = [['Fecha', 'Estado']]
+      historial.value.forEach((h) => rows.push([h.fecha, h.estado]))
+      const csv = rows.map((r) => r.join(',')).join('\n')
+      const blob = new Blob([csv], { type: 'text/csv' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'historial.csv'
+      a.click()
+      URL.revokeObjectURL(url)
+    }
 
     const cerrarSesion = () => {
-      localStorage.removeItem("access");
-      window.location.href = "/login";
-    };
+      localStorage.removeItem('access')
+      window.location.href = '/login'
+    }
 
-    const toggleDarkMode = () => (darkMode.value = !darkMode.value);
+    const toggleDarkMode = () => (darkMode.value = !darkMode.value)
 
     const resumen = computed(() => [
-      { titulo: "Eventos", valor: eventos.value.length, color: "text-indigo-500" },
-      { titulo: "Asistencias", valor: presentes.value, color: "text-green-500" },
-      { titulo: "Ausencias", valor: ausentes.value, color: "text-red-500" },
-      { titulo: "Ingresos", valor: ingresos.value, color: "text-blue-500" }, // 👈 agregado
-    ]);
+      { titulo: 'Eventos', valor: eventos.value.length, color: 'text-indigo-500' },
+      { titulo: 'Asistencias', valor: presentes.value, color: 'text-green-500' },
+      { titulo: 'Ausencias', valor: ausentes.value, color: 'text-red-500' },
+      { titulo: 'Ingresos', valor: ingresos.value, color: 'text-blue-500' }, // 👈 agregado
+    ])
 
     const generarEventosDummy = () => {
-      const tipos = ["Conferencia", "Taller", "Recorrido", "Evento"];
-      const nombres = ["Presentacio de proyectos finales", "Exposiciones volumen 2", "OctoberFest 🍻", "Fiesta Helloween 🎃🦇", "Fiesta Navidad 🎄🎅", "Feria Universitaria"];
-      const ahora = new Date();
+      const tipos = ['Conferencia', 'Taller', 'Recorrido', 'Evento']
+      const nombres = [
+        'Presentacio de proyectos finales',
+        'Exposiciones volumen 2',
+        'OctoberFest 🍻',
+        'Fiesta Helloween 🎃🦇',
+        'Fiesta Navidad 🎄🎅',
+        'Feria Universitaria',
+      ]
+      const ahora = new Date()
 
       return Array.from({ length: 5 }).map((_, i) => {
-        const inicio = new Date(ahora.getTime() + i * 86400000);
-        const fin = new Date(inicio.getTime() + 2 * 60 * 60 * 1000);
+        const inicio = new Date(ahora.getTime() + i * 86400000)
+        const fin = new Date(inicio.getTime() + 2 * 60 * 60 * 1000)
         return {
           id: i + 1000,
           nombre: `${nombres[Math.floor(Math.random() * nombres.length)]} ${i + 1}`,
           tipo: tipos[Math.floor(Math.random() * tipos.length)],
           fecha_inicio: inicio.toISOString(),
           fecha_fin: fin.toISOString(),
-        };
-      });
-    };
+        }
+      })
+    }
 
     const getEventos = async () => {
       try {
-        const token = localStorage.getItem("access");
-        const res = await axios.get<Evento[]>("http://127.0.0.1:8000/api/eventos/", {
+        const token = localStorage.getItem('access')
+        const res = await axios.get<Evento[]>('http://127.0.0.1:8000/api/eventos/', {
           headers: { Authorization: `Bearer ${token}` },
-        });
-        eventos.value = res.data.length ? res.data : generarEventosDummy(); // 👈 si no hay datos, carga dummy
+        })
+        eventos.value = res.data.length ? res.data : generarEventosDummy() // 👈 si no hay datos, carga dummy
       } catch (err) {
-        console.error("Error cargando eventos:", err);
-        eventos.value = generarEventosDummy(); // 👈 fallback en error
+        console.error('Error cargando eventos:', err)
+        eventos.value = generarEventosDummy() // 👈 fallback en error
       }
-    };
+    }
 
     const getHistorial = async () => {
       try {
-        const token = localStorage.getItem("access");
+        const token = localStorage.getItem('access')
         const res = await axios.get<Asistencia[]>(
-          "http://127.0.0.1:8000/api/asistencias/historial/",
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        historial.value = res.data;
+          'http://127.0.0.1:8000/api/asistencias/historial/',
+          { headers: { Authorization: `Bearer ${token}` } },
+        )
+        historial.value = res.data
 
-        presentes.value = historial.value.filter((h) => h.estado === "presente").length;
-        ausentes.value = historial.value.filter((h) => h.estado === "ausente").length;
-        ingresos.value = historial.value.length; // 👈 cada registro cuenta como ingreso
+        presentes.value = historial.value.filter((h) => h.estado === 'presente').length
+        ausentes.value = historial.value.filter((h) => h.estado === 'ausente').length
+        ingresos.value = historial.value.length // 👈 cada registro cuenta como ingreso
 
-        renderChart();
+        renderChart()
       } catch (err) {
-        console.error("Error cargando historial:", err);
+        console.error('Error cargando historial:', err)
       }
-    };
+    }
 
     onMounted(async () => {
-      await getEventos();
-      await getHistorial();
-    });
+      await getEventos()
+      await getHistorial()
+    })
 
     return {
       estudianteNombre,
@@ -400,7 +403,7 @@ export default defineComponent({
       toggleDarkMode,
       exportarCSV,
       ordenarEventos,
-    };
+    }
   },
-});
+})
 </script>

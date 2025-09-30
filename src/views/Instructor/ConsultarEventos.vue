@@ -19,11 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="(event, index) in events"
-          :key="event.id ?? `event-${index}`"
-          class="border-b"
-        >
+        <tr v-for="(event, index) in events" :key="event.id ?? `event-${index}`" class="border-b">
           <td class="p-2">{{ event.nombre }}</td>
           <td class="p-2">{{ event.tipo }}</td>
           <td class="p-2">{{ event.fecha_inicio }}</td>
@@ -32,9 +28,7 @@
         </tr>
 
         <tr v-if="events.length === 0">
-          <td colspan="5" class="text-center p-4 text-gray-500">
-            No se encontraron eventos
-          </td>
+          <td colspan="5" class="text-center p-4 text-gray-500">No se encontraron eventos</td>
         </tr>
       </tbody>
     </table>
