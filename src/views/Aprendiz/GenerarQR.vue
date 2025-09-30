@@ -5,10 +5,12 @@
   >
     Back
   </RouterLink>
+
   <div class="generador-qr">
     <h1>Generador de QR del Estudiante</h1>
 
-    <div class="form-container">
+    <!-- FORMULARIO (solo se muestra si no hay qrData) -->
+    <div class="form-container" v-if="!qrData">
       <div class="input-group">
         <label for="nombre">Nombre:</label>
         <input
@@ -40,21 +42,23 @@
       </div>
 
       <div class="input-group">
-        <label for="ficha">Num Documento</label>
+        <label for="documento">Num Documento</label>
         <input
           v-model="estudiante.documento"
           type="text"
           id="documento"
-          placeholder="Ingrese su numero de"
+          placeholder="Ingrese su número de documento"
         />
       </div>
+
+      <button @click="generarQR" class="btn-generar">Generar QR</button>
     </div>
 
-    <button @click="generarQR" class="btn-generar">Generar QR</button>
-
-    <div v-if="qrData" class="qr-container">
+    <!-- QR (solo se muestra si ya existe qrData) -->
+    <div v-else class="qr-container">
       <h2>QR del Estudiante</h2>
       <div v-html="qrData" class="qr"></div>
+      <button @click="resetFormulario" class="btn-volver">Volver al formulario</button>
     </div>
   </div>
 </template>
@@ -73,18 +77,16 @@ interface Estudiante {
 export default defineComponent({
   name: 'GeneradorQR',
   setup() {
-    // Datos del estudiante
     const estudiante = ref<Estudiante>({ nombre: '', apellido: '', ficha: '', documento: '' });
     const qrData = ref<string | null>(null);
 
-    // Función para generar el QR
     const generarQR = async () => {
-      if (estudiante.value.nombre && estudiante.value.apellido && estudiante.value.ficha) {
-        const datosEstudiante = `Nombre: ${estudiante.value.nombre}\nApellido: ${estudiante.value.apellido}\nFicha: ${estudiante.value.ficha}\nDocumento: ${estudiante.value.documento}`;
-        //const url = "git-scm.com/downloads/win"
+      if (estudiante.value.nombre && estudiante.value.apellido && estudiante.value.ficha && estudiante.value.documento) {
+        // Aquí puedes poner tus datos o un enlace, yo uso los datos del estudiante
+        // const datosEstudiante = `Nombre: ${estudiante.value.nombre}\nApellido: ${estudiante.value.apellido}\nFicha: ${estudiante.value.ficha}\nDocumento: ${estudiante.value.documento}`;
+        const url = "https://forms.gle/bqxyA4WNU2qD7HYd8"
         try {
-          // Generar el QR con los datos del estudiante
-          qrData.value = await QRCode.toString(datosEstudiante, { type: 'svg' });
+          qrData.value = await QRCode.toString(url, { type: 'svg' });
         } catch (error) {
           console.error('Error al generar el QR:', error);
         }
@@ -93,10 +95,16 @@ export default defineComponent({
       }
     };
 
+    const resetFormulario = () => {
+      qrData.value = null;
+      estudiante.value = { nombre: '', apellido: '', ficha: '', documento: '' };
+    };
+
     return {
       estudiante,
       qrData,
-      generarQR
+      generarQR,
+      resetFormulario
     };
   }
 });
@@ -189,5 +197,14 @@ h2 {
   font-size: 1.5rem;
   color: #007e35;
   font-weight: bold;
+}
+
+.btn-volver {
+  margin-top: 20px;
+  background-color: #e63946;
+}
+
+.btn-volver:hover {
+  background-color: #c1121f;
 }
 </style>

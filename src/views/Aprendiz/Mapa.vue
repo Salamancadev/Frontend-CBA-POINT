@@ -5,28 +5,26 @@
   >
     Volver
   </RouterLink>
-  <div class="container">
-    <!-- Contenedor para los controles y el mapa -->
-    <div class="main-content">
-      <!-- Controles a la izquierda -->
-      <div class="controls">
-        <input
-          v-model="searchQuery"
-          id="searchBox"
-          placeholder="Buscar dirección o lugar..."
-          class="search-input"
-        />
-        <button @click="buscarLugar" class="btn btn-search">Buscar</button>
-        <button @click="irDestino" class="btn btn-destination">Ir al destino</button>
-        <div class="status-container">
-          <span id="status" class="status">{{ status }}</span>
-          <span id="routeInfo" class="route-info">{{ routeInfo }}</span>
-        </div>
-      </div>
 
-      <!-- Mapa a la derecha -->
-      <div id="map"></div>
+  <div class="container">
+    <!-- Encabezado con controles -->
+    <div class="controls-header">
+      <input
+        v-model="searchQuery"
+        id="searchBox"
+        placeholder="Buscar dirección o lugar..."
+        class="search-input"
+      />
+      <button @click="buscarLugar" class="btn btn-search">Buscar</button>
+      <button @click="irDestino" class="btn btn-destination">Ir al destino</button>
+      <div class="status-container">
+        <span id="status" class="status">{{ status }}</span>
+        <span id="routeInfo" class="route-info">{{ routeInfo }}</span>
+      </div>
     </div>
+
+    <!-- Mapa -->
+    <div id="map"></div>
   </div>
 </template>
 
@@ -52,14 +50,14 @@ export default {
     const SENA_LAT = 4.6929141
     const SENA_LNG = -74.2162249
 
-    // Inicializar el mapa
+    // Inicializar mapa
     this.map = L.map('map').setView([SENA_LAT, SENA_LNG], 17)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 30,
       attribution: '&copy; OpenStreetMap contributors',
     }).addTo(this.map)
 
-    // Seguimiento de ubicación en tiempo real
+    // Seguimiento geolocalización
     if ('geolocation' in navigator) {
       navigator.geolocation.watchPosition(
         (pos) => {
@@ -168,9 +166,7 @@ export default {
       if (!this.searchQuery) return
       const resp = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(this.searchQuery)}`,
-        {
-          headers: { 'User-Agent': 'MiProyectoDjango/1.0' },
-        },
+        { headers: { 'User-Agent': 'MiProyectoDjango/1.0' } },
       )
       const results = await resp.json()
       if (!results.length) {
@@ -221,58 +217,49 @@ export default {
 </script>
 
 <style scoped>
-/* Contenedor principal */
 .container {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-  background-color: #f4f6f9;
-  min-height: 100vh;
-  flex-direction: column; /* Apilado en pantallas pequeñas */
-}
-
-.main-content {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1200px;
-  flex-wrap: wrap; /* Permite que los elementos se ajusten cuando el espacio sea limitado */
-}
-
-.controls {
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Barra de búsqueda horizontal */
+.controls-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
   background: #fff;
-  padding: 20px;
+  padding: 15px;
   border-radius: 8px;
+  margin-bottom: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 320px;
-  max-width: 100%;
 }
 
 .search-input {
-  padding: 8px;
+  flex: 1;
+  min-width: 200px;
+  padding: 10px;
   border-radius: 5px;
   border: 1px solid #ddd;
   font-size: 16px;
-  width: 100%;
 }
 
 .btn {
-  padding: 10px;
-  font-size: 16px;
+  padding: 10px 16px;
+  font-size: 15px;
   border-radius: 5px;
   cursor: pointer;
+  border: none;
   transition: background-color 0.3s;
 }
 
 .btn-search {
   background-color: #3498db;
   color: white;
-  border: none;
 }
-
 .btn-search:hover {
   background-color: #2980b9;
 }
@@ -280,9 +267,7 @@ export default {
 .btn-destination {
   background-color: #2ecc71;
   color: white;
-  border: none;
 }
-
 .btn-destination:hover {
   background-color: #27ae60;
 }
@@ -290,33 +275,30 @@ export default {
 .status-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-
-.status, .route-info {
   font-size: 14px;
   color: #555;
+  margin-left: auto; /* Pega el estado a la derecha */
 }
 
 #map {
-  height: 85vh;
-  width: calc(100% - 340px); /* Ajuste el mapa al espacio restante */
+  flex: 1;
+  height: calc(100vh - 120px); /* Ajusta al espacio disponible */
+  width: 100%;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Responsive */
 @media (max-width: 768px) {
-  .main-content {
+  .controls-header {
     flex-direction: column;
+    align-items: stretch;
   }
-
-  .controls {
-    width: 100%;
+  .status-container {
+    margin-left: 0;
   }
-
   #map {
-    width: 100%;
-    height: 60vh; /* Ajuste del mapa en pantallas pequeñas */
+    height: 60vh;
   }
 }
 </style>

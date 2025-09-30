@@ -1,7 +1,7 @@
 <template>
   <header class="sticky top-0 z-50 bg-[#212529] text-white">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex h-16 items-center justify-between">
+      <div class="flex h-16 items-center justify-between mb-8">
         <!-- Logo -->
         <RouterLink to="/" class="flex items-center gap-3">
           <img src="/img/LOGO CBA PASS.png" alt="CbaPass logo" class="h-10 w-auto sm:h-12" />

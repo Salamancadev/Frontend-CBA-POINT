@@ -11,7 +11,7 @@
 
     <!-- Contenedor de la cámara -->
     <div v-if="isCameraActive" class="camera-display">
-      <video ref="videoElement" width="100%" height="auto" autoplay></video>
+      <video ref="videoElement" width="100%" height="auto" autoplay playsinline></video>
     </div>
 
     <!-- Mensaje si la cámara no está activa -->
@@ -25,9 +25,8 @@
       <pre>{{ qrResult }}</pre>
     </div>
 
-    <!-- Botones para iniciar y detener la cámara -->
+    <!-- Botón opcional para detener la cámara -->
     <div class="controls">
-      <button v-if="!isCameraActive" @click="iniciarCamara">Iniciar Cámara</button>
       <button v-if="isCameraActive" @click="detenerCamara">Detener Cámara</button>
     </div>
   </div>
@@ -40,93 +39,85 @@ import jsQR from 'jsqr';
 export default defineComponent({
   name: 'EscanearQRConCamara',
   setup() {
-    // Referencia para el video de la cámara
     const videoElement = ref<HTMLVideoElement | null>(null);
     const qrResult = ref<string | null>(null);
     const isCameraActive = ref<boolean>(false);
     let stream: MediaStream | null = null;
 
-    // Función para iniciar la cámara
+    // Iniciar cámara automáticamente al montar el componente
     const iniciarCamara = async () => {
       try {
         const constraints = {
-          video: true, // Usamos la cámara del dispositivo
+          video: { facingMode: "environment" }, // usar cámara trasera en móviles
         };
-
-        // Acceder a la cámara
         stream = await navigator.mediaDevices.getUserMedia(constraints);
+
         if (videoElement.value) {
-          videoElement.value.srcObject = stream; // Asignamos el stream al video
+          videoElement.value.srcObject = stream;
         }
         isCameraActive.value = true;
-        escanearQR(); // Iniciar escaneo inmediatamente después de activar la cámara
+        escanearQR();
       } catch (error) {
-        console.error('Error al acceder a la cámara:', error);
+        console.error("Error al acceder a la cámara:", error);
         isCameraActive.value = false;
       }
     };
 
-    // Función para detener la cámara
     const detenerCamara = () => {
       if (stream) {
         const tracks = stream.getTracks();
-        tracks.forEach(track => track.stop()); // Detenemos todos los tracks
+        tracks.forEach(track => track.stop());
       }
       isCameraActive.value = false;
     };
 
-    // Función para escanear el QR cada vez que se actualiza el video
     const escanearQR = () => {
-      if (videoElement.value && videoElement.value.readyState === videoElement.value.HAVE_ENOUGH_DATA) {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
+      if (
+        videoElement.value &&
+        videoElement.value.readyState === videoElement.value.HAVE_ENOUGH_DATA
+      ) {
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+
         if (context) {
-          // Establecemos el tamaño del canvas igual al del video
           canvas.height = videoElement.value.videoHeight;
           canvas.width = videoElement.value.videoWidth;
-
-          // Dibujamos el cuadro del video en el canvas
           context.drawImage(videoElement.value, 0, 0, canvas.width, canvas.height);
 
-          // Extraemos la imagen del canvas
           const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
           const code = jsQR(imageData.data, canvas.width, canvas.height, {
-            inversionAttempts: 'dontInvert',
+            inversionAttempts: "dontInvert",
           });
 
-          // Si se detecta un código QR
           if (code) {
-            qrResult.value = code.data; // Guardamos el contenido del QR
-            detenerCamara(); // Detenemos el escaneo una vez leemos el QR
+            qrResult.value = code.data;
+            detenerCamara();
 
-            // Redirigir al enlace del QR escaneado
-            if (qrResult.value) {
-              // Intentamos abrir la URL directamente
-              window.location.href = qrResult.value; // Redirige a la URL contenida en el QR
+            // Redirigir si es un link
+            if (qrResult.value.startsWith("http")) {
+              window.location.href = qrResult.value;
             }
           }
         }
       }
 
-      // Llamamos nuevamente a la función para seguir escaneando
       if (isCameraActive.value) {
         requestAnimationFrame(escanearQR);
       }
     };
 
-    // Limpiar recursos cuando el componente se desmonte
+    onMounted(() => {
+      iniciarCamara(); // activa la cámara automáticamente
+    });
+
     onBeforeUnmount(() => {
-      if (stream) {
-        const tracks = stream.getTracks();
-        tracks.forEach(track => track.stop());
-      }
+      detenerCamara();
     });
 
     return {
       videoElement,
       qrResult,
       isCameraActive,
-      iniciarCamara,
       detenerCamara,
     };
   },
@@ -140,7 +131,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background-color: 212529;
+  background-color: #212529;
   min-height: 100vh;
 }
 
@@ -164,8 +155,6 @@ h1 {
 }
 
 .controls {
-  display: flex;
-  gap: 10px;
   margin-top: 20px;
 }
 
