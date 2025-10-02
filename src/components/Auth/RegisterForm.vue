@@ -78,7 +78,9 @@
 
     <!-- Correo -->
     <div>
-      <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Correo electrónico</label>
+      <label for="email" class="block text-sm font-medium text-gray-300 mb-2"
+        >Correo electrónico</label
+      >
       <input
         id="email"
         v-model="form.email"
@@ -92,7 +94,9 @@
     <!-- Contraseña y Confirmación -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div>
-        <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Contraseña</label>
+        <label for="password" class="block text-sm font-medium text-gray-300 mb-2"
+          >Contraseña</label
+        >
         <input
           id="password"
           v-model="form.password"
@@ -130,12 +134,18 @@
       />
       <div>
         <span class="text-sm text-gray-300">
-          Acepto los 
-          <a href="/terminos-y-condiciones" class="text-[#7ED957] hover:text-[#66b047] underline transition-colors">
+          Acepto los
+          <a
+            href="/terminos-y-condiciones"
+            class="text-[#7ED957] hover:text-[#66b047] underline transition-colors"
+          >
             términos y condiciones
           </a>
-          y la 
-          <a href="/politica-privacidad" class="text-[#24DEFF] hover:text-[#1cb8d9] underline transition-colors">
+          y la
+          <a
+            href="/politica-privacidad"
+            class="text-[#24DEFF] hover:text-[#1cb8d9] underline transition-colors"
+          >
             política de privacidad
           </a>
         </span>
@@ -143,8 +153,8 @@
     </div>
 
     <!-- Botón -->
-    <button 
-      type="submit" 
+    <button
+      type="submit"
       class="w-full bg-gray-800 hover:bg-gray-700 border border-gray-600 hover:border-[#7ED957] text-[#7ED957] font-bold py-3 px-4 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
       :disabled="!form.terms"
     >
@@ -162,8 +172,11 @@
     <!-- Enlace a login -->
     <div class="text-center pt-4 border-t border-gray-700">
       <p class="text-gray-400 text-sm">
-        ¿Ya tienes cuenta? 
-        <RouterLink to="/login" class="text-[#24DEFF] hover:text-[#1cb8d9] font-semibold transition-colors">
+        ¿Ya tienes cuenta?
+        <RouterLink
+          to="/login"
+          class="text-[#24DEFF] hover:text-[#1cb8d9] font-semibold transition-colors"
+        >
           Inicia sesión aquí
         </RouterLink>
       </p>
@@ -203,8 +216,13 @@ const form = reactive<RegisterFormData>({
 
 const router = useRouter()
 
+// const api = axios.create({
+//   baseURL: 'http://127.0.0.1:8000/api',
+//   headers: { 'Content-Type': 'application/json' },
+// })
+
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL_DEPLOY,
   headers: { 'Content-Type': 'application/json' },
 })
 
@@ -240,7 +258,10 @@ async function onSubmit() {
     router.push('/login')
   } catch (err: any) {
     console.error('Error backend:', err)
-    error.value = err.response?.data?.message || err.response?.data || 'Error en el registro. Intenta nuevamente.'
+    error.value =
+      err.response?.data?.message ||
+      err.response?.data ||
+      'Error en el registro. Intenta nuevamente.'
   }
 }
 </script>

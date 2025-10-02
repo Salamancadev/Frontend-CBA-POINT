@@ -1,8 +1,8 @@
 <template>
   <div class="min-h-screen bg-gray-900 p-4 sm:p-6">
     <!-- Botón volver -->
-    <button 
-      @click="$router.back()" 
+    <button
+      @click="$router.back()"
       class="mb-6 bg-gray-800 hover:bg-gray-700 border border-gray-600 hover:border-[#7ED957] text-[#7ED957] font-semibold px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
     >
       ← Volver al menú
@@ -11,7 +11,7 @@
     <!-- Título y controles -->
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8">
       <h1 class="text-3xl font-bold text-[#7ED957] mb-4 lg:mb-0">👥 Gestión de Usuarios</h1>
-      
+
       <!-- Controles de búsqueda -->
       <div class="flex flex-col sm:flex-row gap-3">
         <input
@@ -26,8 +26,8 @@
           placeholder="Filtrar por ficha..."
           class="bg-gray-800 border border-gray-600 text-white p-3 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#7ED957] focus:border-transparent transition-all duration-300"
         />
-        <button 
-          @click="openCreateModal" 
+        <button
+          @click="openCreateModal"
           class="bg-gray-800 hover:bg-gray-700 border border-gray-600 hover:border-[#7ED957] text-[#7ED957] font-bold p-3 rounded-lg transition-all duration-300 hover:scale-105"
         >
           ➕ Crear Usuario
@@ -37,7 +37,7 @@
 
     <!-- Información de resultados -->
     <div class="mb-4 text-sm text-gray-400">
-      Mostrando <span class="text-[#7ED957] font-semibold">{{ filteredUsers.length }}</span> de 
+      Mostrando <span class="text-[#7ED957] font-semibold">{{ filteredUsers.length }}</span> de
       <span class="text-[#24DEFF] font-semibold">{{ users.length }}</span> usuarios
     </div>
 
@@ -46,18 +46,28 @@
       <table class="w-full">
         <thead>
           <tr class="bg-gray-700">
-            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">Nombre</th>
-            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">Documento</th>
-            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">Correo</th>
-            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">Ficha</th>
+            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">
+              Nombre
+            </th>
+            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">
+              Documento
+            </th>
+            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">
+              Correo
+            </th>
+            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">
+              Ficha
+            </th>
             <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">Rol</th>
-            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">Acciones</th>
+            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">
+              Acciones
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr 
-            v-for="user in filteredUsers" 
-            :key="user.id" 
+          <tr
+            v-for="user in filteredUsers"
+            :key="user.id"
             class="border-b border-gray-600 hover:bg-gray-750 transition-colors duration-200"
           >
             <td class="p-4 text-white font-medium">{{ user.nombre }} {{ user.apellido }}</td>
@@ -65,12 +75,12 @@
             <td class="p-4 text-gray-300">{{ user.email ?? '-' }}</td>
             <td class="p-4 text-gray-300">{{ user.ficha ?? '-' }}</td>
             <td class="p-4">
-              <span 
+              <span
                 :class="{
                   'bg-green-900/30 text-green-400': user.rol === 'Aprendiz',
                   'bg-blue-900/30 text-blue-400': user.rol === 'Instructor',
-                  'bg-purple-900/30 text-purple-400': user.rol === 'Administrativo'
-                }" 
+                  'bg-purple-900/30 text-purple-400': user.rol === 'Administrativo',
+                }"
                 class="px-2 py-1 rounded-full text-xs font-semibold"
               >
                 {{ user.rol }}
@@ -78,14 +88,14 @@
             </td>
             <td class="p-4">
               <div class="flex gap-2">
-                <button 
-                  @click="editUser(user)" 
+                <button
+                  @click="editUser(user)"
                   class="bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-[#24DEFF] text-[#24DEFF] font-semibold px-3 py-1 rounded transition-all duration-300 hover:scale-105"
                 >
                   ✏️ Editar
                 </button>
-                <button 
-                  @click="deleteUser(user.id)" 
+                <button
+                  @click="deleteUser(user.id)"
                   class="bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-red-500 text-red-400 hover:text-red-300 font-semibold px-3 py-1 rounded transition-all duration-300 hover:scale-105"
                 >
                   🗑️ Eliminar
@@ -94,9 +104,7 @@
             </td>
           </tr>
           <tr v-if="filteredUsers.length === 0">
-            <td colspan="6" class="text-center p-8 text-gray-400">
-              No se encontraron usuarios
-            </td>
+            <td colspan="6" class="text-center p-8 text-gray-400">No se encontraron usuarios</td>
           </tr>
         </tbody>
       </table>
@@ -113,7 +121,7 @@
             {{ editingUser ? '✏️ Editar Usuario' : '👤 Crear Usuario' }}
           </h2>
         </div>
-        
+
         <form @submit.prevent="saveUser" class="p-6 space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -169,7 +177,9 @@
               />
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-300 mb-2">Confirmar contraseña</label>
+              <label class="block text-sm font-medium text-gray-300 mb-2"
+                >Confirmar contraseña</label
+              >
               <input
                 v-model="form.confirm"
                 type="password"
@@ -181,8 +191,8 @@
 
           <div>
             <label class="block text-sm font-medium text-gray-300 mb-2">Rol</label>
-            <select 
-              v-model="form.rol" 
+            <select
+              v-model="form.rol"
               class="w-full bg-gray-700 border border-gray-600 text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ED957] focus:border-transparent transition-all duration-300"
             >
               <option value="Aprendiz" class="bg-gray-700">Aprendiz</option>
@@ -208,8 +218,8 @@
             >
               Cancelar
             </button>
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               class="bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-[#7ED957] text-[#7ED957] font-bold px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
             >
               💾 Guardar

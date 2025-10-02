@@ -17,7 +17,7 @@
   >
     <!-- Elementos decorativos de fondo -->
     <div class="absolute inset-0 bg-gray-900/40"></div>
-    
+
     <!-- Patrón de puntos decorativos -->
     <div class="absolute inset-0 opacity-10">
       <div class="absolute top-10 left-10 w-4 h-4 bg-[#7ED957] rounded-full"></div>
@@ -74,7 +74,7 @@
           >
             <span class="mr-2">📱</span> ¡Descárgala ya!
           </a>
-          
+
           <RouterLink
             to="/register"
             class="inline-flex items-center justify-center rounded-full bg-gray-800 border border-gray-600 hover:border-[#24DEFF] px-8 py-4 text-base md:text-lg font-bold text-[#24DEFF] transition-all duration-300 hover:bg-gray-700 hover:shadow-2xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#24DEFF] focus:ring-offset-2 focus:ring-offset-gray-900"
@@ -103,7 +103,7 @@ import { RouterLink } from 'vue-router'
     background-size: cover !important;
     transition: none !important;
   }
-  
+
   .hover\:scale-105 {
     transform: none !important;
   }

@@ -12,7 +12,9 @@
     </button>
 
     <!-- Logo -->
-    <h1 class="text-white font-bold text-lg md:text-xl">🎓 Cba<span class="text-[#7ED957]">Point</span></h1>
+    <h1 class="text-white font-bold text-lg md:text-xl">
+      🎓 Cba<span class="text-[#7ED957]">Point</span>
+    </h1>
 
     <!-- Menú desktop -->
     <ul class="hidden lg:flex space-x-6">
@@ -32,7 +34,6 @@
     </ul>
 
     <!-- Dark mode -->
-    
   </nav>
 
   <!-- Drawer lateral (solo móvil) -->
@@ -85,9 +86,7 @@
         <p v-if="eventosHoy.length" class="text-[#7ED957] font-semibold mt-2 animate-pulse">
           📢 Hoy tienes {{ eventosHoy.length }} evento(s)
         </p>
-        <p v-else class="text-gray-400 font-semibold mt-2">
-          📅 No hay eventos para hoy
-        </p>
+        <p v-else class="text-gray-400 font-semibold mt-2">📅 No hay eventos para hoy</p>
       </div>
       <button
         @click="cerrarSesion"
@@ -120,7 +119,7 @@
             {{ eventosFiltrados.length }} eventos
           </span>
         </div>
-        
+
         <!-- Filtros -->
         <div class="flex flex-col sm:flex-row gap-3 mb-6">
           <input
@@ -129,7 +128,10 @@
             placeholder="Buscar evento..."
             class="bg-gray-700 border border-gray-600 text-white p-3 rounded-xl w-full transition-all duration-300 focus:ring-2 focus:ring-[#7ED957] focus:border-transparent placeholder-gray-400"
           />
-          <select v-model="filtroTipo" class="bg-gray-700 border border-gray-600 text-white p-3 rounded-xl transition-all duration-300 focus:ring-2 focus:ring-[#7ED957] focus:border-transparent">
+          <select
+            v-model="filtroTipo"
+            class="bg-gray-700 border border-gray-600 text-white p-3 rounded-xl transition-all duration-300 focus:ring-2 focus:ring-[#7ED957] focus:border-transparent"
+          >
             <option value="" class="bg-gray-700">Todos los tipos</option>
             <option v-for="tipo in tiposEventos" :key="tipo" :value="tipo" class="bg-gray-700">
               {{ tipo }}
@@ -142,7 +144,7 @@
             ⬇️ Ordenar
           </button>
         </div>
-        
+
         <!-- Lista eventos -->
         <div v-if="eventosFiltrados.length" class="space-y-4">
           <div
@@ -152,10 +154,14 @@
           >
             <div class="flex justify-between items-start">
               <div>
-                <p class="font-bold text-[#7ED957] text-lg group-hover:text-white transition-colors">
+                <p
+                  class="font-bold text-[#7ED957] text-lg group-hover:text-white transition-colors"
+                >
                   {{ evento.nombre }}
                 </p>
-                <span class="inline-block bg-gray-600 text-[#24DEFF] px-2 py-1 rounded text-xs font-semibold mt-1">
+                <span
+                  class="inline-block bg-gray-600 text-[#24DEFF] px-2 py-1 rounded text-xs font-semibold mt-1"
+                >
                   {{ evento.tipo }}
                 </span>
               </div>
@@ -170,11 +176,14 @@
             </div>
             <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-600">
               <p class="text-xs text-gray-400">
-                Duración: {{ Math.round((new Date(evento.fecha_fin) - new Date(evento.fecha_inicio)) / (1000 * 60 * 60)) }}h
+                Duración:
+                {{
+                  Math.round(
+                    (new Date(evento.fecha_fin) - new Date(evento.fecha_inicio)) / (1000 * 60 * 60),
+                  )
+                }}h
               </p>
-              <span class="text-[#24DEFF] text-xs font-semibold">
-                📍 Activo
-              </span>
+              <span class="text-[#24DEFF] text-xs font-semibold"> 📍 Activo </span>
             </div>
           </div>
         </div>
@@ -198,7 +207,8 @@
 
     <!-- Footer -->
     <footer class="mt-12 text-center text-gray-500 text-sm">
-      <p>Sistema de Gestión Cba<span class="text-[#7ED957]">Point</span> • 
+      <p>
+        Sistema de Gestión Cba<span class="text-[#7ED957]">Point</span> •
         <span class="text-[#24DEFF]">v1.0.0</span>
       </p>
     </footer>
@@ -299,19 +309,19 @@ export default defineComponent({
                 },
               ],
             },
-            options: { 
-              responsive: true, 
+            options: {
+              responsive: true,
               plugins: { legend: { display: false } },
               scales: {
                 x: {
                   grid: { color: '#374151' },
-                  ticks: { color: '#9CA3AF' }
+                  ticks: { color: '#9CA3AF' },
                 },
                 y: {
                   grid: { color: '#374151' },
-                  ticks: { color: '#9CA3AF' }
-                }
-              }
+                  ticks: { color: '#9CA3AF' },
+                },
+              },
             },
           })
         }
@@ -333,10 +343,10 @@ export default defineComponent({
             options: {
               plugins: {
                 legend: {
-                  labels: { color: '#9CA3AF' }
-                }
-              }
-            }
+                  labels: { color: '#9CA3AF' },
+                },
+              },
+            },
           })
         }
       }

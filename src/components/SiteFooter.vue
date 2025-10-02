@@ -10,7 +10,8 @@
             <span class="text-xl font-bold text-[#7ED957]">CbaPoint</span>
           </div>
           <p class="text-gray-400 text-sm leading-relaxed">
-            Sistema de gestión de asistencias para instructores SENA. Facilita, registra y optimiza el control de aprendices.
+            Sistema de gestión de asistencias para instructores SENA. Facilita, registra y optimiza
+            el control de aprendices.
           </p>
         </section>
 
@@ -27,7 +28,9 @@
                 proyectocbapass@gmail.com
               </a>
             </p>
-            <p class="text-gray-300">Teléfono: <span class="text-gray-400">+57 123 456 7890</span></p>
+            <p class="text-gray-300">
+              Teléfono: <span class="text-gray-400">+57 123 456 7890</span>
+            </p>
             <p class="text-gray-300">Dirección: <span class="text-gray-400">SENA Mosquera</span></p>
           </div>
         </section>
@@ -129,7 +132,8 @@
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
         <div class="flex flex-col md:flex-row justify-between items-center gap-4">
           <p class="text-gray-400 text-sm text-center md:text-left">
-            &copy; 2025 <span class="text-[#7ED957] font-semibold">CbaPoint</span>. Todos los derechos reservados.
+            &copy; 2025 <span class="text-[#7ED957] font-semibold">CbaPoint</span>. Todos los
+            derechos reservados.
           </p>
           <div class="flex items-center gap-2 text-gray-400 text-sm">
             <span>🚀 Hecho con</span>

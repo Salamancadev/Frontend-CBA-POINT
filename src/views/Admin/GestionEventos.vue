@@ -1,8 +1,8 @@
 <template>
   <div class="min-h-screen bg-gray-900 p-4 sm:p-6">
     <!-- Botón volver -->
-    <button 
-      @click="$router.back()" 
+    <button
+      @click="$router.back()"
       class="mb-6 bg-gray-800 hover:bg-gray-700 border border-gray-600 hover:border-[#7ED957] text-[#7ED957] font-semibold px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
     >
       ← Volver al menú
@@ -11,9 +11,9 @@
     <!-- Título y controles -->
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8">
       <h1 class="text-3xl font-bold text-[#7ED957] mb-4 lg:mb-0">📅 Gestión de Eventos</h1>
-      
-      <button 
-        @click="openModal" 
+
+      <button
+        @click="openModal"
         class="bg-gray-800 hover:bg-gray-700 border border-gray-600 hover:border-[#7ED957] text-[#7ED957] font-bold px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105"
       >
         ➕ Crear Evento
@@ -30,29 +30,43 @@
       <table class="w-full">
         <thead>
           <tr class="bg-gray-700">
-            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">Nombre</th>
-            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">Tipo</th>
-            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">Fecha Inicio</th>
-            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">Fecha Fin</th>
-            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">Jornada</th>
-            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">Docente</th>
-            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">Acciones</th>
+            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">
+              Nombre
+            </th>
+            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">
+              Tipo
+            </th>
+            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">
+              Fecha Inicio
+            </th>
+            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">
+              Fecha Fin
+            </th>
+            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">
+              Jornada
+            </th>
+            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">
+              Docente
+            </th>
+            <th class="p-4 text-left text-[#7ED957] font-semibold border-b border-gray-600">
+              Acciones
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr 
-            v-for="(event, index) in events" 
-            :key="event.id ?? `event-${index}`" 
+          <tr
+            v-for="(event, index) in events"
+            :key="event.id ?? `event-${index}`"
             class="border-b border-gray-600 hover:bg-gray-750 transition-colors duration-200"
           >
             <td class="p-4 text-white font-medium">{{ event.nombre }}</td>
             <td class="p-4">
-              <span 
+              <span
                 :class="{
                   'bg-blue-900/30 text-blue-400': event.tipo === 'Inducción',
                   'bg-green-900/30 text-green-400': event.tipo === 'Evento',
-                  'bg-purple-900/30 text-purple-400': event.tipo === 'Charla'
-                }" 
+                  'bg-purple-900/30 text-purple-400': event.tipo === 'Charla',
+                }"
                 class="px-2 py-1 rounded-full text-xs font-semibold"
               >
                 {{ event.tipo }}
@@ -61,12 +75,12 @@
             <td class="p-4 text-gray-300">{{ formatDate(event.fecha_inicio) }}</td>
             <td class="p-4 text-gray-300">{{ formatDate(event.fecha_fin) }}</td>
             <td class="p-4">
-              <span 
+              <span
                 :class="{
                   'bg-yellow-900/30 text-yellow-400': event.jornada === 'Mañana',
                   'bg-orange-900/30 text-orange-400': event.jornada === 'Tarde',
-                  'bg-indigo-900/30 text-indigo-400': event.jornada === 'Mixta'
-                }" 
+                  'bg-indigo-900/30 text-indigo-400': event.jornada === 'Mixta',
+                }"
                 class="px-2 py-1 rounded-full text-xs font-semibold"
               >
                 {{ event.jornada ?? '-' }}
@@ -77,14 +91,14 @@
             </td>
             <td class="p-4">
               <div class="flex gap-2">
-                <button 
-                  @click="editEvent(event)" 
+                <button
+                  @click="editEvent(event)"
                   class="bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-[#24DEFF] text-[#24DEFF] font-semibold px-3 py-1 rounded transition-all duration-300 hover:scale-105"
                 >
                   ✏️ Editar
                 </button>
-                <button 
-                  @click="deleteEvent(event.id)" 
+                <button
+                  @click="deleteEvent(event.id)"
                   class="bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-red-500 text-red-400 hover:text-red-300 font-semibold px-3 py-1 rounded transition-all duration-300 hover:scale-105"
                 >
                   🗑️ Eliminar
@@ -93,9 +107,7 @@
             </td>
           </tr>
           <tr v-if="events.length === 0">
-            <td colspan="7" class="text-center p-8 text-gray-400">
-              No se encontraron eventos
-            </td>
+            <td colspan="7" class="text-center p-8 text-gray-400">No se encontraron eventos</td>
           </tr>
         </tbody>
       </table>
@@ -112,7 +124,7 @@
             {{ editingEvent ? '✏️ Editar Evento' : '📅 Crear Evento' }}
           </h2>
         </div>
-        
+
         <form @submit.prevent="saveEvent" class="p-6 space-y-4">
           <div>
             <label class="block text-sm font-medium text-gray-300 mb-2">Nombre del evento</label>
@@ -126,8 +138,8 @@
 
           <div>
             <label class="block text-sm font-medium text-gray-300 mb-2">Tipo de evento</label>
-            <select 
-              v-model="form.tipo" 
+            <select
+              v-model="form.tipo"
               required
               class="w-full bg-gray-700 border border-gray-600 text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ED957] focus:border-transparent transition-all duration-300"
             >
@@ -161,8 +173,8 @@
 
           <div>
             <label class="block text-sm font-medium text-gray-300 mb-2">Jornada</label>
-            <select 
-              v-model="form.jornada" 
+            <select
+              v-model="form.jornada"
               required
               class="w-full bg-gray-700 border border-gray-600 text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ED957] focus:border-transparent transition-all duration-300"
             >
@@ -175,8 +187,8 @@
 
           <div>
             <label class="block text-sm font-medium text-gray-300 mb-2">Docente responsable</label>
-            <select 
-              v-model="form.docente_id" 
+            <select
+              v-model="form.docente_id"
               required
               class="w-full bg-gray-700 border border-gray-600 text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ED957] focus:border-transparent transition-all duration-300"
             >
@@ -195,8 +207,8 @@
             >
               Cancelar
             </button>
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               class="bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-[#7ED957] text-[#7ED957] font-bold px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
             >
               💾 Guardar
@@ -253,7 +265,7 @@ const formatDate = (dateString: string): string => {
   return date.toLocaleDateString('es-ES', {
     day: '2-digit',
     month: '2-digit',
-    year: 'numeric'
+    year: 'numeric',
   })
 }
 
@@ -336,7 +348,7 @@ const saveEvent = async () => {
       await api.post('/eventos/crear/', payload)
       alert('🎉 Evento creado correctamente')
     }
-    
+
     closeModal()
     await fetchEvents()
   } catch (err) {

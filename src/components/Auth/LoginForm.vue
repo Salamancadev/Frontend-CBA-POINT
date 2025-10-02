@@ -2,7 +2,9 @@
   <!-- Formulario de login -->
   <form @submit.prevent="onSubmit" class="space-y-6">
     <div>
-      <label for="documento" class="block text-sm font-medium text-gray-300 mb-2">Número de documento</label>
+      <label for="documento" class="block text-sm font-medium text-gray-300 mb-2"
+        >Número de documento</label
+      >
       <input
         id="documento"
         v-model="form.documentNumber"
@@ -12,7 +14,7 @@
         placeholder="Ingresa tu número de documento"
       />
     </div>
-    
+
     <div>
       <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Contraseña</label>
       <input
@@ -29,8 +31,8 @@
 
     <!-- Enlace de recuperación -->
     <div class="text-right">
-      <a 
-        href="/recuperar-contraseña" 
+      <a
+        href="/recuperar-contraseña"
         class="text-sm text-[#24DEFF] hover:text-[#1cb8d9] transition-colors"
       >
         ¿Olvidaste tu contraseña?
@@ -53,8 +55,8 @@
       </p>
     </div>
 
-    <button 
-      type="submit" 
+    <button
+      type="submit"
       class="w-full bg-gray-800 hover:bg-gray-700 border border-gray-600 hover:border-[#7ED957] text-[#7ED957] font-bold py-3 px-4 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
     >
       🔐 Ingresar
@@ -63,8 +65,11 @@
     <!-- Enlace a registro -->
     <div class="text-center pt-4 border-t border-gray-700">
       <p class="text-gray-400 text-sm">
-        ¿No tienes cuenta? 
-        <RouterLink to="/register" class="text-[#24DEFF] hover:text-[#1cb8d9] font-semibold transition-colors">
+        ¿No tienes cuenta?
+        <RouterLink
+          to="/register"
+          class="text-[#24DEFF] hover:text-[#1cb8d9] font-semibold transition-colors"
+        >
           Regístrate aquí
         </RouterLink>
       </p>
@@ -102,16 +107,16 @@ const router = useRouter()
 const userStore = useUserStore()
 const authStore = useAuthStore()
 
-const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api',
-  headers: { 'Content-Type': 'application/json' },
-})
-
-// ✅ Axios instancia con la URL desde .env
 // const api = axios.create({
-//   baseURL: import.meta.env.VITE_API_BASE_URL_DEPLOY,
+//   baseURL: 'http://127.0.0.1:8000/api',
 //   headers: { 'Content-Type': 'application/json' },
 // })
+
+// ✅ Axios instancia con la URL desde .env
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL_DEPLOY,
+  headers: { 'Content-Type': 'application/json' },
+})
 
 async function onSubmit() {
   error.value = ''
@@ -150,7 +155,6 @@ async function onSubmit() {
       else if (userRole === 'Administrativo') router.push({ name: 'dashboard-admin' })
       else error.value = 'Rol de usuario no reconocido'
     }, 1500)
-    
   } catch (err: any) {
     console.error('Error completo del backend:', err)
     error.value = err.response?.data?.error || 'Error en el login. Verifica tus credenciales.'

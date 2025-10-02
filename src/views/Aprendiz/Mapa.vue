@@ -19,22 +19,35 @@
             class="search-input bg-gray-700 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#7ED957] focus:border-transparent transition-all duration-300 flex-1"
           />
           <div class="flex gap-2">
-            <button @click="buscarLugar" class="btn btn-search bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-[#7ED957] text-[#7ED957] font-semibold px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105">
+            <button
+              @click="buscarLugar"
+              class="btn btn-search bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-[#7ED957] text-[#7ED957] font-semibold px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
+            >
               🔍 Buscar
             </button>
-            <button @click="irDestino" class="btn btn-destination bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-[#24DEFF] text-[#24DEFF] font-semibold px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105">
+            <button
+              @click="irDestino"
+              class="btn btn-destination bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-[#24DEFF] text-[#24DEFF] font-semibold px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105"
+            >
               🎯 Ir al destino
             </button>
           </div>
         </div>
-        
+
         <div class="status-container mt-3 flex flex-col sm:flex-row gap-2 text-sm">
-          <span id="routeInfo" class="route-info text-[#24DEFF] font-semibold bg-gray-700 px-3 py-1 rounded-lg">{{ routeInfo }}</span>
+          <span
+            id="routeInfo"
+            class="route-info text-[#24DEFF] font-semibold bg-gray-700 px-3 py-1 rounded-lg"
+            >{{ routeInfo }}</span
+          >
         </div>
       </div>
 
       <!-- Mapa -->
-      <div id="map" class="bg-gray-800 border border-gray-700 rounded-xl shadow-lg overflow-hidden"></div>
+      <div
+        id="map"
+        class="bg-gray-800 border border-gray-700 rounded-xl shadow-lg overflow-hidden"
+      ></div>
     </div>
   </div>
 </template>
@@ -96,11 +109,11 @@ export default {
       [4.692324, -74.21455],
       [4.696692, -74.212033],
     ]
-    L.polygon(zonaCoords, { 
-      color: '#7ED957', 
-      fillColor: '#7ED957', 
+    L.polygon(zonaCoords, {
+      color: '#7ED957',
+      fillColor: '#7ED957',
       fillOpacity: 0.2,
-      weight: 2
+      weight: 2,
     })
       .addTo(this.map)
       .bindPopup('Centro de Biotecnologia Agropecuaria Sena')
@@ -223,12 +236,12 @@ export default {
 
       if (this.routeLayer) this.map.removeLayer(this.routeLayer)
 
-      this.routeLayer = L.geoJSON(route, { 
-        style: { 
-          color: '#7ED957', 
+      this.routeLayer = L.geoJSON(route, {
+        style: {
+          color: '#7ED957',
           weight: 6,
-          opacity: 0.8
-        } 
+          opacity: 0.8,
+        },
       }).addTo(this.map)
       this.map.fitBounds(this.routeLayer.getBounds(), { padding: [50, 50] })
 
@@ -290,11 +303,11 @@ export default {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   #map {
     height: 60vh;
   }
-  
+
   .search-input {
     min-width: unset;
   }

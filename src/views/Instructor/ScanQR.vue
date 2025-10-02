@@ -14,9 +14,7 @@
     <div
       class="bg-gray-800 w-full max-w-3xl p-8 rounded-2xl shadow-xl border border-gray-700 text-center"
     >
-      <h2 class="text-2xl font-bold text-gray-100 mb-2">
-        🌐 Lector Universal de QR
-      </h2>
+      <h2 class="text-2xl font-bold text-gray-100 mb-2">🌐 Lector Universal de QR</h2>
       <p class="text-gray-400 mb-6">
         Escanea cualquier código QR y serás redirigido automáticamente
       </p>
@@ -51,14 +49,14 @@
         >
           {{ escaneando ? '⏸️ Pausar' : '▶️ Reanudar' }}
         </button>
-        
+
         <button
           @click="cambiarCamara"
           class="bg-purple-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-purple-700 transition"
         >
           🔄 Cámara {{ camaraTrasera ? 'Frontal' : 'Trasera' }}
         </button>
-        
+
         <button
           @click="reiniciarScanner"
           class="bg-gray-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-gray-700 transition"
@@ -82,7 +80,10 @@
                 <p class="text-sm text-gray-300 break-all">{{ item.contenido }}</p>
                 <p class="text-xs text-gray-500 mt-1">{{ item.fecha }}</p>
               </div>
-              <span class="ml-2 text-xs px-2 py-1 rounded-full" :class="item.esUrl ? 'bg-green-500' : 'bg-yellow-500'">
+              <span
+                class="ml-2 text-xs px-2 py-1 rounded-full"
+                :class="item.esUrl ? 'bg-green-500' : 'bg-yellow-500'"
+              >
                 {{ item.esUrl ? 'URL' : 'TEXTO' }}
               </span>
             </div>
@@ -94,9 +95,11 @@
       <div class="mt-6">
         <div v-if="mensaje" class="p-4 bg-green-900 rounded-lg mb-4">
           <p class="font-semibold text-green-400">{{ mensaje }}</p>
-          <p class="text-sm text-gray-300 mt-2">Redirigiendo en {{ contadorRedireccion }} segundos...</p>
+          <p class="text-sm text-gray-300 mt-2">
+            Redirigiendo en {{ contadorRedireccion }} segundos...
+          </p>
         </div>
-        
+
         <div v-if="error" class="p-4 bg-red-900 rounded-lg">
           <p class="font-semibold text-red-400">{{ error }}</p>
         </div>
@@ -164,7 +167,7 @@ export default {
       escaneosExitosos: 0,
       urlsDetectadas: 0,
       otrosContenidos: 0,
-      historial: []
+      historial: [],
     }
   },
   mounted() {
@@ -178,26 +181,25 @@ export default {
     async iniciarScanner() {
       try {
         this.scanner = new Html5Qrcode('reader')
-        
+
         const config = {
           fps: 10,
           qrbox: { width: 250, height: 250 },
           aspectRatio: 1.0,
-          supportedScanTypes: []
+          supportedScanTypes: [],
         }
 
         const camaraId = await this.obtenerCamaraId()
-        
+
         await this.scanner.start(
           camaraId,
           config,
           this.onScanSuccess.bind(this),
-          this.onScanFailure.bind(this)
+          this.onScanFailure.bind(this),
         )
-        
+
         this.escaneando = true
         this.error = ''
-        
       } catch (err) {
         console.error('Error iniciando la cámara: ', err)
         this.error = this.obtenerMensajeErrorCamara(err)
@@ -210,17 +212,18 @@ export default {
         if (dispositivos.length === 0) {
           throw new Error('No se encontraron cámaras')
         }
-        
+
         // Preferir cámara trasera si está disponible
         if (this.camaraTrasera) {
-          const camaraTrasera = dispositivos.find(d => 
-            d.label.toLowerCase().includes('back') || 
-            d.label.toLowerCase().includes('rear') ||
-            d.label.toLowerCase().includes('environment')
+          const camaraTrasera = dispositivos.find(
+            (d) =>
+              d.label.toLowerCase().includes('back') ||
+              d.label.toLowerCase().includes('rear') ||
+              d.label.toLowerCase().includes('environment'),
           )
           if (camaraTrasera) return camaraTrasera.id
         }
-        
+
         // Si no hay cámara trasera o se solicita frontal, usar la primera disponible
         return dispositivos[0].id
       } catch (err) {
@@ -232,11 +235,11 @@ export default {
 
     onScanSuccess(decodedText, decodedResult) {
       console.log('QR escaneado:', decodedText)
-      
+
       // Agregar al historial
       this.agregarAlHistorial(decodedText)
       this.escaneosExitosos++
-      
+
       // Verificar si es una URL
       if (this.esUrlValida(decodedText)) {
         this.urlsDetectadas++
@@ -266,7 +269,7 @@ export default {
     procesarUrl(url) {
       this.urlDetectada = url
       this.mensaje = '¡URL detectada! Preparando redirección...'
-      
+
       // Iniciar contador para redirección automática
       this.iniciarContadorRedireccion()
     },
@@ -279,10 +282,10 @@ export default {
     iniciarContadorRedireccion() {
       this.contadorRedireccion = 5
       this.limpiarContador()
-      
+
       this.intervaloRedireccion = setInterval(() => {
         this.contadorRedireccion--
-        
+
         if (this.contadorRedireccion <= 0) {
           this.redirigirInmediatamente()
         }
@@ -295,7 +298,7 @@ export default {
         // Abrir en nueva pestaña
         window.open(this.urlDetectada, '_blank')
         this.mensaje = '✅ Redirigiendo...'
-        
+
         // Limpiar después de un tiempo
         setTimeout(() => {
           this.reiniciarEstado()
@@ -307,7 +310,7 @@ export default {
       this.limpiarContador()
       this.reiniciarEstado()
       this.mensaje = 'Redirección cancelada'
-      
+
       setTimeout(() => {
         this.mensaje = ''
       }, 3000)
@@ -355,7 +358,7 @@ export default {
       this.limpiarContador()
       this.reiniciarEstado()
       this.error = ''
-      
+
       setTimeout(() => {
         this.iniciarScanner()
       }, 500)
@@ -365,11 +368,11 @@ export default {
       const item = {
         contenido,
         fecha: new Date().toLocaleTimeString(),
-        esUrl: this.esUrlValida(contenido)
+        esUrl: this.esUrlValida(contenido),
       }
-      
+
       this.historial.unshift(item)
-      
+
       // Mantener máximo 10 items en el historial
       if (this.historial.length > 10) {
         this.historial.pop()
@@ -380,7 +383,7 @@ export default {
       try {
         await navigator.clipboard.writeText(texto)
         this.mensaje = '✅ Texto copiado al portapapeles'
-        
+
         setTimeout(() => {
           this.mensaje = ''
         }, 3000)
@@ -398,8 +401,8 @@ export default {
       } else {
         return 'Error al acceder a la cámara. Intenta recargar la página.'
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -418,11 +421,11 @@ export default {
   #reader {
     min-height: 250px;
   }
-  
+
   .flex.gap-2 {
     flex-direction: column;
   }
-  
+
   .flex.gap-2 button {
     margin-bottom: 0.5rem;
   }

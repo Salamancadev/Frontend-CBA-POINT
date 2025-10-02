@@ -4,7 +4,7 @@
       <div class="flex h-16 items-center justify-between">
         <!-- Logo -->
         <img src="/img/LOGO CBA PASS.png" alt="CbaPass logo" class="h-10 w-auto sm:h-12" />
-          <span class="sr-only">CBA Pass</span>
+        <span class="sr-only">CBA Pass</span>
 
         <!-- Desktop nav -->
         <nav class="hidden md:block">
@@ -19,7 +19,7 @@
                   Inicio
                 </RouterLink>
               </li>
-              
+
               <li>
                 <RouterLink
                   to="/login"

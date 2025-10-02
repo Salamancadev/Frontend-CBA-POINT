@@ -2,12 +2,12 @@
   <div class="min-h-screen bg-gray-900 p-6 text-white font-sans">
     <!-- Header -->
     <header class="mb-10">
-      <h1 class="text-4xl font-bold mb-2 text-white">
-        Dashboard Administrador
-      </h1>
+      <h1 class="text-4xl font-bold mb-2 text-white">Dashboard Administrador</h1>
       <p class="text-lg text-gray-400">
         Bienvenido,
-        <span class="font-semibold text-[#7ED957]">{{ mappedUser.nombre }} {{ mappedUser.apellido }}</span>
+        <span class="font-semibold text-[#7ED957]"
+          >{{ mappedUser.nombre }} {{ mappedUser.apellido }}</span
+        >
       </p>
     </header>
 
@@ -75,7 +75,9 @@
           to="/gestion-usuarios"
           class="bg-gray-800 border border-gray-700 hover:border-[#7ED957] text-white text-center p-6 rounded-2xl shadow-lg hover:scale-105 transition-all duration-300 no-underline flex flex-col items-center group"
         >
-          <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">👤</div>
+          <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
+            👤
+          </div>
           <h3 class="text-lg font-bold text-[#7ED957]">Gestionar Usuarios</h3>
           <p class="text-sm text-gray-400 mt-2">Agregar, modificar o eliminar usuarios</p>
         </router-link>
@@ -84,27 +86,11 @@
           to="/gestion-eventos"
           class="bg-gray-800 border border-gray-700 hover:border-[#7ED957] text-white text-center p-6 rounded-2xl shadow-lg hover:scale-105 transition-all duration-300 no-underline flex flex-col items-center group"
         >
-          <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">📅</div>
+          <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
+            📅
+          </div>
           <h3 class="text-lg font-bold text-[#7ED957]">Gestionar Eventos</h3>
           <p class="text-sm text-gray-400 mt-2">Crear y administrar eventos</p>
-        </router-link>
-
-        <router-link
-          to="/registro-asistencias"
-          class="bg-gray-800 border border-gray-700 hover:border-[#7ED957] text-white text-center p-6 rounded-2xl shadow-lg hover:scale-105 transition-all duration-300 no-underline flex flex-col items-center group"
-        >
-          <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">✅</div>
-          <h3 class="text-lg font-bold text-[#7ED957]">Registrar Asistencias</h3>
-          <p class="text-sm text-gray-400 mt-2">Marcar asistencias de aprendices</p>
-        </router-link>
-
-        <router-link
-          to="/reportes-generales"
-          class="bg-gray-800 border border-gray-700 hover:border-[#24DEFF] text-white text-center p-6 rounded-2xl shadow-lg hover:scale-105 transition-all duration-300 no-underline flex flex-col items-center group"
-        >
-          <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">📊</div>
-          <h3 class="text-lg font-bold text-[#24DEFF]">Reportes Generales</h3>
-          <p class="text-sm text-gray-400 mt-2">Visualizar estadísticas y exportar reportes</p>
         </router-link>
       </div>
     </section>
